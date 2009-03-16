@@ -142,6 +142,7 @@ namespace FogBugzClient
             p.Y = 0;
             Location = p;
 
+            // TODO: prompt the user for Base url if none in config
 
             String baseURL = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
             // TODO: handle config not found
