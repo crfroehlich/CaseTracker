@@ -1,6 +1,6 @@
 namespace FogBugzClient
 {
-    partial class TimeTracker
+    partial class HoverWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace FogBugzClient
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeTracker));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HoverWindow));
             this.UpdateCasesTimer = new System.Windows.Forms.Timer(this.components);
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MainMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -265,7 +265,7 @@ namespace FogBugzClient
             this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
             this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
             // 
-            // TimeTracker
+            // HoverWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -284,18 +284,18 @@ namespace FogBugzClient
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(2000, 26);
             this.MinimumSize = new System.Drawing.Size(224, 26);
-            this.Name = "TimeTracker";
+            this.Name = "HoverWindow";
             this.Opacity = 0.8;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "FogBugz Client";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.TimeTracker_Load);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TimeTracker_MouseUp);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TimeTracker_FormClosed);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TimeTracker_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimeTracker_MouseMove);
+            this.Load += new System.EventHandler(this.HoverWindow_Load);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.HoverWindow_MouseUp);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.HoverWindow_FormClosed);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HoverWindow_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HoverWindow_MouseMove);
             this.MainMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).EndInit();

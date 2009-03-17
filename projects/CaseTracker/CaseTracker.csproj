@@ -83,9 +83,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TimeTracker.resx">
+    <EmbeddedResource Include="HoverWindow.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>TimeTracker.cs</DependentUpon>
+      <DependentUpon>HoverWindow.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -107,11 +107,11 @@
     <Compile Include="SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TimeTracker.cs">
+    <Compile Include="HoverWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TimeTracker.Designer.cs">
-      <DependentUpon>TimeTracker.cs</DependentUpon>
+    <Compile Include="HoverWindow.Designer.cs">
+      <DependentUpon>HoverWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
   </ItemGroup>

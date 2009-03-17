@@ -12,43 +12,45 @@ namespace FogBugzClient
 {
     public partial class LoginForm : Form
     {
-        public string email {
+        public string Email {
             get { return txtUserName.Text; }
             set { txtUserName.Text = value; } 
         }
-        public string password {
+
+        public string Password {
             get { return txtPassword.Text; }
             set { txtPassword.Text = value; } 
+        }
+
+        public string Server
+        {
+            get { return txtServer.Text; }
+            set { txtServer.Text = value; }
         }
 
         public LoginForm()
         {
             InitializeComponent();
         }
+        // TODO: tab order, enter on server text
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start((string)ConfigurationManager.AppSettings["FogBugzBaseURL"] + 
-                "/default.asp?pg=pgForgotPassword");
+            if (Server == "")
+            {
+                Utils.ShowErrorMessage("Unable to determine link to Forgotten Password page.\nPlease configure the server URL", "Not Available");
+                return;
+            }
+            Process.Start(Server + "/default.asp?pg=pgForgotPassword");
         }
 
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        private void anyTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
                 DialogResult = DialogResult.OK;
                 Close();
             }
-        }
-
-        private void txtUserName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-            {
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-
         }
 
     }

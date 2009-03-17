@@ -30,6 +30,13 @@ namespace FogBugzClient
         }
     }
 
+    class EServerError : Exception
+    {
+        public EServerError(string reason)
+            : base(reason)
+        {
+        }
+    }
 
     public class FogBugz
     {
@@ -58,10 +65,23 @@ namespace FogBugzClient
 
         private string httpGet(string url)
         {
-            WebRequest req = WebRequest.Create(url);
-            WebResponse res = req.GetResponse();
-            StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
-            return sr.ReadToEnd();
+            try
+            {
+                WebRequest req = WebRequest.Create(url);
+                WebResponse res = req.GetResponse();
+                StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
+                return sr.ReadToEnd();
+            }
+            catch (System.Net.WebException x)
+            {
+                Utils.LogError(x.ToString());
+                throw new EServerError("Unable to find FogBugz server at location: " + BaseURL);
+            }
+            catch (System.UriFormatException x)
+            {
+                Utils.LogError(x.ToString());
+                throw new EServerError("The server URL you provided appears to be malformed: " + BaseURL);
+            }
         }
 
         public bool Logon(string email, string password)

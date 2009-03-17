@@ -36,6 +36,8 @@ namespace FogBugzClient
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.lnkForgotPwd = new System.Windows.Forms.LinkLabel();
+            this.txtServer = new System.Windows.Forms.TextBox();
+            this.lblServer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblEmail
@@ -50,7 +52,7 @@ namespace FogBugzClient
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(12, 46);
+            this.lblPassword.Location = new System.Drawing.Point(12, 48);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(56, 13);
             this.lblPassword.TabIndex = 1;
@@ -58,45 +60,45 @@ namespace FogBugzClient
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(74, 12);
+            this.txtUserName.Location = new System.Drawing.Point(104, 12);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(176, 20);
             this.txtUserName.TabIndex = 0;
-            this.txtUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUserName_KeyPress);
+            this.txtUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anyTextBox_KeyPress);
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(74, 43);
+            this.txtPassword.Location = new System.Drawing.Point(104, 45);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(176, 20);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUserName_KeyPress);
+            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anyTextBox_KeyPress);
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(175, 90);
+            this.btnCancel.Location = new System.Drawing.Point(398, 108);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // btnLogin
             // 
             this.btnLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnLogin.Location = new System.Drawing.Point(94, 90);
+            this.btnLogin.Location = new System.Drawing.Point(317, 108);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
-            this.btnLogin.TabIndex = 2;
+            this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             // 
             // lnkForgotPwd
             // 
             this.lnkForgotPwd.AutoSize = true;
-            this.lnkForgotPwd.Location = new System.Drawing.Point(152, 66);
+            this.lnkForgotPwd.Location = new System.Drawing.Point(286, 52);
             this.lnkForgotPwd.Name = "lnkForgotPwd";
             this.lnkForgotPwd.Size = new System.Drawing.Size(98, 13);
             this.lnkForgotPwd.TabIndex = 4;
@@ -104,12 +106,32 @@ namespace FogBugzClient
             this.lnkForgotPwd.Text = "forgot my password";
             this.lnkForgotPwd.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // txtServer
+            // 
+            this.txtServer.Location = new System.Drawing.Point(104, 78);
+            this.txtServer.Name = "txtServer";
+            this.txtServer.Size = new System.Drawing.Size(369, 20);
+            this.txtServer.TabIndex = 2;
+            this.txtServer.Text = "[e.g. http://www.YourCompany.com/FogBugz/]";
+            this.txtServer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anyTextBox_KeyPress);
+            // 
+            // lblServer
+            // 
+            this.lblServer.AutoSize = true;
+            this.lblServer.Location = new System.Drawing.Point(12, 81);
+            this.lblServer.Name = "lblServer";
+            this.lblServer.Size = new System.Drawing.Size(86, 13);
+            this.lblServer.TabIndex = 6;
+            this.lblServer.Text = "FogBugz Server:";
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(262, 125);
+            this.ClientSize = new System.Drawing.Size(485, 142);
+            this.Controls.Add(this.lblServer);
+            this.Controls.Add(this.txtServer);
             this.Controls.Add(this.lnkForgotPwd);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnCancel);
@@ -138,5 +160,7 @@ namespace FogBugzClient
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.LinkLabel lnkForgotPwd;
+        private System.Windows.Forms.TextBox txtServer;
+        private System.Windows.Forms.Label lblServer;
     }
 }

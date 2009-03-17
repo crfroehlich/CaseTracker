@@ -12,7 +12,7 @@ namespace FogBugzClient
 {
     public partial class SearchForm : Form
     {
-        public TimeTracker dad;
+        public HoverWindow dad;
         public FogBugz fb;
         public String UserSearch
         {

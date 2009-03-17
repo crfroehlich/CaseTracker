@@ -31,7 +31,7 @@ namespace FogBugzClient
             };
 
             if (firstInstance)
-                Application.Run(new TimeTracker());
+                Application.Run(new HoverWindow());
         }
     }
 }

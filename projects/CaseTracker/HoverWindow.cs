@@ -13,33 +13,38 @@ using Microsoft.Win32;
 
 namespace FogBugzClient
 {
-    public partial class TimeTracker : Form
+    public partial class HoverWindow : Form
     {
-        private FogBugz fb;
-        private string email;
-        private bool resizing = false;
-        private string password;
-        private String BaseSearch;
-        private String NarrowSearch;
+        private FogBugz _fb;
 
-        private bool dragging = false;
-        private DateTime startDragTime;
-        private int mouseDownX;
+        private string _email;
+        private string _server;
+        private string _password;
+
+        private bool _resizing = false;
+
+        private String _baseSearch;
+        private String _narrowSearch;
+
+        private bool _dragging = false;
+        private DateTime _startDragTime;
+        private int _mouseDownX;
         
-        private int mouseDownY;
-        private int dragDistance = 0;
-        private bool switchToNothinUponClosing = false;
+        private int _mouseDownY;
+        private int _dragDistance = 0;
+        private bool _switchToNothinUponClosing = false;
 
-        private int gripStartX;
+        private int _gripStartX;
 
-        private object CurrentState;
+        private object _currentState;
+        private Case _trackedCase = null;
+
 
         private bool SelectedItemIsCase()
         {
             return CaseDropDown.SelectedItem.GetType() == typeof(Case);
         }
 
-        private Case _trackedCase = null;
         public bool TrackingCase
         {
             get
@@ -57,9 +62,9 @@ namespace FogBugzClient
 
             set
             {
-                if (!fb.startStopWork(value != null ? value.id : 0))
+                if (!_fb.startStopWork(value != null ? value.id : 0))
                 {
-                    Process.Start(fb.CaseEditURL(0));
+                    Process.Start(_fb.CaseEditURL(0));
                     _trackedCase = null;
                     trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
                 }
@@ -69,20 +74,19 @@ namespace FogBugzClient
             }
         }
 
-
         private void SetState(object state)
         {
             Utils.Trace("Entering state: " + state.GetType().ToString());
-            CurrentState = state;
+            _currentState = state;
             Refresh();
         }
 
-        public TimeTracker()
+        public HoverWindow()
         {
             InitializeComponent();
 
-            BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
-            NarrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
+            _baseSearch = ConfigurationManager.AppSettings["BaseSearch"];
+            _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
         }
 
         private void updateCases()
@@ -90,7 +94,7 @@ namespace FogBugzClient
             CaseDropDown.Items.Clear();
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
-            Case[] cases = fb.getCases(BaseSearch + " " + NarrowSearch);
+            Case[] cases = _fb.getCases(_baseSearch + " " + _narrowSearch);
             CaseDropDown.Items.Add("(nothing)");
             CaseDropDown.Text = "(nothing)";
             foreach (Case c in cases)
@@ -126,11 +130,11 @@ namespace FogBugzClient
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (fb.loggedIn)
+            if (_fb.loggedIn)
                 updateCases();
         }
 
-        private void TimeTracker_Load(object sender, EventArgs e)
+        private void HoverWindow_Load(object sender, EventArgs e)
         {
 
             SetState(new StateLoggedOff(this));
@@ -142,14 +146,7 @@ namespace FogBugzClient
             p.Y = 0;
             Location = p;
 
-            // TODO: prompt the user for Base url if none in config
-
-            String baseURL = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
-            // TODO: handle config not found
-
-            fb = new FogBugz(baseURL);
             loadSettings();
-
 
             if (!login())
             {
@@ -162,22 +159,22 @@ namespace FogBugzClient
 
         private void startDragging(MouseEventArgs e)
         {
-            startDragTime = DateTime.Now;
+            _startDragTime = DateTime.Now;
             
-            dragDistance = 0;
-            mouseDownX = e.X;
-            mouseDownY = e.Y;
-            dragging = true;
+            _dragDistance = 0;
+            _mouseDownX = e.X;
+            _mouseDownY = e.Y;
+            _dragging = true;
         }
 
-        private void TimeTracker_MouseDown(object sender, MouseEventArgs e)
+        private void HoverWindow_MouseDown(object sender, MouseEventArgs e)
         {
             startDragging(e);
         }
 
-        private void TimeTracker_MouseMove(object sender, MouseEventArgs e)
+        private void HoverWindow_MouseMove(object sender, MouseEventArgs e)
         {
-            if (dragging)
+            if (_dragging)
                 dragWindow(e);
         }
 
@@ -210,23 +207,23 @@ namespace FogBugzClient
             {
                 Point p = new Point();
                 // Measure drag distance
-                dragDistance += (int)Math.Sqrt((e.X - mouseDownX) * (e.X - mouseDownX) + (e.Y - mouseDownY) * (e.Y - mouseDownY));
+                _dragDistance += (int)Math.Sqrt((e.X - _mouseDownX) * (e.X - _mouseDownX) + (e.Y - _mouseDownY) * (e.Y - _mouseDownY));
 
                 // Measure drag speed
-                long ticks = DateTime.Now.Subtract(startDragTime).Milliseconds;
+                long ticks = DateTime.Now.Subtract(_startDragTime).Milliseconds;
                 if (ticks > 0)
                 {
-                    double speed = (double)dragDistance / ticks;
+                    double speed = (double)_dragDistance / ticks;
 
                     // Not doing anything with the drag speed for now
                     // Might use it to implement mouse gestures
                 }
-                dragDistance = 0;
-                startDragTime = DateTime.Now;
+                _dragDistance = 0;
+                _startDragTime = DateTime.Now;
 
 
-                p.X = Location.X + (e.X - mouseDownX);
-                p.Y = Location.Y + (e.Y - mouseDownY);
+                p.X = Location.X + (e.X - _mouseDownX);
+                p.Y = Location.Y + (e.Y - _mouseDownY);
                 moveWindow(p);
             }
 
@@ -239,7 +236,7 @@ namespace FogBugzClient
 
         private void label1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (dragging)
+            if (_dragging)
                 dragWindow(e);
         }
 
@@ -254,7 +251,7 @@ namespace FogBugzClient
             {
                 // If the selected item is changed as part of the update process, 
                 // don't count it as the user changing selection
-                if (CurrentState.GetType() == typeof(StateUpdatingCases))
+                if (_currentState.GetType() == typeof(StateUpdatingCases))
                     return;
                 TrackedCase = SelectedItemIsCase() ? (Case)CaseDropDown.SelectedItem : null;
             }
@@ -287,12 +284,13 @@ namespace FogBugzClient
 
         private void btnConfigure_Click(object sender, EventArgs e)
         {
-            LogonResultInfo info = DoLogonScreen(email, password);
-            if (info.userChoice == DialogResult.Cancel)
+            LogonResultInfo info = DoLogonScreen(_email, _password, _server);
+            if (info.UserChoice == DialogResult.Cancel)
                 // user cancelled, do nothing (keep old account)
                 return;
-            email = info.username;
-            password = info.password;
+            _email = info.User;
+            _password = info.Password;
+            _server = info.Server;
             bool b = login();
             if (b)
                 updateCases();
@@ -303,28 +301,30 @@ namespace FogBugzClient
 
         public struct LogonResultInfo
         {
-            public String username;
-            public string password;
-            public DialogResult userChoice;
+            public String User;
+            public string Password;
+            public string Server;
+            public DialogResult UserChoice;
         };
 
-        LogonResultInfo DoLogonScreen(string initialUser, string initialPassword)
+        LogonResultInfo DoLogonScreen(string initialUser, string initialPassword, string initialServer)
         {
             LogonResultInfo ret = new LogonResultInfo();
 
             LoginForm f = new LoginForm();
-            f.password = initialPassword;
-            f.email = initialUser;
+            f.Password = initialPassword;
+            f.Email = initialUser;
+            f.Server = initialServer;
+
 
             if (f.ShowDialog() == DialogResult.Cancel)
-            {
-                ret.userChoice = DialogResult.Cancel;
-            }
+                ret.UserChoice = DialogResult.Cancel;
             else
             {
-                ret.userChoice = DialogResult.OK;
-                ret.username = f.email;
-                ret.password = f.password;
+                ret.UserChoice = DialogResult.OK;
+                ret.User = f.Email;
+                ret.Password = f.Password;
+                ret.Server = f.Server;
 
             }
             return ret;
@@ -334,59 +334,90 @@ namespace FogBugzClient
 
         private bool login()
         {
-            SetState(new StateLoggingIn(this));
-            if (email.Length == 0 || password.Length == 0)
+            try
             {
-                LogonResultInfo info = DoLogonScreen("", "");
-                if (info.userChoice == DialogResult.Cancel)
+
+                SetState(new StateLoggingIn(this));
+                if (_email.Length == 0 || _password.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
+                {
+                    if (_server.Length == 0)
+                    {
+                        string url = ConfigurationManager.AppSettings["FogBugzBaseURL"] ?? "";
+                        _server = (url.Length > 0) ? url : (string)ConfigurationManager.AppSettings["ExampleServerURL"];
+                    }
+
+                    LogonResultInfo info = DoLogonScreen("", "", _server);
+                    if (info.UserChoice == DialogResult.Cancel)
+                        return false;
+
+                    _email = info.User;
+                    _password = info.Password;
+                    _server = info.Server;
+                }
+
+                _fb = new FogBugz(_server);
+
+                if (!_fb.Logon(_email, _password))
+                {
+                    _password = "";
+                    MessageBox.Show("Login failed", "FogBugz", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
-
-                email = info.username;
-                password = info.password;
+                }
+                else
+                {
+                    saveSettings();
+                }
+                return true;
             }
-
-            if (!fb.Logon(email, password))
+            catch (Exception x)
             {
-                password = "";
-                MessageBox.Show("Login failed", "FogBugz", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                SetState(new StateLoggedOff(this));
+                throw x;
             }
-            return true;
         }
 
         private void saveSettings()
         {
-            RegistryKey ttkey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\TimeTracker");
-            ttkey.SetValue("email", email);
-            ttkey.SetValue("password", Utils.Encrypt(password));
+            RegistryKey ttkey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
+            ttkey.SetValue("email", _email);
+            ttkey.SetValue("password", Utils.Encrypt(_password));
+            ttkey.SetValue("server", _server);
             ttkey.SetValue("LastX", Location.X);
             ttkey.SetValue("LastY", Location.Y);
-            ttkey.SetValue("NarrowSearch", NarrowSearch);
+            ttkey.SetValue("NarrowSearch", _narrowSearch);
             ttkey.SetValue("LastWidth", Width);
             ttkey.SetValue("PollingInterval", UpdateCasesTimer.Interval);
-            ttkey.SetValue("SwitchToNothingWhenClosing", switchToNothinUponClosing ? 1 : 0);
+            ttkey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             
             ttkey.Close();
         }
 
         private void loadSettings()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\TimeTracker");
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (key == null)
             {
-                email = "";
-                password = "";
-            } else
+                _email = "";
+                _password = "";
+                _server = "";
+            }
+            else
             {
-                email = (String)key.GetValue("email", "");
+                _email = (String)key.GetValue("email", "");
+                _server = (String)key.GetValue("server", "");
+
+                if (_server == "")
+                {
+                    _server = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
+                }
 
                 try
                 {
-                    password = Utils.Decrypt((String)key.GetValue("password", ""));
+                    _password = Utils.Decrypt((String)key.GetValue("password", ""));
                 }
                 catch (CryptographicException)
                 {
-                    password = "";
+                    _password = "";
                 }
 
 
@@ -394,22 +425,22 @@ namespace FogBugzClient
                 newLoc.X = (int)key.GetValue("LastX", Location.X);
                 newLoc.Y = (int)key.GetValue("LastY", Location.Y);
                 Width = (int)key.GetValue("LastWidth", Width);
-                NarrowSearch = (String)key.GetValue("NarrowSearch", "");
+                _narrowSearch = (String)key.GetValue("NarrowSearch", "");
                 UpdateCasesTimer.Interval = (int)key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
                 UpdateCasesTimer.Interval = (int)key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
-                switchToNothinUponClosing = (int)key.GetValue("SwitchToNothingWhenClosing", switchToNothinUponClosing ? 1 : 0) != 0;
+                _switchToNothinUponClosing = (int)key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
                 Location = newLoc;
                 key.Close();
             }
         }
 
 
-        private void TimeTracker_FormClosed(object sender, FormClosedEventArgs e)
+        private void HoverWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             try
             {
-                if (switchToNothinUponClosing)
-                    fb.startStopWork(0);
+                if (_switchToNothinUponClosing)
+                    _fb.startStopWork(0);
                 saveSettings();
             }
             catch (System.Exception x)
@@ -427,13 +458,13 @@ namespace FogBugzClient
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
-            fb.ResolveCase(fb.workingOnCase);
+            _fb.ResolveCase(_fb.workingOnCase);
             updateCases();
         }
 
         private void btnViewCase_Click(object sender, EventArgs e)
         {
-            Process.Start(fb.CaseEditURL(((Case)CaseDropDown.SelectedItem).id));
+            Process.Start(_fb.CaseEditURL(((Case)CaseDropDown.SelectedItem).id));
         }
 
         private void btnShowHide_Click(object sender, EventArgs e)
@@ -465,13 +496,13 @@ namespace FogBugzClient
         private void SetFilter()
         {
             SearchForm f = new SearchForm();
-            f.fb = fb;
+            f.fb = _fb;
             f.dad = this;
-            f.UserSearch = NarrowSearch;
-            f.BaseSearch = BaseSearch;
+            f.UserSearch = _narrowSearch;
+            f.BaseSearch = _baseSearch;
             if (f.ShowDialog() == DialogResult.OK)
             {
-                NarrowSearch = f.UserSearch;
+                _narrowSearch = f.UserSearch;
                 updateCases();
             }
 
@@ -492,44 +523,42 @@ namespace FogBugzClient
 
         }
 
-
-
         private void grip_MouseDown(object sender, MouseEventArgs e)
         {
-            resizing = true;
-            gripStartX = Cursor.Position.X;
+            _resizing = true;
+            _gripStartX = Cursor.Position.X;
         }
 
         private void grip_MouseUp(object sender, MouseEventArgs e)
         {
-            resizing = false;
+            _resizing = false;
 
         }
 
         private void grip_MouseMove(object sender, MouseEventArgs e)
         {
-            if (resizing)
+            if (_resizing)
             {
-                Width += Cursor.Position.X - gripStartX;
-                gripStartX = Cursor.Position.X;
+                Width += Cursor.Position.X - _gripStartX;
+                _gripStartX = Cursor.Position.X;
             }
         }
 
         private void btnResolveClose_Click(object sender, EventArgs e)
         {
-            fb.ResolveCase(fb.workingOnCase);
+            _fb.ResolveCase(_fb.workingOnCase);
             updateCases();
 
         }
 
-        private void TimeTracker_MouseUp(object sender, MouseEventArgs e)
+        private void HoverWindow_MouseUp(object sender, MouseEventArgs e)
         {
-            dragging = false;
+            _dragging = false;
         }
 
         private void label1_MouseUp(object sender, MouseEventArgs e)
         {
-            dragging = false;
+            _dragging = false;
         }
 
         private void backgroundPic_MouseDown(object sender, MouseEventArgs e)
@@ -539,13 +568,13 @@ namespace FogBugzClient
 
         private void backgroundPic_MouseMove(object sender, MouseEventArgs e)
         {
-            if (dragging)
+            if (_dragging)
                 dragWindow(e);
         }
 
         private void backgroundPic_MouseUp(object sender, MouseEventArgs e)
         {
-            dragging = false;
+            _dragging = false;
         }
 
         private void backgroundPic_Click(object sender, EventArgs e)
@@ -555,7 +584,7 @@ namespace FogBugzClient
 
         private void btnNewCase_Click(object sender, EventArgs e)
         {
-            Process.Start(fb.NewCaseURL);
+            Process.Start(_fb.NewCaseURL);
 
         }
 
@@ -586,7 +615,7 @@ namespace FogBugzClient
 
         private class StateLoggedOff
         {
-            public StateLoggedOff(TimeTracker frm)
+            public StateLoggedOff(HoverWindow frm)
             {
                 frm.btnMain.Enabled = true;
                 frm.CaseDropDown.Text = "(please login)";
@@ -604,7 +633,7 @@ namespace FogBugzClient
 
         private class StateLoggingIn : StateLoggedOff
         {
-            public StateLoggingIn(TimeTracker frm) : base(frm)
+            public StateLoggingIn(HoverWindow frm) : base(frm)
             {
                 frm.btnMain.Enabled = false;
             }
@@ -612,7 +641,7 @@ namespace FogBugzClient
 
         private class StateLoggedIn : StateLoggingIn
         {
-            public StateLoggedIn(TimeTracker frm) : base(frm)
+            public StateLoggedIn(HoverWindow frm) : base(frm)
             {
                 frm.CaseDropDown.Enabled = true;
                 frm.btnFilter.Enabled = true;
@@ -627,7 +656,7 @@ namespace FogBugzClient
 
         private class StateUpdatingCases : StateLoggedOff
         {
-            public StateUpdatingCases(TimeTracker frm)
+            public StateUpdatingCases(HoverWindow frm)
                 : base(frm)
             {
                 frm.CaseDropDown.Text = "(Updating cases...)";
@@ -639,7 +668,7 @@ namespace FogBugzClient
 
         private class StateTrackingCase : StateLoggedIn
         {
-            public StateTrackingCase(TimeTracker frm)
+            public StateTrackingCase(HoverWindow frm)
                 : base(frm)
             {
                 frm.btnResolve.Enabled = true;
@@ -652,5 +681,5 @@ namespace FogBugzClient
             }
         };
 
-    } // Class TimeTracker
+    } // Class HoverWindow
 }
