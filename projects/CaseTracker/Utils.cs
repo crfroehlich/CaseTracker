@@ -21,11 +21,8 @@ namespace FogBugzClient
             ShowErrorMessage(error, "Error Encountered");
         }
 
-        // TODO: improve this... store in registry using user's token
-        private static string secret = "948jd5u3i487r934"; // Yes, lame, but still a bit better than just putting the pwd in HKCU in clear text...
-
         // Only supports ASCII passwords
-        public static string Encrypt(string text)
+        public static string Encrypt(string text, string secret)
         {
             if (text.Length == 0)
                 return text;
@@ -45,7 +42,7 @@ namespace FogBugzClient
         }
 
         // Only supports ASCII passwords
-        public static string Decrypt(String cipher)
+        public static string Decrypt(String cipher, string secret)
         {
             if (cipher.Length == 0)
                 return cipher;

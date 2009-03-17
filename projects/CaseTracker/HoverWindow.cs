@@ -17,7 +17,7 @@ namespace FogBugzClient
     {
         private FogBugz _fb;
 
-        private string _email;
+        private string _username;
         private string _server;
         private string _password;
 
@@ -284,11 +284,11 @@ namespace FogBugzClient
 
         private void btnConfigure_Click(object sender, EventArgs e)
         {
-            LogonResultInfo info = DoLogonScreen(_email, _password, _server);
+            LogonResultInfo info = DoLogonScreen(_username, _password, _server);
             if (info.UserChoice == DialogResult.Cancel)
                 // user cancelled, do nothing (keep old account)
                 return;
-            _email = info.User;
+            _username = info.User;
             _password = info.Password;
             _server = info.Server;
             bool b = login();
@@ -338,7 +338,7 @@ namespace FogBugzClient
             {
 
                 SetState(new StateLoggingIn(this));
-                if (_email.Length == 0 || _password.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
+                if (_password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
                 {
                     if (_server.Length == 0)
                     {
@@ -346,18 +346,18 @@ namespace FogBugzClient
                         _server = (url.Length > 0) ? url : (string)ConfigurationManager.AppSettings["ExampleServerURL"];
                     }
 
-                    LogonResultInfo info = DoLogonScreen("", "", _server);
+                    LogonResultInfo info = DoLogonScreen(_username, _password, _server);
                     if (info.UserChoice == DialogResult.Cancel)
                         return false;
 
-                    _email = info.User;
+                    _username = info.User;
                     _password = info.Password;
                     _server = info.Server;
                 }
 
                 _fb = new FogBugz(_server);
 
-                if (!_fb.Logon(_email, _password))
+                if (!_fb.Logon(_username, _password))
                 {
                     _password = "";
                     MessageBox.Show("Login failed", "FogBugz", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -379,8 +379,7 @@ namespace FogBugzClient
         private void saveSettings()
         {
             RegistryKey ttkey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
-            ttkey.SetValue("email", _email);
-            ttkey.SetValue("password", Utils.Encrypt(_password));
+            ttkey.SetValue("email", _username);
             ttkey.SetValue("server", _server);
             ttkey.SetValue("LastX", Location.X);
             ttkey.SetValue("LastY", Location.Y);
@@ -397,29 +396,20 @@ namespace FogBugzClient
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (key == null)
             {
-                _email = "";
+                _username = "";
                 _password = "";
                 _server = "";
             }
             else
             {
-                _email = (String)key.GetValue("email", "");
+                _username = (String)key.GetValue("email", "");
                 _server = (String)key.GetValue("server", "");
+                _password = "";
 
                 if (_server == "")
                 {
                     _server = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
                 }
-
-                try
-                {
-                    _password = Utils.Decrypt((String)key.GetValue("password", ""));
-                }
-                catch (CryptographicException)
-                {
-                    _password = "";
-                }
-
 
                 Point newLoc = new Point();
                 newLoc.X = (int)key.GetValue("LastX", Location.X);

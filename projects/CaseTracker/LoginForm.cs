@@ -32,8 +32,8 @@ namespace FogBugzClient
         {
             InitializeComponent();
         }
-        // TODO: tab order, enter on server text
 
+        // TODO: Basic input validation (length, etc.)
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (Server == "")
