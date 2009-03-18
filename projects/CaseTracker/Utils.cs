@@ -21,45 +21,33 @@ namespace FogBugzClient
             ShowErrorMessage(error, "Error Encountered");
         }
 
-        // Only supports ASCII passwords
-        public static string Encrypt(string text, string secret)
+        private static byte[] entropy = new byte[] { 0x23, 0x10, 0x19, 0x79, 0x18, 0x89, 0x04 };
+
+        // Only ASCII text. Based on example here: http://blogs.msdn.com/shawnfa/archive/2004/05/05/126825.aspx
+        public static string EncryptCurrentUser(String text)
         {
             if (text.Length == 0)
                 return text;
 
             byte[] buffer = ASCIIEncoding.ASCII.GetBytes(text);
 
-            RijndaelManaged rijndael = new RijndaelManaged();
-
-            return Convert.ToBase64String(
-                        rijndael.CreateEncryptor(   
-                            ASCIIEncoding.ASCII.GetBytes(secret),
-                            ASCIIEncoding.ASCII.GetBytes(secret)
-                                                ).TransformFinalBlock(
-                                                    buffer, 
-                                                    0, 
-                                                    buffer.Length));
+            byte[] protectedData = ProtectedData.Protect(buffer, entropy, DataProtectionScope.CurrentUser);
+  
+            return Convert.ToBase64String(protectedData);
         }
 
-        // Only supports ASCII passwords
-        public static string Decrypt(String cipher, string secret)
+        // TODO: disable tray icon menu according to state
+
+        public static string DecryptCurrentUser(String cipher)
         {
             if (cipher.Length == 0)
                 return cipher;
 
             byte[] buffer = Convert.FromBase64String(cipher);
 
-            RijndaelManaged rijndael = new RijndaelManaged();
+            byte[] unprotectedBytes = ProtectedData.Unprotect(buffer, entropy, DataProtectionScope.CurrentUser);
 
-            byte[] decrypted = rijndael.CreateDecryptor(
-                ASCIIEncoding.ASCII.GetBytes(secret),
-                ASCIIEncoding.ASCII.GetBytes(secret)
-                    ).TransformFinalBlock(
-                        buffer,
-                        0,
-                        buffer.Length);
-
-            return ASCIIEncoding.ASCII.GetString(decrypted);
+            return ASCIIEncoding.ASCII.GetString(unprotectedBytes);
         }
 
         public static void LogError(string msg, params object[] args)

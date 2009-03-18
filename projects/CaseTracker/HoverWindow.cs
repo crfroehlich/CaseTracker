@@ -379,7 +379,8 @@ namespace FogBugzClient
         private void saveSettings()
         {
             RegistryKey ttkey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
-            ttkey.SetValue("email", _username);
+            ttkey.SetValue("username", _username);
+            ttkey.SetValue("password", Utils.EncryptCurrentUser(_password));
             ttkey.SetValue("server", _server);
             ttkey.SetValue("LastX", Location.X);
             ttkey.SetValue("LastY", Location.Y);
@@ -404,11 +405,19 @@ namespace FogBugzClient
             {
                 _username = (String)key.GetValue("email", "");
                 _server = (String)key.GetValue("server", "");
-                _password = "";
 
                 if (_server == "")
                 {
                     _server = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
+                }
+
+                try
+                {
+                    _password = Utils.DecryptCurrentUser((String)key.GetValue("password", ""));
+                }
+                catch (CryptographicException)
+                {
+                    _password = "";
                 }
 
                 Point newLoc = new Point();

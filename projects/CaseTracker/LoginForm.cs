@@ -34,6 +34,8 @@ namespace FogBugzClient
         }
 
         // TODO: Basic input validation (length, etc.)
+        // tODO: check that encryption works after restart, and verify decryption failure is handled gracefully
+
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (Server == "")
