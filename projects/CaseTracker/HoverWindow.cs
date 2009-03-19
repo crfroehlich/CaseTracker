@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Configuration;
 using System.Security.Cryptography;
-using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
