@@ -46,13 +46,47 @@ namespace FogBugzClient
             Process.Start(Server + "/default.asp?pg=pgForgotPassword");
         }
 
+        private bool validateTextBoxNotEmpty(TextBox box, string field)
+        {
+            if (box.Text.Length == 0)
+            {
+                Utils.ShowErrorMessage("Expecting a non-empty " + field + "...", "Invalid Input");
+                return false;
+            }
+            return true;
+        }
+
+        private bool validate()
+        {
+            if (!validateTextBoxNotEmpty(txtServer, "Server URL")) return false;
+            if (!validateTextBoxNotEmpty(txtUserName, "User Name")) return false;
+            if (!validateTextBoxNotEmpty(txtPassword, "Password")) return false;
+
+            if (!Uri.IsWellFormedUriString(txtServer.Text, UriKind.Absolute))
+            {
+                Utils.ShowErrorMessage("The server URL you supplied is not valid: " + txtServer.Text);
+                return false;
+            }
+            return true;
+        }
+
+        private void submit()
+        {
+            if (!validate())
+                return;
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
         private void anyTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
-            {
-                DialogResult = DialogResult.OK;
-                Close();
-            }
+                submit();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            submit();
         }
 
     }
