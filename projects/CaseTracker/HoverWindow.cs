@@ -688,8 +688,5 @@ namespace FogBugzCaseTracker
             }
         };
 
-        // TODO: disable tray icon menu according to state
-
-
     } // Class HoverWindow
 }
