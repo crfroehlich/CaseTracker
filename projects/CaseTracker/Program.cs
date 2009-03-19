@@ -8,8 +8,6 @@ namespace FogBugzCaseTracker
     static class Program
     {
         static Mutex mutexSingleton;
-        const string MUTEX_NAME = "Only one VM FB client";
-
 
         /// <summary>
         /// The main entry point for the application.
