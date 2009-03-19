@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     class Utils
     {
@@ -24,26 +24,18 @@ namespace FogBugzClient
         private static byte[] entropy = new byte[] { 0x23, 0x10, 0x19, 0x79, 0x18, 0x89, 0x04 };
 
         // Only ASCII text. Based on example here: http://blogs.msdn.com/shawnfa/archive/2004/05/05/126825.aspx
-        public static string EncryptCurrentUser(String text)
+        public static byte[] EncryptCurrentUser(String text)
         {
             if (text.Length == 0)
-                return text;
+                throw new Exception("Cannot encrypt empty string");
 
             byte[] buffer = ASCIIEncoding.ASCII.GetBytes(text);
 
-            byte[] protectedData = ProtectedData.Protect(buffer, entropy, DataProtectionScope.CurrentUser);
-  
-            return Convert.ToBase64String(protectedData);
+            return ProtectedData.Protect(buffer, entropy, DataProtectionScope.CurrentUser);
         }
 
-        // TODO: disable tray icon menu according to state
-
-        public static string DecryptCurrentUser(String cipher)
+        public static string DecryptCurrentUser(byte[] buffer)
         {
-            if (cipher.Length == 0)
-                return cipher;
-
-            byte[] buffer = Convert.FromBase64String(cipher);
 
             byte[] unprotectedBytes = ProtectedData.Unprotect(buffer, entropy, DataProtectionScope.CurrentUser);
 
@@ -56,10 +48,10 @@ namespace FogBugzClient
             try
             {
                 Trace(l);
-                if (!EventLog.SourceExists("FogBugzClient"))
-                    EventLog.CreateEventSource("FogBugzClient", "Application");
+                if (!EventLog.SourceExists("CaseTracker"))
+                    EventLog.CreateEventSource("CaseTracker", "Application");
                 EventLog log = new EventLog("Application");
-                log.Source = "FogBugzClient";
+                log.Source = "CaseTracker";
                 log.WriteEntry(l, EventLogEntryType.Error);
             }
             catch (Exception)

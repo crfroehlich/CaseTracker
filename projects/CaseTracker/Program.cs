@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     static class Program
     {
@@ -21,7 +21,7 @@ namespace FogBugzClient
             Application.SetCompatibleTextRenderingDefault(false);
 
             bool firstInstance;
-            mutexSingleton = new Mutex(false, "Local\\VisionMapFogBugzClientSingletonMutex", out firstInstance);
+            mutexSingleton = new Mutex(false, "Local\\VisionMapCaseTrackerSingletonMutex", out firstInstance);
             // If firstInstance is now true, we're the first instance of the application;
             // otherwise another instance is running.
             Application.ThreadException += delegate(object sender, ThreadExceptionEventArgs args)

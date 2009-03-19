@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     public partial class LoginForm : Form
     {
@@ -33,8 +33,7 @@ namespace FogBugzClient
             InitializeComponent();
         }
 
-        // TODO: Basic input validation (length, etc.)
-        // tODO: check that encryption works after restart, and verify decryption failure is handled gracefully
+        
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

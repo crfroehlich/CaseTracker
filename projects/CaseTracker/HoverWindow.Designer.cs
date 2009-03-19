@@ -1,4 +1,4 @@
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     partial class HoverWindow
     {
@@ -92,7 +92,7 @@ namespace FogBugzClient
             // 
             // btnNewCase
             // 
-            this.btnNewCase.Image = global::FogBugzClient.Properties.Resources.new_case;
+            this.btnNewCase.Image = global::FogBugzCaseTracker.Properties.Resources.new_case;
             this.btnNewCase.Name = "btnNewCase";
             this.btnNewCase.Size = new System.Drawing.Size(196, 22);
             this.btnNewCase.Text = "New Case";
@@ -100,7 +100,7 @@ namespace FogBugzClient
             // 
             // btnResolve
             // 
-            this.btnResolve.Image = global::FogBugzClient.Properties.Resources.check_icon;
+            this.btnResolve.Image = global::FogBugzCaseTracker.Properties.Resources.check_icon;
             this.btnResolve.Name = "btnResolve";
             this.btnResolve.Size = new System.Drawing.Size(196, 22);
             this.btnResolve.Text = "&Resolve this case";
@@ -108,7 +108,7 @@ namespace FogBugzClient
             // 
             // btnResolveClose
             // 
-            this.btnResolveClose.Image = global::FogBugzClient.Properties.Resources.fat_check;
+            this.btnResolveClose.Image = global::FogBugzCaseTracker.Properties.Resources.fat_check;
             this.btnResolveClose.Name = "btnResolveClose";
             this.btnResolveClose.Size = new System.Drawing.Size(196, 22);
             this.btnResolveClose.Text = "Resolve && &Close this case";
@@ -116,7 +116,7 @@ namespace FogBugzClient
             // 
             // btnViewCase
             // 
-            this.btnViewCase.Image = global::FogBugzClient.Properties.Resources.firefox_16;
+            this.btnViewCase.Image = global::FogBugzCaseTracker.Properties.Resources.firefox_16;
             this.btnViewCase.Name = "btnViewCase";
             this.btnViewCase.Size = new System.Drawing.Size(196, 22);
             this.btnViewCase.Text = "&View case in browser";
@@ -124,7 +124,7 @@ namespace FogBugzClient
             // 
             // btnConfigure
             // 
-            this.btnConfigure.Image = global::FogBugzClient.Properties.Resources.key;
+            this.btnConfigure.Image = global::FogBugzCaseTracker.Properties.Resources.key;
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new System.Drawing.Size(196, 22);
             this.btnConfigure.Text = "&Switch user";
@@ -132,7 +132,7 @@ namespace FogBugzClient
             // 
             // menuExportExcel
             // 
-            this.menuExportExcel.Image = global::FogBugzClient.Properties.Resources.excel;
+            this.menuExportExcel.Image = global::FogBugzCaseTracker.Properties.Resources.excel;
             this.menuExportExcel.Name = "menuExportExcel";
             this.menuExportExcel.Size = new System.Drawing.Size(196, 22);
             this.menuExportExcel.Text = "Export to Excel";
@@ -193,7 +193,7 @@ namespace FogBugzClient
             // extensionGrip
             // 
             this.extensionGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.extensionGrip.BackgroundImage = global::FogBugzClient.Properties.Resources.ellipsis_vertical;
+            this.extensionGrip.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.ellipsis_vertical;
             this.extensionGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.extensionGrip.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.extensionGrip.Location = new System.Drawing.Point(328, 1);
@@ -210,7 +210,7 @@ namespace FogBugzClient
             this.btnFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFilter.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnFilter.BackgroundImage = global::FogBugzClient.Properties.Resources.filter;
+            this.btnFilter.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.filter;
             this.btnFilter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnFilter.FlatAppearance.BorderSize = 0;
             this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -226,7 +226,7 @@ namespace FogBugzClient
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnRefresh.BackgroundImage = global::FogBugzClient.Properties.Resources.refresh;
+            this.btnRefresh.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -239,7 +239,7 @@ namespace FogBugzClient
             // 
             // btnMain
             // 
-            this.btnMain.BackgroundImage = global::FogBugzClient.Properties.Resources.icon;
+            this.btnMain.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.icon;
             this.btnMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnMain.ContextMenuStrip = this.MainMenu;
             this.btnMain.FlatAppearance.BorderSize = 0;

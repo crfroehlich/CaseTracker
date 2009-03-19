@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     public partial class SearchForm : Form
     {

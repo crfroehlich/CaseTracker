@@ -7,7 +7,7 @@
     <ProjectGuid>{F4F7D42F-838F-4E3C-84AF-80A7D6CA655C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FogBugzClient</RootNamespace>
+    <RootNamespace>FogBugzCaseTracker</RootNamespace>
     <AssemblyName>CaseTracker</AssemblyName>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>

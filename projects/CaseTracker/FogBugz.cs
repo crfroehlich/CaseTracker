@@ -6,7 +6,7 @@ using System.Web;
 using System.Collections;
 using System.Diagnostics;
 
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     public struct Filter
     {

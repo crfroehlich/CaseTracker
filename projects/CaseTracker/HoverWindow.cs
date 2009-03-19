@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Configuration;
 using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +12,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     public partial class HoverWindow : Form
     {
@@ -376,11 +377,13 @@ namespace FogBugzClient
             }
         }
 
+
+
         private void saveSettings()
         {
             RegistryKey ttkey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
             ttkey.SetValue("username", _username);
-            ttkey.SetValue("password", Utils.EncryptCurrentUser(_password));
+            ttkey.SetValue("password", Convert.ToBase64String(Utils.EncryptCurrentUser(_password)));
             ttkey.SetValue("server", _server);
             ttkey.SetValue("LastX", Location.X);
             ttkey.SetValue("LastY", Location.Y);
@@ -413,13 +416,18 @@ namespace FogBugzClient
 
                 try
                 {
-                    _password = Utils.DecryptCurrentUser((String)key.GetValue("password", ""));
+                    _password = Utils.DecryptCurrentUser(Convert.FromBase64String((String)key.GetValue("password", "")));
                 }
-                catch (CryptographicException)
+                catch (System.FormatException x)
                 {
-                    _password = "";
+                    _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
+                    Utils.LogError("Base 64 of pwd is bad: " + x.ToString());
                 }
-
+                catch (System.Security.Cryptography.CryptographicException x)
+                {
+                    _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
+                    Utils.LogError("Unable to decode password: " + x.ToString());
+                }
                 Point newLoc = new Point();
                 newLoc.X = (int)key.GetValue("LastX", Location.X);
                 newLoc.Y = (int)key.GetValue("LastY", Location.Y);
@@ -679,6 +687,9 @@ namespace FogBugzClient
 
             }
         };
+
+        // TODO: disable tray icon menu according to state
+
 
     } // Class HoverWindow
 }

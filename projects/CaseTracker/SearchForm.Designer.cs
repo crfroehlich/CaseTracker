@@ -1,4 +1,4 @@
-namespace FogBugzClient
+namespace FogBugzCaseTracker
 {
     partial class SearchForm
     {
