@@ -65,7 +65,7 @@ namespace FogBugzCaseTracker
             // 
             this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.trayIcon.BalloonTipText = "Right-click: menu\r\nLeft-click: show/hide";
-            this.trayIcon.BalloonTipTitle = "FogBugz Time Tracker";
+            this.trayIcon.BalloonTipTitle = "Case Tracker";
             this.trayIcon.ContextMenuStrip = this.MainMenu;
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "FogBugz";
@@ -289,7 +289,7 @@ namespace FogBugzCaseTracker
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "FogBugz Client";
+            this.Text = "Case Tracker";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.HoverWindow_Load);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.HoverWindow_MouseUp);
