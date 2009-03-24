@@ -133,38 +133,11 @@ namespace CropOfTheMorningToYou
                 new SolidBrush(Color.Black),
                 headerLocation);
 
-            PaintCopyright(e);
-
             // Paint the crop rectangle
             e.Graphics.FillRectangle(
                 new SolidBrush(Color.White),
                 TwoPointsToRect(CropStart, CropStop));
 
-        }
-
-        private void PaintCopyright(PaintEventArgs e)
-        {
-
-            String notice = "Copyright © 2008 Assaf Lavie (http://wtw.tw)";
-
-            Font f = new Font("Arial", 14, FontStyle.Italic);
-
-            // Measure the text size
-            Size headerSize = TextRenderer.MeasureText(notice, f);
-
-            // Figure out the correct location of the text so that 
-            // it appears in the middle of the screen
-            Point headerLocation = new Point(
-                (Screen.PrimaryScreen.Bounds.Width - 20 - headerSize.Width),
-                (Screen.PrimaryScreen.Bounds.Height - 20 - headerSize.Height)
-                );
-
-            // Paint the header text in the middle of the screen
-            e.Graphics.DrawString(
-                notice,
-                f,
-                new SolidBrush(Color.Black),
-                headerLocation);        
         }
 
         private void SaveCropped(System.Drawing.Imaging.ImageFormat format,
