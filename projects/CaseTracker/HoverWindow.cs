@@ -109,7 +109,7 @@ namespace FogBugzCaseTracker
                 // Find case in drop down, and if it's not there then we can't track it any more
                 for (int i = 1; i < CaseDropDown.Items.Count; ++i)
                 {
-                    if (SelectedItemIsCase() && (((Case)CaseDropDown.Items[i]).id == TrackedCase.id))
+                    if (((Case)CaseDropDown.Items[i]).id == TrackedCase.id)
                     {
                         foundCaseInDropdown = true;
                         CaseDropDown.SelectedIndex = i;
