@@ -23,12 +23,23 @@ SolidCompression=yes
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
+[Code]
+procedure ClosePreviousVersion();
+var
+  oldHwnd: HWnd;
+begin
+  oldHwnd := FindWindowByWindowName('Case Tracker');
+  if (oldHwnd <> 0) then
+     SendMessage(oldHwnd, 16, 0, 0);             // WM_CLOSE
+
+end;
+
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "{#SrcApp}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SrcApp}"; DestDir: "{app}"; Flags: ignoreversion ; BeforeInstall: ClosePreviousVersion
 Source: "{#SrcApp}.config"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
