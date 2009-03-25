@@ -103,16 +103,18 @@ namespace FogBugzCaseTracker
                 CaseDropDown.Items.Add(c);
             }
 
-            if (TrackingCase)
+            // Handle also case where a case is being tracked on the server side, but not on the client
+            if (TrackingCase || _fb.workingOnCase != 0)
             {
                 bool foundCaseInDropdown = false;
                 // Find case in drop down, and if it's not there then we can't track it any more
                 for (int i = 1; i < CaseDropDown.Items.Count; ++i)
                 {
-                    if (((Case)CaseDropDown.Items[i]).id == TrackedCase.id)
+                    if (((Case)CaseDropDown.Items[i]).id == _fb.workingOnCase)
                     {
                         foundCaseInDropdown = true;
                         CaseDropDown.SelectedIndex = i;
+                        TrackedCase = ((Case)CaseDropDown.Items[i]);
                     }
                 }
 
