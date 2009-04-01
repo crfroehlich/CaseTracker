@@ -1,6 +1,6 @@
-namespace CropOfTheMorningToYou
+namespace StopCrop
 {
-    partial class Cropper
+    partial class OverlayWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -146,7 +146,7 @@ namespace CropOfTheMorningToYou
             // 
             this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // Cropper
+            // OverlayWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -157,12 +157,12 @@ namespace CropOfTheMorningToYou
             this.Cursor = System.Windows.Forms.Cursors.Cross;
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Cropper";
+            this.Name = "OverlayWindow";
             this.Opacity = 0.4;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cropper";
+            this.Text = "OverlayWindow";
             this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Cropper_Load);

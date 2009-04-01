@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace CropOfTheMorningToYou
+namespace StopCrop
 {
     static class Program
     {
@@ -14,7 +14,8 @@ namespace CropOfTheMorningToYou
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Cropper());
+            SettingsForm f = new SettingsForm();
+            Application.Run(f);
         }
     }
 }

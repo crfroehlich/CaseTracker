@@ -7,9 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using Capture;
 
-namespace CropOfTheMorningToYou
+namespace StopCrop
 {
-    public partial class Cropper : Form
+    public partial class OverlayWindow : Form
     {
 
         private bool Cropping;
@@ -40,7 +40,7 @@ namespace CropOfTheMorningToYou
         }
 
 
-        public Cropper()
+        public OverlayWindow()
         {
             InitializeComponent();
         }
