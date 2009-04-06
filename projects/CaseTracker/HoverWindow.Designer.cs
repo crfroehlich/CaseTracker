@@ -50,6 +50,7 @@ namespace FogBugzCaseTracker
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnMain = new System.Windows.Forms.Button();
             this.backgroundPic = new System.Windows.Forms.PictureBox();
+            this.timerRetryLogin = new System.Windows.Forms.Timer(this.components);
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).BeginInit();
@@ -265,6 +266,10 @@ namespace FogBugzCaseTracker
             this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
             this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
             // 
+            // timerRetryLogin
+            // 
+            this.timerRetryLogin.Tick += new System.EventHandler(this.timerRetryLogin_Tick);
+            // 
             // HoverWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -326,5 +331,6 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.ToolStripMenuItem btnResolveClose;
         private System.Windows.Forms.ToolStripMenuItem btnNewCase;
         private System.Windows.Forms.ToolStripMenuItem menuExportExcel;
+        private System.Windows.Forms.Timer timerRetryLogin;
     }
 }

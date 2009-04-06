@@ -91,43 +91,51 @@ namespace FogBugzCaseTracker
 
         private void updateCases()
         {
-            CaseDropDown.Items.Clear();
-            SetState(new StateUpdatingCases(this));
-            Application.DoEvents();
-            Case[] cases = _fb.getCases(_baseSearch + " " + _narrowSearch);
-            CaseDropDown.Items.Add("(nothing)");
-            CaseDropDown.Text = "(nothing)";
-            foreach (Case c in cases)
+            try
             {
+                CaseDropDown.Items.Clear();
+                SetState(new StateUpdatingCases(this));
                 Application.DoEvents();
-                CaseDropDown.Items.Add(c);
-            }
-
-            // Handle also case where a case is being tracked on the server side, but not on the client
-            if (TrackingCase || _fb.workingOnCase != 0)
-            {
-                bool foundCaseInDropdown = false;
-                // Find case in drop down, and if it's not there then we can't track it any more
-                for (int i = 1; i < CaseDropDown.Items.Count; ++i)
+                Case[] cases = _fb.getCases(_baseSearch + " " + _narrowSearch);
+                CaseDropDown.Items.Add("(nothing)");
+                CaseDropDown.Text = "(nothing)";
+                foreach (Case c in cases)
                 {
-                    if (((Case)CaseDropDown.Items[i]).id == _fb.workingOnCase)
+                    Application.DoEvents();
+                    CaseDropDown.Items.Add(c);
+                }
+
+                // Handle also case where a case is being tracked on the server side, but not on the client
+                if (TrackingCase || _fb.workingOnCase != 0)
+                {
+                    bool foundCaseInDropdown = false;
+                    // Find case in drop down, and if it's not there then we can't track it any more
+                    for (int i = 1; i < CaseDropDown.Items.Count; ++i)
                     {
-                        foundCaseInDropdown = true;
-                        CaseDropDown.SelectedIndex = i;
-                        TrackedCase = ((Case)CaseDropDown.Items[i]);
+                        if (((Case)CaseDropDown.Items[i]).id == _fb.workingOnCase)
+                        {
+                            foundCaseInDropdown = true;
+                            CaseDropDown.SelectedIndex = i;
+                            TrackedCase = ((Case)CaseDropDown.Items[i]);
+                        }
                     }
-                }
 
-                if (!foundCaseInDropdown)
-                {
-                    TrackedCase = null;
-                    SetState(new StateLoggedIn(this));
+                    if (!foundCaseInDropdown)
+                    {
+                        TrackedCase = null;
+                        SetState(new StateLoggedIn(this));
+                    }
+                    else
+                        SetState(new StateTrackingCase(this));
                 }
-                else 
-                    SetState(new StateTrackingCase(this));
+                else
+                    SetState(new StateLoggedIn(this));
             }
-            else
-                SetState(new StateLoggedIn(this));
+            catch (EServerError e) // Handle connection error / server down-time while updating
+            {
+                Utils.LogError("Error while updating: " + e.ToString());
+                SetState(new StateRetryLogin(this));
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -430,6 +438,8 @@ namespace FogBugzCaseTracker
                     Utils.LogError("Unable to decode password: " + x.ToString());
                 }
                 Point newLoc = new Point();
+                timerRetryLogin.Interval = int.Parse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"]);
+
                 newLoc.X = (int)key.GetValue("LastX", Location.X);
                 newLoc.Y = (int)key.GetValue("LastY", Location.Y);
                 Width = (int)key.GetValue("LastWidth", Width);
@@ -616,7 +626,7 @@ namespace FogBugzCaseTracker
             }
             catch (System.Exception x)
             {
-                MessageBox.Show("Sorry, couldn't launch Execl");
+                MessageBox.Show("Sorry, couldn't launch Excel");
                 Utils.LogError(x.ToString());
             }
         }
@@ -639,11 +649,23 @@ namespace FogBugzCaseTracker
         };
 
 
+        private class StateRetryLogin : StateLoggedOff
+        {
+            public StateRetryLogin(HoverWindow frm) : base(frm)
+            {
+                frm.CaseDropDown.Text = "(FogBugz server disconnection)";
+                frm.timerRetryLogin.Enabled = true;
+            }
+        };
+
+
         private class StateLoggingIn : StateLoggedOff
         {
             public StateLoggingIn(HoverWindow frm) : base(frm)
             {
                 frm.btnMain.Enabled = false;
+                frm.timerRetryLogin.Enabled = false;
+
             }
         };
 
@@ -658,6 +680,7 @@ namespace FogBugzCaseTracker
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.btnMain.Enabled = true;
 
+
             }
         };
 
@@ -671,6 +694,8 @@ namespace FogBugzCaseTracker
                 frm.btnMain.Enabled = false;
                 frm.UpdateCasesTimer.Enabled = false;
                 frm.CaseDropDown.Enabled = false;
+                frm.timerRetryLogin.Enabled = false;
+
             }
         };
 
@@ -688,6 +713,17 @@ namespace FogBugzCaseTracker
 
             }
         };
+
+        private void timerRetryLogin_Tick(object sender, EventArgs e)
+        {
+            // Try to login and if fail return to retry state.
+            Utils.Trace("Retrying login...");
+            if (!_fb.Logon(_username, _password))
+                SetState(new StateRetryLogin(this));
+            else
+                updateCases();
+
+        }
 
     } // Class HoverWindow
 }

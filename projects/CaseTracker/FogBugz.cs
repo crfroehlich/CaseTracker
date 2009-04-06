@@ -38,6 +38,14 @@ namespace FogBugzCaseTracker
         }
     }
 
+    class EURLError : Exception
+    {
+        public EURLError(string reason)
+            : base(reason)
+        {
+        }
+    }
+
     public class FogBugz
     {
         private string lastError_;
@@ -74,13 +82,13 @@ namespace FogBugzCaseTracker
             }
             catch (System.Net.WebException x)
             {
-                Utils.LogError(x.ToString());
+                Utils.LogError(x.ToString() + ". Connection status: " + x.Status.ToString());
                 throw new EServerError("Unable to find FogBugz server at location: " + BaseURL);
             }
             catch (System.UriFormatException x)
             {
                 Utils.LogError(x.ToString());
-                throw new EServerError("The server URL you provided appears to be malformed: " + BaseURL);
+                throw new EURLError("The server URL you provided appears to be malformed: " + BaseURL);
             }
         }
 
@@ -97,6 +105,10 @@ namespace FogBugzCaseTracker
             catch (ECommandFailed e)
             {
                 lastError_ = e.Message;
+            }
+            catch (EServerError e)
+            {
+                Utils.LogError("Error during logon: " + e.ToString());
             }
             token_ = "";
             return false;
