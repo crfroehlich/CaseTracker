@@ -53,7 +53,6 @@ In order to run the test create an XML file with this format:
         {
             Assert.Throws(typeof(EURLError), new TestDelegate(BadLogin));
             Assert.DoesNotThrow(new TestDelegate(GoodLogin));
-
         }
 
         [Test]
@@ -63,7 +62,7 @@ In order to run the test create an XML file with this format:
             fb.Logon(_creds.UserName, _creds.Password);
 
             Exporter ex = new Exporter(_creds.Server);
-            String mm = ex.CasesToMindMap(fb.getCases("outline:\"2385\""));
+            String mm = ex.CasesToMindMap(fb.getCases("status:\"Active\" milestone:\"1.9\""));
             System.IO.File.WriteAllText("output.mm", mm);
 
         }

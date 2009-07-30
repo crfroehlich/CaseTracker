@@ -22,7 +22,6 @@ namespace FogBugzNet
         {
             XmlElement node = _doc.CreateElement("node");
             node.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = String.Format("{0}: {1}", c.id, c.name);
-            node.Attributes.Append(_doc.CreateAttribute("NAME")).Value = c.id.ToString();
             node.Attributes.Append(_doc.CreateAttribute("POSITION")).Value = "right";
             node.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _server + "?" + c.id.ToString();
             
@@ -49,15 +48,12 @@ namespace FogBugzNet
                 if (c.parentCase == 0)
                     continue;
 
-                // Find the node
-                XmlNode child = dict[c.id];
-
                 if (!dict.ContainsKey(c.parentCase))
                     continue;
 
                 XmlNode parent = dict[c.parentCase];
 
-                parent.AppendChild(child);
+                parent.AppendChild(dict[c.id]);
             }
         
             return _doc.OuterXml;
