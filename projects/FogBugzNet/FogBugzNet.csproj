@@ -42,6 +42,7 @@
     <Compile Include="Exporter.cs" />
     <Compile Include="FogBugz.cs" />
     <Compile Include="FogBugzTest.cs" />
+    <Compile Include="Importer.cs" />
     <Compile Include="MileStone.cs" />
     <Compile Include="ProjectNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

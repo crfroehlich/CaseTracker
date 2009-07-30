@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using FogBugzNet;
 using System.Xml.Serialization;
+using System.Xml;
 
 
 namespace FogBugzNet
@@ -56,12 +57,25 @@ In order to run the test create an XML file with this format:
         }
 
         [Test]
-        public void TestMindMap()
+        public void TestMindMapExport()
         {
             FogBugz fb = new FogBugz(_creds.Server);
             fb.Logon(_creds.UserName, _creds.Password);
 
 //            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
+            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\""));
+            ex.CasesToMindMap().Save("output.mm");
+
+        }
+        public void TestMindMapImport()
+        {
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load("input.mm");
+            FogBugz fb = new FogBugz(_creds.Server);
+            fb.Logon(_creds.UserName, _creds.Password);
+
+            //            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
             Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\""));
             ex.CasesToMindMap().Save("output.mm");
 
