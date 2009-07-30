@@ -61,8 +61,8 @@ In order to run the test create an XML file with this format:
             FogBugz fb = new FogBugz(_creds.Server);
             fb.Logon(_creds.UserName, _creds.Password);
 
-            Exporter ex = new Exporter(_creds.Server);
-            ex.CasesToMindMap(fb.getCases("status:\"Active\" project:\"sharp\"")).Save("output.mm");
+            Exporter ex = new Exporter(_creds.Server, fb.getCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
+            ex.CasesToMindMap().Save("output.mm");
 
         }
 
