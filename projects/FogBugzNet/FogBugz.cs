@@ -15,7 +15,6 @@ namespace FogBugzNet
         public string id;
     }
 
-
     public struct Project
     {
         public string name;
@@ -194,7 +193,7 @@ namespace FogBugzNet
             {
                 Case c = new Case();
                 c.name = node.SelectSingleNode("sTitle").InnerText;
-                c.project = node.SelectSingleNode("sProject").InnerText;
+                c.project.name = node.SelectSingleNode("sProject").InnerText;
                 c.assignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
                 c.area = node.SelectSingleNode("sArea").InnerText;
                 c.id = int.Parse(node.SelectSingleNode("@ixBug").Value);

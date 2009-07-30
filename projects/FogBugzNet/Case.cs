@@ -10,7 +10,8 @@ namespace FogBugzNet
         public TimeSpan estimate;
         public int id;
         public string name;
-        public string project;
+        public Project project;
+
         public string area;
         public string assignedTo;
         public int parentCase;
@@ -34,7 +35,7 @@ namespace FogBugzNet
         {
             get
             {
-                return String.Format("{0}:{1}:{2}:{3} - {4}", project, area, assignedTo, id, name);
+                return String.Format("{0}:{1}:{2}:{3} - {4}", project.name, area, assignedTo, id, name);
             }
         }
 
