@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Case.cs" />
     <Compile Include="Credentials.cs" />
+    <Compile Include="Exporter.cs" />
     <Compile Include="FogBugz.cs" />
     <Compile Include="FogBugzTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

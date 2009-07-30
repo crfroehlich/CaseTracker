@@ -4,6 +4,7 @@ using System.Text;
 using FogBugzNet;
 using System.Xml.Serialization;
 
+
 namespace FogBugzNet
 {
     using NUnit.Framework;
@@ -29,14 +30,10 @@ In order to run the test create an XML file with this format:
         {
             System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
             doc.Load("credentials.xml");
-            System.Diagnostics.Trace.Write(doc.InnerXml);
             _creds = new Credentials();
             _creds.UserName = doc.SelectSingleNode("//UserName").InnerText;
             _creds.Password = doc.SelectSingleNode("//Password").InnerText;
             _creds.Server = doc.SelectSingleNode("//Server").InnerText;
-
-
-
         }
 
         private void BadLogin()
@@ -45,16 +42,32 @@ In order to run the test create an XML file with this format:
             fb.Logon("bad", "bad");
         }
 
+        private void GoodLogin()
+        {
+            FogBugz fb = new FogBugz(_creds.Server);
+            fb.Logon(_creds.UserName, _creds.Password);
+        }
+
         [Test]
         public void TestLogin()
         {
-            Assert.Throws(typeof (EURLError), new TestDelegate(BadLogin));
+            Assert.Throws(typeof(EURLError), new TestDelegate(BadLogin));
+            Assert.DoesNotThrow(new TestDelegate(GoodLogin));
 
+        }
+
+        [Test]
+        public void TestMindMap()
+        {
             FogBugz fb = new FogBugz(_creds.Server);
             fb.Logon(_creds.UserName, _creds.Password);
 
+            Exporter ex = new Exporter(_creds.Server);
+            String mm = ex.CasesToMindMap(fb.getCases("outline:\"2385\""));
+            System.IO.File.WriteAllText("output.mm", mm);
 
         }
+
 
 
     }
