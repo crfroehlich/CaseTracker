@@ -35,14 +35,36 @@ namespace FogBugzCaseTracker
             }
         }
 
+        public bool IgnoreBaseSearch
+        {
+            set
+            {
+                chkIgnoreBaseSearch.Checked = value;
+                txtBaseSearch.Enabled = !chkIgnoreBaseSearch.Checked;
+
+            }
+            get
+            {
+                return chkIgnoreBaseSearch.Checked;
+            }
+        }
+
         public SearchForm()
         {
             InitializeComponent();
         }
 
+        private string formatSearch()
+        {
+            if (!chkIgnoreBaseSearch.Checked)
+                return txtBaseSearch.Text + " " + txtNarrowSearch.Text;
+            else
+                return txtNarrowSearch.Text;
+        }
+
         private void testSearch()
         {
-            Case[] cases = fb.getCases(txtBaseSearch.Text + " " + txtNarrowSearch.Text);
+            Case[] cases = fb.getCases(formatSearch());
             listTestResults.Items.Clear();
             foreach (Case c in cases)
                 listTestResults.Items.Add(c);
@@ -76,6 +98,12 @@ namespace FogBugzCaseTracker
         {
 
             Process.Start((string)ConfigurationManager.AppSettings["FogBugzBaseURL"] + "/help/topics/basics/Searchingforcases.html");
+        }
+
+        private void chkIgnoreBaseSearch_CheckedChanged(object sender, EventArgs e)
+        {
+            txtBaseSearch.Enabled = !chkIgnoreBaseSearch.Checked;
+
         }
 
 

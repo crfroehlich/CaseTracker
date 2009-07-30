@@ -22,7 +22,7 @@ namespace FogBugzCaseTracker
         public int id;
     }
 
-    class ECommandFailed : Exception
+    public class ECommandFailed : Exception
     {
         public ECommandFailed(string reason)
             : base(reason)
@@ -30,7 +30,7 @@ namespace FogBugzCaseTracker
         }
     }
 
-    class EServerError : Exception
+    public class EServerError : Exception
     {
         public EServerError(string reason)
             : base(reason)
@@ -38,7 +38,7 @@ namespace FogBugzCaseTracker
         }
     }
 
-    class EURLError : Exception
+    public class EURLError : Exception
     {
         public EURLError(string reason)
             : base(reason)
@@ -183,7 +183,7 @@ namespace FogBugzCaseTracker
         // Return all cases that match search (as in the web page search box)
         public Case[] getCases(string search)
         {
-            string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst");
+            string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst,ixBugParent");
             XmlDocument doc = xmlDoc(res);
             XmlNodeList nodes = doc.SelectNodes("//case");
 
@@ -197,6 +197,9 @@ namespace FogBugzCaseTracker
                 c.assignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
                 c.area = node.SelectSingleNode("sArea").InnerText;
                 c.id = int.Parse(node.SelectSingleNode("@ixBug").Value);
+                c.parentCase = 0;
+                if (node.SelectSingleNode("ixBugParent").InnerText != "")
+                    c.parentCase = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
 
                 double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
                 c.elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));

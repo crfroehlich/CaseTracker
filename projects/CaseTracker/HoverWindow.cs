@@ -23,6 +23,7 @@ namespace FogBugzCaseTracker
 
         private bool _resizing = false;
 
+        private bool _ignoreBaseSearch;
         private String _baseSearch;
         private String _narrowSearch;
 
@@ -87,6 +88,7 @@ namespace FogBugzCaseTracker
 
             _baseSearch = ConfigurationManager.AppSettings["BaseSearch"];
             _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
+            _ignoreBaseSearch =  bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]);
         }
 
         private void updateCases()
@@ -397,6 +399,7 @@ namespace FogBugzCaseTracker
             ttkey.SetValue("LastX", Location.X);
             ttkey.SetValue("LastY", Location.Y);
             ttkey.SetValue("NarrowSearch", _narrowSearch);
+            ttkey.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
             ttkey.SetValue("LastWidth", Width);
             ttkey.SetValue("PollingInterval", UpdateCasesTimer.Interval);
             ttkey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
@@ -447,6 +450,7 @@ namespace FogBugzCaseTracker
                 UpdateCasesTimer.Interval = (int)key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
                 UpdateCasesTimer.Interval = (int)key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
                 _switchToNothinUponClosing = (int)key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
+                _ignoreBaseSearch = (int)key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
                 Location = newLoc;
                 key.Close();
             }
@@ -518,9 +522,11 @@ namespace FogBugzCaseTracker
             f.dad = this;
             f.UserSearch = _narrowSearch;
             f.BaseSearch = _baseSearch;
+            f.IgnoreBaseSearch = _ignoreBaseSearch;
             if (f.ShowDialog() == DialogResult.OK)
             {
                 _narrowSearch = f.UserSearch;
+                _ignoreBaseSearch = f.IgnoreBaseSearch;
                 updateCases();
             }
 

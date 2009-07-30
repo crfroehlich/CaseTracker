@@ -13,6 +13,7 @@ namespace FogBugzCaseTracker
         public string project;
         public string area;
         public string assignedTo;
+        public int parentCase;
 
         public string id_name { get { return id + ": " + name; } }
         public string elapsed_time_h_m // returns elapsed time in h:m format: 20:04
