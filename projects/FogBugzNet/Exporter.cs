@@ -9,8 +9,9 @@ namespace FogBugzNet
     class Exporter
     {
         private String _server;
+        private XmlElement _rootNode;
         private Dictionary<int, XmlNode> _caseToNode = new Dictionary<int, XmlNode>();
-        private Dictionary<int, XmlNode> _milestoneToNode = new Dictionary<int, XmlNode>();
+        private Dictionary<int, ProjectNode> _projectIdToNode = new Dictionary<int, ProjectNode>();
 
         private Case[] _cases;
 
@@ -52,30 +53,50 @@ namespace FogBugzNet
         {
             _doc.LoadXml("<map version=\"0.8.1\"></map>");
 
-            XmlElement rootNode = _doc.CreateElement("node");
-            rootNode.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = "FogBugz Cases";
+            _rootNode = _doc.CreateElement("node");
+            _rootNode.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = "FogBugz Cases";
 
-            _doc.DocumentElement.AppendChild(rootNode);
+
+            _doc.DocumentElement.AppendChild(_rootNode);
         }
+
         private void RelocateElements()
         {
             foreach (Case c in _cases)
                 RelocateCaseInDOM(c);
         }
+
         private void CreateFlatElements()
         {
             foreach (Case c in _cases)
             {
-                _caseToNode.Add(c.ID, _doc.DocumentElement.AppendChild(CaseToNode(c)));
-
+                _caseToNode.Add(c.ID, _rootNode.AppendChild(CaseToNode(c)));
+                VerifyProjectNodeExists(c);
                 VerifyMileStoneExists(c);
             }
         }
 
+        private void VerifyProjectNodeExists(Case c)
+        {
+            if (!_projectIdToNode.ContainsKey(c.ParentProject.ID))
+            {
+                ProjectNode pn = CreateProjectNode(c);
+                _rootNode.AppendChild(pn.Node);
+                _projectIdToNode.Add(c.ParentProject.ID, pn);
+            }
+        }
+
+        private ProjectNode CaseProjectNode(Case c)
+        {
+            return _projectIdToNode[c.ParentProject.ID];
+        }
+
         private void VerifyMileStoneExists(Case c)
         {
-            if (!_milestoneToNode.ContainsKey(c.ParentMileStone.ID))
-                _milestoneToNode.Add(c.ParentMileStone.ID, _doc.DocumentElement.AppendChild(CreateMileStoneNode(c)));
+            ProjectNode pn = CaseProjectNode(c);
+            
+            if (!pn.MileStoneIdToNode.ContainsKey(c.ParentMileStone.ID))
+                pn.MileStoneIdToNode.Add(c.ParentMileStone.ID, pn.Node.AppendChild(CreateMileStoneNode(c)));
         }
 
         private void RelocateCaseInDOM(Case c)
@@ -94,7 +115,7 @@ namespace FogBugzNet
         }
         private void MoveCaseToMileStone(Case c)
         {
-            XmlNode ms = _milestoneToNode[c.ParentMileStone.ID];
+            XmlNode ms = CaseProjectNode(c).MileStoneIdToNode[c.ParentMileStone.ID];
             ms.AppendChild(_caseToNode[c.ID]);
         }
         private bool NoParentCaseAvailable(Case c)
@@ -109,5 +130,18 @@ namespace FogBugzNet
 
             return mileStoneNode;
         }
+
+        private ProjectNode CreateProjectNode(Case c)
+        {
+            ProjectNode ret = new ProjectNode();
+            ret.Node = NewElement();
+            ret.Node.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = string.Format("Project: {0}", c.ParentProject.Name);
+            ret.Node.Attributes.Append(_doc.CreateAttribute("LINK")).Value = 
+                string.Format("{0}?pre=preMultiSearch&pg=pgList&pgBack=pgSearch&search=2&searchFor=status:%22active%22+project:%22{1}%22+OrderBy:%22FixFor%22+View:%22Outline%22", _server, c.ParentProject.Name);
+
+            return ret;
+        }
+
+
     }
 }
