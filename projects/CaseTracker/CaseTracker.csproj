@@ -61,8 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Case.cs" />
-    <Compile Include="FogBugz.cs" />
+    <Compile Include="Exporter.cs" />
     <Compile Include="FogBugzTest.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -115,7 +114,6 @@
     <Compile Include="HoverWindow.Designer.cs">
       <DependentUpon>HoverWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon.ico" />
@@ -157,6 +155,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FogBugzNet\FogBugzNet.csproj">
+      <Project>{FD76A654-B990-4D68-A7CF-852C3053B843}</Project>
+      <Name>FogBugzNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

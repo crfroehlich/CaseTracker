@@ -6,7 +6,7 @@ using System.Web;
 using System.Collections;
 using System.Diagnostics;
 
-namespace FogBugzCaseTracker
+namespace FogBugzNet
 {
     public struct Filter
     {
@@ -49,7 +49,7 @@ namespace FogBugzCaseTracker
     public class FogBugz
     {
         private string lastError_;
-        public string lastError { get { return lastError_;  } }
+        public string lastError { get { return lastError_; } }
 
         private string token_;
         public string token { get { return token_; } }
@@ -64,7 +64,7 @@ namespace FogBugzCaseTracker
             {
                 return BaseURL_;
             }
-            
+
         }
         public FogBugz(string baseURL)
         {
@@ -114,7 +114,7 @@ namespace FogBugzCaseTracker
             return false;
         }
 
-        private string fbCommand(string command, params string []args)
+        private string fbCommand(string command, params string[] args)
         {
             string arguments = "";
             if ((loggedIn) && !command.Equals("logon"))
@@ -125,7 +125,8 @@ namespace FogBugzCaseTracker
                     arguments += "&" + arg;
             string resXML = httpGet(BaseURL + "/api.asp?cmd=" + command + arguments);
 
-            if (xmlDoc(resXML).SelectNodes("//error").Count > 0) {
+            if (xmlDoc(resXML).SelectNodes("//error").Count > 0)
+            {
                 lastError_ = xmlDoc(resXML).SelectSingleNode("//error").InnerText;
                 throw new ECommandFailed(lastError_);
             }
@@ -156,7 +157,7 @@ namespace FogBugzCaseTracker
             string res = fbCommand("listFilters", null);
 
             XmlNodeList filters = xmlDoc(res).SelectNodes("//filter");
-    
+
             ArrayList ret = new ArrayList();
             foreach (XmlNode node in filters)
             {
@@ -188,9 +189,9 @@ namespace FogBugzCaseTracker
             XmlNodeList nodes = doc.SelectNodes("//case");
 
             ArrayList ret = new ArrayList();
-            
+
             foreach (XmlNode node in nodes)
-            {   
+            {
                 Case c = new Case();
                 c.name = node.SelectSingleNode("sTitle").InnerText;
                 c.project = node.SelectSingleNode("sProject").InnerText;
@@ -273,7 +274,8 @@ namespace FogBugzCaseTracker
 
         public string NewCaseURL
         {
-            get {
+            get
+            {
                 return BaseURL + "/default.asp?command=new&pg=pgEditBug";
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FogBugzNet;
 
 namespace FogBugzCaseTracker
 {
@@ -22,5 +23,7 @@ namespace FogBugzCaseTracker
             Assert.Throws(typeof (EURLError), new TestDelegate(BadLogin));
 
         }
+
+
     }
 }

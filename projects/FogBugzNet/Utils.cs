@@ -7,9 +7,9 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FogBugzCaseTracker
+namespace FogBugzNet
 {
-    class Utils
+    public class Utils
     {
         public static void ShowErrorMessage(string error, string title)
         {

@@ -41,6 +41,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: "{#SrcApp}"; DestDir: "{app}"; Flags: ignoreversion ; BeforeInstall: ClosePreviousVersion
 Source: "{#SrcApp}.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\FogBugzNet\bin\release\FogBugzNet.dll"; DestDir: "{app}"; Flags: ignoreversion
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
