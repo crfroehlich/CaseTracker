@@ -102,6 +102,13 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap freemind {
+            get {
+                object obj = ResourceManager.GetObject("freemind", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);

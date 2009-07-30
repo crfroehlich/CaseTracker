@@ -167,7 +167,7 @@ namespace FogBugzCaseTracker
             this.listTestResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.listTestResults.DisplayMember = "project_id_name";
+            this.listTestResults.DisplayMember = "LongDescription";
             this.listTestResults.FormattingEnabled = true;
             this.listTestResults.Location = new System.Drawing.Point(20, 28);
             this.listTestResults.Name = "listTestResults";

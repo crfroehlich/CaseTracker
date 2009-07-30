@@ -33,24 +33,25 @@ namespace FogBugzCaseTracker
             this.UpdateCasesTimer = new System.Windows.Forms.Timer(this.components);
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MainMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnNewCase = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnResolve = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnResolveClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnViewCase = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnConfigure = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExportExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnShowHide = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CurrentCaseTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.CaseDropDown = new System.Windows.Forms.ComboBox();
             this.lblWorkingOn = new System.Windows.Forms.Label();
+            this.timerRetryLogin = new System.Windows.Forms.Timer(this.components);
             this.extensionGrip = new System.Windows.Forms.PictureBox();
             this.btnFilter = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnMain = new System.Windows.Forms.Button();
             this.backgroundPic = new System.Windows.Forms.PictureBox();
-            this.timerRetryLogin = new System.Windows.Forms.Timer(this.components);
+            this.btnNewCase = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnResolve = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnResolveClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnViewCase = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnConfigure = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExportExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToFreeMindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).BeginInit();
@@ -83,61 +84,14 @@ namespace FogBugzCaseTracker
             this.btnViewCase,
             this.btnConfigure,
             this.menuExportExcel,
+            this.exportToFreeMindToolStripMenuItem,
             this.toolStripSeparator1,
             this.btnShowHide,
             this.exitToolStripMenuItem});
             this.MainMenu.Name = "contextMenuStrip1";
-            this.MainMenu.Size = new System.Drawing.Size(197, 186);
+            this.MainMenu.Size = new System.Drawing.Size(197, 230);
             this.MainMenu.Opened += new System.EventHandler(this.contextMenuStrip1_Opened);
             this.MainMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStrip1_Closed);
-            // 
-            // btnNewCase
-            // 
-            this.btnNewCase.Image = global::FogBugzCaseTracker.Properties.Resources.new_case;
-            this.btnNewCase.Name = "btnNewCase";
-            this.btnNewCase.Size = new System.Drawing.Size(196, 22);
-            this.btnNewCase.Text = "New Case";
-            this.btnNewCase.Click += new System.EventHandler(this.btnNewCase_Click);
-            // 
-            // btnResolve
-            // 
-            this.btnResolve.Image = global::FogBugzCaseTracker.Properties.Resources.check_icon;
-            this.btnResolve.Name = "btnResolve";
-            this.btnResolve.Size = new System.Drawing.Size(196, 22);
-            this.btnResolve.Text = "&Resolve this case";
-            this.btnResolve.Click += new System.EventHandler(this.btnResolve_Click);
-            // 
-            // btnResolveClose
-            // 
-            this.btnResolveClose.Image = global::FogBugzCaseTracker.Properties.Resources.fat_check;
-            this.btnResolveClose.Name = "btnResolveClose";
-            this.btnResolveClose.Size = new System.Drawing.Size(196, 22);
-            this.btnResolveClose.Text = "Resolve && &Close this case";
-            this.btnResolveClose.Click += new System.EventHandler(this.btnResolveClose_Click);
-            // 
-            // btnViewCase
-            // 
-            this.btnViewCase.Image = global::FogBugzCaseTracker.Properties.Resources.firefox_16;
-            this.btnViewCase.Name = "btnViewCase";
-            this.btnViewCase.Size = new System.Drawing.Size(196, 22);
-            this.btnViewCase.Text = "&View case in browser";
-            this.btnViewCase.Click += new System.EventHandler(this.btnViewCase_Click);
-            // 
-            // btnConfigure
-            // 
-            this.btnConfigure.Image = global::FogBugzCaseTracker.Properties.Resources.key;
-            this.btnConfigure.Name = "btnConfigure";
-            this.btnConfigure.Size = new System.Drawing.Size(196, 22);
-            this.btnConfigure.Text = "&Switch user";
-            this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
-            // 
-            // menuExportExcel
-            // 
-            this.menuExportExcel.Image = global::FogBugzCaseTracker.Properties.Resources.excel;
-            this.menuExportExcel.Name = "menuExportExcel";
-            this.menuExportExcel.Size = new System.Drawing.Size(196, 22);
-            this.menuExportExcel.Text = "Export to Excel";
-            this.menuExportExcel.Click += new System.EventHandler(this.menuExportExcel_Click);
             // 
             // toolStripSeparator1
             // 
@@ -162,7 +116,7 @@ namespace FogBugzCaseTracker
             // 
             this.CaseDropDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.CaseDropDown.DisplayMember = "project_id_name";
+            this.CaseDropDown.DisplayMember = "LongDescription";
             this.CaseDropDown.DropDownHeight = 500;
             this.CaseDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CaseDropDown.DropDownWidth = 400;
@@ -190,6 +144,10 @@ namespace FogBugzCaseTracker
             this.lblWorkingOn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label1_MouseMove);
             this.lblWorkingOn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
             this.lblWorkingOn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label1_MouseUp);
+            // 
+            // timerRetryLogin
+            // 
+            this.timerRetryLogin.Tick += new System.EventHandler(this.timerRetryLogin_Tick);
             // 
             // extensionGrip
             // 
@@ -266,9 +224,61 @@ namespace FogBugzCaseTracker
             this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
             this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
             // 
-            // timerRetryLogin
+            // btnNewCase
             // 
-            this.timerRetryLogin.Tick += new System.EventHandler(this.timerRetryLogin_Tick);
+            this.btnNewCase.Image = global::FogBugzCaseTracker.Properties.Resources.new_case;
+            this.btnNewCase.Name = "btnNewCase";
+            this.btnNewCase.Size = new System.Drawing.Size(196, 22);
+            this.btnNewCase.Text = "New Case";
+            this.btnNewCase.Click += new System.EventHandler(this.btnNewCase_Click);
+            // 
+            // btnResolve
+            // 
+            this.btnResolve.Image = global::FogBugzCaseTracker.Properties.Resources.check_icon;
+            this.btnResolve.Name = "btnResolve";
+            this.btnResolve.Size = new System.Drawing.Size(196, 22);
+            this.btnResolve.Text = "&Resolve this case";
+            this.btnResolve.Click += new System.EventHandler(this.btnResolve_Click);
+            // 
+            // btnResolveClose
+            // 
+            this.btnResolveClose.Image = global::FogBugzCaseTracker.Properties.Resources.fat_check;
+            this.btnResolveClose.Name = "btnResolveClose";
+            this.btnResolveClose.Size = new System.Drawing.Size(196, 22);
+            this.btnResolveClose.Text = "Resolve && &Close this case";
+            this.btnResolveClose.Click += new System.EventHandler(this.btnResolveClose_Click);
+            // 
+            // btnViewCase
+            // 
+            this.btnViewCase.Image = global::FogBugzCaseTracker.Properties.Resources.firefox_16;
+            this.btnViewCase.Name = "btnViewCase";
+            this.btnViewCase.Size = new System.Drawing.Size(196, 22);
+            this.btnViewCase.Text = "&View case in browser";
+            this.btnViewCase.Click += new System.EventHandler(this.btnViewCase_Click);
+            // 
+            // btnConfigure
+            // 
+            this.btnConfigure.Image = global::FogBugzCaseTracker.Properties.Resources.key;
+            this.btnConfigure.Name = "btnConfigure";
+            this.btnConfigure.Size = new System.Drawing.Size(196, 22);
+            this.btnConfigure.Text = "&Switch user";
+            this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
+            // 
+            // menuExportExcel
+            // 
+            this.menuExportExcel.Image = global::FogBugzCaseTracker.Properties.Resources.excel;
+            this.menuExportExcel.Name = "menuExportExcel";
+            this.menuExportExcel.Size = new System.Drawing.Size(196, 22);
+            this.menuExportExcel.Text = "Export to Excel";
+            this.menuExportExcel.Click += new System.EventHandler(this.menuExportExcel_Click);
+            // 
+            // exportToFreeMindToolStripMenuItem
+            // 
+            this.exportToFreeMindToolStripMenuItem.Image = global::FogBugzCaseTracker.Properties.Resources.freemind;
+            this.exportToFreeMindToolStripMenuItem.Name = "exportToFreeMindToolStripMenuItem";
+            this.exportToFreeMindToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.exportToFreeMindToolStripMenuItem.Text = "Export To &FreeMind";
+            this.exportToFreeMindToolStripMenuItem.Click += new System.EventHandler(this.exportToFreeMindToolStripMenuItem_Click);
             // 
             // HoverWindow
             // 
@@ -332,5 +342,6 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.ToolStripMenuItem btnNewCase;
         private System.Windows.Forms.ToolStripMenuItem menuExportExcel;
         private System.Windows.Forms.Timer timerRetryLogin;
+        private System.Windows.Forms.ToolStripMenuItem exportToFreeMindToolStripMenuItem;
     }
 }

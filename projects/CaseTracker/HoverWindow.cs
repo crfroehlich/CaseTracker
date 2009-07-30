@@ -21,7 +21,7 @@ namespace FogBugzCaseTracker
         private string _username;
         private string _server;
         private string _password;
-
+        private Case[] _cases;
         private bool _resizing = false;
 
         private bool _ignoreBaseSearch;
@@ -45,6 +45,14 @@ namespace FogBugzCaseTracker
         private bool SelectedItemIsCase()
         {
             return CaseDropDown.SelectedItem.GetType() == typeof(Case);
+        }
+
+        private string formatSearch()
+        {
+            if (!_ignoreBaseSearch)
+                return _baseSearch + " " + _narrowSearch;
+            else
+                return _narrowSearch;
         }
 
         public bool TrackingCase
@@ -99,10 +107,10 @@ namespace FogBugzCaseTracker
                 CaseDropDown.Items.Clear();
                 SetState(new StateUpdatingCases(this));
                 Application.DoEvents();
-                Case[] cases = _fb.GetCases(_baseSearch + " " + _narrowSearch);
+                _cases = _fb.GetCases(formatSearch());
                 CaseDropDown.Items.Add("(nothing)");
                 CaseDropDown.Text = "(nothing)";
-                foreach (Case c in cases)
+                foreach (Case c in _cases)
                 {
                     Application.DoEvents();
                     CaseDropDown.Items.Add(c);
@@ -730,6 +738,26 @@ namespace FogBugzCaseTracker
             else
                 updateCases();
 
+        }
+
+        private void exportToFreeMindToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".mm";
+                // create a writer and open the file
+
+                Exporter ex = new Exporter(_server, _cases);
+                ex.CasesToMindMap().Save(tempTabSep);
+
+                System.Diagnostics.Process.Start("\"" + tempTabSep + "\"");
+            }
+            catch (System.Exception x)
+            {
+                MessageBox.Show("Sorry, couldn't launch Excel");
+                Utils.LogError(x.ToString());
+            }
         }
 
     } // Class HoverWindow

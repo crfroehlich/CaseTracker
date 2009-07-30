@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace FogBugzNet
 {
-    class Exporter
+    public class Exporter
     {
         private String _server;
         private XmlElement _rootNode;
