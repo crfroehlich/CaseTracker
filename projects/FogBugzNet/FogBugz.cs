@@ -151,7 +151,7 @@ namespace FogBugzNet
             return doc;
         }
 
-        public Filter[] getFilters()
+        public Filter[] GetFilters()
         {
             string res = fbCommand("listFilters", null);
 
@@ -170,18 +170,18 @@ namespace FogBugzNet
         }
 
         // Return all cases in current filter
-        public Case[] getCases()
+        public Case[] GetCases()
         {
-            return getCases("");
+            return GetCases("");
         }
 
-        public void setFilter(Filter f)
+        public void SetFilter(Filter f)
         {
             fbCommand("saveFilter", "sFilter=" + f.ID.ToString());
         }
 
         // Return all cases that match search (as in the web page search box)
-        public Case[] getCases(string search)
+        public Case[] GetCases(string search)
         {
             string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst,ixBugParent,ixFixFor,sFixFor,sCategory");
             XmlDocument doc = xmlDoc(res);
@@ -216,7 +216,7 @@ namespace FogBugzNet
         }
 
         // The id of the case the user is working on right now
-        public int workingOnCase
+        public int CaseWorkedOnNow
         {
             get
             {
@@ -236,7 +236,7 @@ namespace FogBugzNet
         }
 
         // Start working on case id (0: stop working).
-        public bool startStopWork(int id)
+        public bool ToggleWorkingOnCase(int id)
         {
             if (id == 0)
                 fbCommand("stopWork", null);

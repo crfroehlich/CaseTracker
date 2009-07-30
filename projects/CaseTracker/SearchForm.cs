@@ -66,7 +66,7 @@ namespace FogBugzCaseTracker
 
         private void testSearch()
         {
-            Case[] cases = fb.getCases(formatSearch());
+            Case[] cases = fb.GetCases(formatSearch());
             listTestResults.Items.Clear();
             foreach (Case c in cases)
                 listTestResults.Items.Add(c);

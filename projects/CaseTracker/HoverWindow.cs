@@ -64,7 +64,7 @@ namespace FogBugzCaseTracker
 
             set
             {
-                if (!_fb.startStopWork(value != null ? value.ID : 0))
+                if (!_fb.ToggleWorkingOnCase(value != null ? value.ID : 0))
                 {
                     Process.Start(_fb.CaseEditURL(0));
                     _trackedCase = null;
@@ -99,7 +99,7 @@ namespace FogBugzCaseTracker
                 CaseDropDown.Items.Clear();
                 SetState(new StateUpdatingCases(this));
                 Application.DoEvents();
-                Case[] cases = _fb.getCases(_baseSearch + " " + _narrowSearch);
+                Case[] cases = _fb.GetCases(_baseSearch + " " + _narrowSearch);
                 CaseDropDown.Items.Add("(nothing)");
                 CaseDropDown.Text = "(nothing)";
                 foreach (Case c in cases)
@@ -109,13 +109,13 @@ namespace FogBugzCaseTracker
                 }
 
                 // Handle also case where a case is being tracked on the server side, but not on the client
-                if (TrackingCase || _fb.workingOnCase != 0)
+                if (TrackingCase || _fb.CaseWorkedOnNow != 0)
                 {
                     bool foundCaseInDropdown = false;
                     // Find case in drop down, and if it's not there then we can't track it any more
                     for (int i = 1; i < CaseDropDown.Items.Count; ++i)
                     {
-                        if (((Case)CaseDropDown.Items[i]).ID == _fb.workingOnCase)
+                        if (((Case)CaseDropDown.Items[i]).ID == _fb.CaseWorkedOnNow)
                         {
                             foundCaseInDropdown = true;
                             CaseDropDown.SelectedIndex = i;
@@ -463,7 +463,7 @@ namespace FogBugzCaseTracker
             try
             {
                 if (_switchToNothinUponClosing)
-                    _fb.startStopWork(0);
+                    _fb.ToggleWorkingOnCase(0);
                 saveSettings();
             }
             catch (System.Exception x)
@@ -481,7 +481,7 @@ namespace FogBugzCaseTracker
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
-            _fb.ResolveCase(_fb.workingOnCase);
+            _fb.ResolveCase(_fb.CaseWorkedOnNow);
             updateCases();
         }
 
@@ -571,7 +571,7 @@ namespace FogBugzCaseTracker
 
         private void btnResolveClose_Click(object sender, EventArgs e)
         {
-            _fb.ResolveCase(_fb.workingOnCase);
+            _fb.ResolveCase(_fb.CaseWorkedOnNow);
             updateCases();
 
         }
