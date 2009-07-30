@@ -184,7 +184,7 @@ namespace FogBugzNet
         // Return all cases that match search (as in the web page search box)
         public Case[] getCases(string search)
         {
-            string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst,ixBugParent,ixFixFor,sFixFor");
+            string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst,ixBugParent,ixFixFor,sFixFor,sCategory");
             XmlDocument doc = xmlDoc(res);
             XmlNodeList nodes = doc.SelectNodes("//case");
 
@@ -209,6 +209,7 @@ namespace FogBugzNet
                 c.estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
                 c.milestone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
                 c.milestone.Name = node.SelectSingleNode("sFixFor").InnerText;
+                c.Category = node.SelectSingleNode("sCategory").InnerText;
 
                 ret.Add(c);
             }

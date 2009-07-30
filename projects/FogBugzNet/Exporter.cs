@@ -21,7 +21,7 @@ namespace FogBugzNet
         public XmlElement CaseToNode(Case c)
         {
             XmlElement node = _doc.CreateElement("node");
-            node.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = String.Format("{0}: {1}", c.id, c.name);
+            node.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = String.Format("{0} {1}: {2}", c.Category, c.id, c.name);
             node.Attributes.Append(_doc.CreateAttribute("POSITION")).Value = "right";
             node.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _server + "?" + c.id.ToString();
             

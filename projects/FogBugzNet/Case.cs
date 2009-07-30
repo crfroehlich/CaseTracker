@@ -14,6 +14,7 @@ namespace FogBugzNet
         public string area;
         public string assignedTo;
         public int parentCase;
+        public string Category;
 
         public MileStone milestone = new MileStone();
 
