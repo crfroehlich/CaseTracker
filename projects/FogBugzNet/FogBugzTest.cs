@@ -62,8 +62,7 @@ In order to run the test create an XML file with this format:
             fb.Logon(_creds.UserName, _creds.Password);
 
             Exporter ex = new Exporter(_creds.Server);
-            String mm = ex.CasesToMindMap(fb.getCases("status:\"Active\" milestone:\"1.9\""));
-            System.IO.File.WriteAllText("output.mm", mm);
+            ex.CasesToMindMap(fb.getCases("status:\"Active\" project:\"sharp\"")).Save("output.mm");
 
         }
 
