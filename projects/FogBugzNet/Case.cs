@@ -6,36 +6,36 @@ namespace FogBugzNet
 {
     public class Case
     {
-        public TimeSpan elapsed;
-        public TimeSpan estimate;
-        public int id;
-        public string name;
-        public Project project;
+        public TimeSpan Elapsed;
+        public TimeSpan Estimate;
+        public int ID;
+        public string Name;
+        public Project ParentProject;
 
-        public string area;
-        public string assignedTo;
-        public int parentCase;
+        public string Area;
+        public string AssignedTo;
+        public int ParentCase;
         public string Category;
 
-        public MileStone milestone = new MileStone();
+        public MileStone ParentMileStone = new MileStone();
 
-        public string id_name { get { return id + ": " + name; } }
-        public string elapsed_time_h_m // returns elapsed time in h:m format: 20:04
+        public string ShortDescription { get { return ID + ": " + Name; } }
+        public string ElapsedTime_h_m // returns elapsed time in h:m format: 20:04
         {
 
             get
             {
                 return String.Format("{0}:{1}",
-                        elapsed.TotalHours.ToString("###"),
-                        elapsed.Minutes.ToString("0#"));
+                        Elapsed.TotalHours.ToString("###"),
+                        Elapsed.Minutes.ToString("0#"));
 
             }
         }
-        public string project_id_name
+        public string LongDescription
         {
             get
             {
-                return String.Format("{0}:{1}:{2}:{3} - {4}", project.name, area, assignedTo, id, name);
+                return String.Format("{0}:{1}:{2}:{3} - {4}", ParentProject.Name, Area, AssignedTo, ID, Name);
             }
         }
 

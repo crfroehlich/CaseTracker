@@ -64,7 +64,7 @@ namespace FogBugzCaseTracker
 
             set
             {
-                if (!_fb.startStopWork(value != null ? value.id : 0))
+                if (!_fb.startStopWork(value != null ? value.ID : 0))
                 {
                     Process.Start(_fb.CaseEditURL(0));
                     _trackedCase = null;
@@ -115,7 +115,7 @@ namespace FogBugzCaseTracker
                     // Find case in drop down, and if it's not there then we can't track it any more
                     for (int i = 1; i < CaseDropDown.Items.Count; ++i)
                     {
-                        if (((Case)CaseDropDown.Items[i]).id == _fb.workingOnCase)
+                        if (((Case)CaseDropDown.Items[i]).ID == _fb.workingOnCase)
                         {
                             foundCaseInDropdown = true;
                             CaseDropDown.SelectedIndex = i;
@@ -143,7 +143,7 @@ namespace FogBugzCaseTracker
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (_fb.loggedIn)
+            if (_fb.IsLoggedIn)
                 updateCases();
         }
 
@@ -487,7 +487,7 @@ namespace FogBugzCaseTracker
 
         private void btnViewCase_Click(object sender, EventArgs e)
         {
-            Process.Start(_fb.CaseEditURL(((Case)CaseDropDown.SelectedItem).id));
+            Process.Start(_fb.CaseEditURL(((Case)CaseDropDown.SelectedItem).ID));
         }
 
         private void btnShowHide_Click(object sender, EventArgs e)
@@ -625,7 +625,7 @@ namespace FogBugzCaseTracker
                 for (int i = 1; i < CaseDropDown.Items.Count; ++i)
                 {
                     Case c = (Case)CaseDropDown.Items[i];
-                    tw.WriteLine("({0:D}) {1}\t{2}h\t{3}", c.id, c.name, c.estimate.TotalHours, c.assignedTo);
+                    tw.WriteLine("({0:D}) {1}\t{2}h\t{3}", c.ID, c.Name, c.Estimate.TotalHours, c.AssignedTo);
                 }
 
                 tw.Close();
@@ -715,7 +715,7 @@ namespace FogBugzCaseTracker
                 frm.btnViewCase.Enabled = true;
                 frm.btnResolveClose.Enabled = true;
                 frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown, 
-                    String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).elapsed_time_h_m));
+                    String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = true;
 
             }

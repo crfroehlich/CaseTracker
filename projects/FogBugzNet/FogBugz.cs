@@ -10,15 +10,15 @@ namespace FogBugzNet
 {
     public struct Filter
     {
-        public string name;
-        public string type;
-        public string id;
+        public string Name;
+        public string FilterType;
+        public string ID;
     }
 
     public struct Project
     {
-        public string name;
-        public int id;
+        public string Name;
+        public int ID;
     }
 
     public class ECommandFailed : Exception
@@ -48,12 +48,12 @@ namespace FogBugzNet
     public class FogBugz
     {
         private string lastError_;
-        public string lastError { get { return lastError_; } }
+        public string LastError { get { return lastError_; } }
 
         private string token_;
-        public string token { get { return token_; } }
+        public string AuthToken { get { return token_; } }
 
-        public bool loggedIn { get { return token != null && token_.Length > 0; } }
+        public bool IsLoggedIn { get { return AuthToken != null && token_.Length > 0; } }
 
         private string BaseURL_;
 
@@ -116,8 +116,8 @@ namespace FogBugzNet
         private string fbCommand(string command, params string[] args)
         {
             string arguments = "";
-            if ((loggedIn) && !command.Equals("logon"))
-                arguments += "&token=" + token;
+            if ((IsLoggedIn) && !command.Equals("logon"))
+                arguments += "&token=" + AuthToken;
 
             if (args != null)
                 foreach (string arg in args)
@@ -138,9 +138,9 @@ namespace FogBugzNet
         // command methods, such as "Logon", or "ListCases".
         public string ExecuteURL(string URLParams)
         {
-            if (!loggedIn)
+            if (!IsLoggedIn)
                 return "Not logged in";
-            string URL = BaseURL + "/api.asp?" + URLParams + "&token=" + token;
+            string URL = BaseURL + "/api.asp?" + URLParams + "&token=" + AuthToken;
             return httpGet(URL);
         }
 
@@ -161,9 +161,9 @@ namespace FogBugzNet
             foreach (XmlNode node in filters)
             {
                 Filter f = new Filter();
-                f.name = node.InnerText;
-                f.id = node.SelectSingleNode("@sFilter").Value;
-                f.type = node.SelectSingleNode("@type").Value;
+                f.Name = node.InnerText;
+                f.ID = node.SelectSingleNode("@sFilter").Value;
+                f.FilterType = node.SelectSingleNode("@type").Value;
                 ret.Add(f);
             }
             return (Filter[])ret.ToArray(typeof(Filter));
@@ -177,7 +177,7 @@ namespace FogBugzNet
 
         public void setFilter(Filter f)
         {
-            fbCommand("saveFilter", "sFilter=" + f.id.ToString());
+            fbCommand("saveFilter", "sFilter=" + f.ID.ToString());
         }
 
         // Return all cases that match search (as in the web page search box)
@@ -192,22 +192,22 @@ namespace FogBugzNet
             foreach (XmlNode node in nodes)
             {
                 Case c = new Case();
-                c.name = node.SelectSingleNode("sTitle").InnerText;
-                c.project.name = node.SelectSingleNode("sProject").InnerText;
-                c.assignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
-                c.area = node.SelectSingleNode("sArea").InnerText;
-                c.id = int.Parse(node.SelectSingleNode("@ixBug").Value);
-                c.parentCase = 0;
+                c.Name = node.SelectSingleNode("sTitle").InnerText;
+                c.ParentProject.Name = node.SelectSingleNode("sProject").InnerText;
+                c.AssignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
+                c.Area = node.SelectSingleNode("sArea").InnerText;
+                c.ID = int.Parse(node.SelectSingleNode("@ixBug").Value);
+                c.ParentCase = 0;
                 if (node.SelectSingleNode("ixBugParent").InnerText != "")
-                    c.parentCase = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
+                    c.ParentCase = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
 
                 double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
-                c.elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));
+                c.Elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));
 
                 double hrsEstimate = double.Parse(node.SelectSingleNode("hrsCurrEst").InnerText);
-                c.estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
-                c.milestone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
-                c.milestone.Name = node.SelectSingleNode("sFixFor").InnerText;
+                c.Estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
+                c.ParentMileStone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
+                c.ParentMileStone.Name = node.SelectSingleNode("sFixFor").InnerText;
                 c.Category = node.SelectSingleNode("sCategory").InnerText;
 
                 ret.Add(c);
@@ -300,8 +300,8 @@ namespace FogBugzNet
             foreach (XmlNode proj in projs)
             {
                 Project p = new Project();
-                p.id = int.Parse(proj.SelectSingleNode("./ixProject").InnerText);
-                p.name = proj.SelectSingleNode("./sProject").InnerText;
+                p.ID = int.Parse(proj.SelectSingleNode("./ixProject").InnerText);
+                p.Name = proj.SelectSingleNode("./sProject").InnerText;
                 ret.Add(p);
             }
 
