@@ -660,6 +660,9 @@ namespace FogBugzCaseTracker
                 frm.btnViewCase.Enabled = false;
                 frm.btnResolveClose.Enabled = false;
                 frm.UpdateCasesTimer.Enabled = false;
+                frm.exportToFreeMindToolStripMenuItem.Enabled = false;
+                frm.menuExportExcel.Enabled = false;
+                
             }
         };
 
@@ -694,6 +697,8 @@ namespace FogBugzCaseTracker
                 frm.btnNewCase.Enabled = true;
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.btnMain.Enabled = true;
+                frm.exportToFreeMindToolStripMenuItem.Enabled = true;
+                frm.menuExportExcel.Enabled = true;
 
 
             }
