@@ -81,6 +81,9 @@ In order to run the test create an XML file with this format:
             Importer im = new Importer(doc, fb);
             ImportAnalysis res = im.Analyze();
             Assert.Greater(res.CasesWithNewParents.Count, 0);
+            Assert.AreEqual(res.CasesWithNewParents[0].ID, 7164);
+            Assert.AreEqual(res.CasesWithNewParents[0].ParentCase, 7163);
+
 
         }
 

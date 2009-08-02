@@ -48,13 +48,15 @@ namespace FogBugzNet
 
     public class ImportAnalysis
     {
-        public Dictionary<Case, Case> CasesWithNewParents = new Dictionary<Case, Case>();
+        public List<Case> CasesWithNewParents = new List<Case>();
     }
 
     public class Importer
     {
         private FogBugz _fb;
         private XmlDocument _doc;
+        private Search _origSearch;
+        private Dictionary<int, Case> _origCases = new Dictionary<int,Case>();
 
         public Importer(XmlDocument mindMap, FogBugz fb)
         {
@@ -62,19 +64,68 @@ namespace FogBugzNet
             _doc = mindMap;
         }
 
+        public static bool IsCaseNode(XmlNode node)
+        {
+            return Regex.Match(node.Attributes["TEXT"].Value, @"(\w+) (\d+): (.*)").Success;
+        }
+
+        Case ParseCaseNode(XmlNode node)
+        {
+            // Parse case link / title
+            string text = node.Attributes["TEXT"].Value;
+            Match m = Regex.Match(text, @"(\w+) (\d+): (.*)");
+            if (!m.Success)
+                return null;
+
+            Case c = new Case();
+            c.Category = m.Groups[1].Value;
+            c.ID = int.Parse(m.Groups[2].Value);
+            c.Name = m.Groups[3].Value;
+            return c;
+        }
+
         public ImportAnalysis Analyze()
         {
+            RunOrigQuery();
+
             ImportAnalysis a = new ImportAnalysis();
 
-            string rootLink = _doc.SelectSingleNode("/map/node").Attributes["LINK"].Value;
-            Search origSearch = new Search();
-            origSearch.Query = Regex.Match(rootLink, "searchFor=(.*)").Groups[1].Value;
-            origSearch.Cases = _fb.GetCases(origSearch.Query);
+            XmlNodeList nodes = _doc.SelectNodes("//node");
+            foreach (XmlNode node in nodes)
+            {
+                Case c = ParseCaseNode(node);
+                if (c == null) // If not a case
+                    continue;
 
 
+                Case parent = ParseCaseNode(node.ParentNode);
+                if (parent == null)
+                    continue;
+
+                c.ParentCase = parent.ID;
+                // Now we have a case with a parent case check to see if it differs from the original case's parent
+                if (_origCases.ContainsKey(c.ID) && _origCases[c.ID].ParentCase != parent.ID)
+                {
+                    a.CasesWithNewParents.Add(c);
+                }
+            }
             return a;
         }
 
+        private void RunOrigQuery()
+        {
+            string rootLink = _doc.SelectSingleNode("/map/node").Attributes["LINK"].Value;
+            _origSearch = new Search();
+            _origSearch.Query = Regex.Match(rootLink, "searchFor=(.*)").Groups[1].Value;
+            _origSearch.Cases = _fb.GetCases(_origSearch.Query);
+
+            // Build a dictionary for speedy case by ID access
+            foreach (Case c in _origSearch.Cases)
+                _origCases.Add(c.ID, c);
+
+
+
+        }
         
     }
 }
