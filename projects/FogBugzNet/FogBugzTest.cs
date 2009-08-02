@@ -63,10 +63,13 @@ In order to run the test create an XML file with this format:
             fb.Logon(_creds.UserName, _creds.Password);
 
 //            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
-            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\""));
-            ex.CasesToMindMap().Save("output.mm");
 
+//            string query = "status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\"";
+            string query = "status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")";
+            Exporter ex = new Exporter(_creds.Server, new Search(query, fb.GetCases(query)));
+            ex.CasesToMindMap().Save("output.mm");
         }
+
         public void TestMindMapImport()
         {
 
@@ -76,8 +79,7 @@ In order to run the test create an XML file with this format:
             fb.Logon(_creds.UserName, _creds.Password);
 
             //            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
-            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\""));
-            ex.CasesToMindMap().Save("output.mm");
+//            ex.CasesToMindMap().Save("output.mm");
 
         }
 

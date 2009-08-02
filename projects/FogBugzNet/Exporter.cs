@@ -13,12 +13,12 @@ namespace FogBugzNet
         private Dictionary<int, XmlNode> _caseToNode = new Dictionary<int, XmlNode>();
         private Dictionary<int, ProjectNode> _projectIdToNode = new Dictionary<int, ProjectNode>();
 
-        private Case[] _cases;
+        private Search _search;
 
-        public Exporter(string Server, Case[] cases)
+        public Exporter(string server, Search search)
         {
-            _cases = cases;
-            _server = Server;
+            _search = search;
+            _server = server;
         }
 
         private XmlDocument _doc = new XmlDocument();
@@ -55,20 +55,21 @@ namespace FogBugzNet
 
             _rootNode = _doc.CreateElement("node");
             _rootNode.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = "FogBugz Cases";
-
-
+            _rootNode.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _server + "?pre=preMultiSearch&pg=pgList&pgBack=pgSearch&search=2&searchFor=" + _search.Query;
             _doc.DocumentElement.AppendChild(_rootNode);
+
+
         }
 
         private void RelocateElements()
         {
-            foreach (Case c in _cases)
+            foreach (Case c in _search.Cases)
                 RelocateCaseInDOM(c);
         }
 
         private void CreateFlatElements()
         {
-            foreach (Case c in _cases)
+            foreach (Case c in _search.Cases)
             {
                 _caseToNode.Add(c.ID, _rootNode.AppendChild(CaseToNode(c)));
                 VerifyProjectNodeExists(c);

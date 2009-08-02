@@ -45,5 +45,9 @@ namespace FogBugzNet
     class Importer
     {
         public Importer(string server, string importer)
+        {
+
+
+        }
     }
 }
