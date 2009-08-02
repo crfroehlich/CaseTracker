@@ -66,10 +66,11 @@ In order to run the test create an XML file with this format:
 
 //            string query = "status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\"";
             string query = "status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")";
-            Exporter ex = new Exporter(_creds.Server, new Search(query, fb.GetCases(query)));
+            Exporter ex = new Exporter(fb, new Search(query, fb.GetCases(query)));
             ex.CasesToMindMap().Save("output.mm");
         }
 
+        [Test]
         public void TestMindMapImport()
         {
 
@@ -77,9 +78,9 @@ In order to run the test create an XML file with this format:
             doc.Load("input.mm");
             FogBugz fb = new FogBugz(_creds.Server);
             fb.Logon(_creds.UserName, _creds.Password);
-
-            //            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
-//            ex.CasesToMindMap().Save("output.mm");
+            Importer im = new Importer(doc, fb);
+            ImportAnalysis res = im.Analyze();
+            Assert.Greater(res.CasesWithNewParents.Count, 0);
 
         }
 

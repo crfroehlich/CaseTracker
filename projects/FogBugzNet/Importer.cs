@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 
 /*
@@ -40,14 +41,40 @@ using System.Text;
  * 
  * 
  */
+
+using System.Xml;
 namespace FogBugzNet
 {
-    class Importer
+
+    public class ImportAnalysis
     {
-        public Importer(string server, string importer)
+        public Dictionary<Case, Case> CasesWithNewParents = new Dictionary<Case, Case>();
+    }
+
+    public class Importer
+    {
+        private FogBugz _fb;
+        private XmlDocument _doc;
+
+        public Importer(XmlDocument mindMap, FogBugz fb)
         {
-
-
+            _fb = fb;
+            _doc = mindMap;
         }
+
+        public ImportAnalysis Analyze()
+        {
+            ImportAnalysis a = new ImportAnalysis();
+
+            string rootLink = _doc.SelectSingleNode("/map/node").Attributes["LINK"].Value;
+            Search origSearch = new Search();
+            origSearch.Query = Regex.Match(rootLink, "searchFor=(.*)").Groups[1].Value;
+            origSearch.Cases = _fb.GetCases(origSearch.Query);
+
+
+            return a;
+        }
+
+        
     }
 }

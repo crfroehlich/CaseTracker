@@ -170,7 +170,7 @@ namespace FogBugzNet
         }
 
         // Return all cases in current filter
-        public Case[] GetCases()
+        public Case[] GetCurrentFilterCases()
         {
             return GetCases("");
         }

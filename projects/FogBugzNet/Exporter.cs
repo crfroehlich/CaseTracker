@@ -8,17 +8,18 @@ namespace FogBugzNet
 {
     public class Exporter
     {
-        private String _server;
         private XmlElement _rootNode;
         private Dictionary<int, XmlNode> _caseToNode = new Dictionary<int, XmlNode>();
         private Dictionary<int, ProjectNode> _projectIdToNode = new Dictionary<int, ProjectNode>();
 
         private Search _search;
 
-        public Exporter(string server, Search search)
+        private FogBugz _fb;
+
+        public Exporter(FogBugz fb, Search search)
         {
             _search = search;
-            _server = server;
+            _fb = fb;
         }
 
         private XmlDocument _doc = new XmlDocument();
@@ -34,7 +35,7 @@ namespace FogBugzNet
         {
             XmlElement node = NewElement();
             node.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = String.Format("{0} {1}: {2}", c.Category, c.ID, c.Name);
-            node.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _server + "?" + c.ID.ToString();
+            node.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _fb.BaseURL + "?" + c.ID.ToString();
             
             return node;
         }
@@ -55,7 +56,7 @@ namespace FogBugzNet
 
             _rootNode = _doc.CreateElement("node");
             _rootNode.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = "FogBugz Cases";
-            _rootNode.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _server + "?pre=preMultiSearch&pg=pgList&pgBack=pgSearch&search=2&searchFor=" + _search.Query;
+            _rootNode.Attributes.Append(_doc.CreateAttribute("LINK")).Value = _fb.BaseURL + "?pre=preMultiSearch&pg=pgList&pgBack=pgSearch&search=2&searchFor=" + _search.Query;
             _doc.DocumentElement.AppendChild(_rootNode);
 
 
@@ -127,7 +128,7 @@ namespace FogBugzNet
         {
             XmlElement mileStoneNode = NewElement();
             mileStoneNode.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = string.Format("MileStone: {0}", c.ParentMileStone.Name);
-            mileStoneNode.Attributes.Append(_doc.CreateAttribute("LINK")).Value = string.Format("{0}?pg=pgList&pre=preSaveFilterFixFor&ixFixFor={1}&ixStatus=-2", _server, c.ParentMileStone.ID);
+            mileStoneNode.Attributes.Append(_doc.CreateAttribute("LINK")).Value = string.Format("{0}?pg=pgList&pre=preSaveFilterFixFor&ixFixFor={1}&ixStatus=-2", _fb.BaseURL, c.ParentMileStone.ID);
 
             return mileStoneNode;
         }
@@ -137,8 +138,8 @@ namespace FogBugzNet
             ProjectNode ret = new ProjectNode();
             ret.Node = NewElement();
             ret.Node.Attributes.Append(_doc.CreateAttribute("TEXT")).Value = string.Format("Project: {0}", c.ParentProject.Name);
-            ret.Node.Attributes.Append(_doc.CreateAttribute("LINK")).Value = 
-                string.Format("{0}?pre=preMultiSearch&pg=pgList&pgBack=pgSearch&search=2&searchFor=status:%22active%22+project:%22{1}%22+OrderBy:%22FixFor%22+View:%22Outline%22", _server, c.ParentProject.Name);
+            ret.Node.Attributes.Append(_doc.CreateAttribute("LINK")).Value =
+                string.Format("{0}?pre=preMultiSearch&pg=pgList&pgBack=pgSearch&search=2&searchFor=status:%22active%22+project:%22{1}%22+OrderBy:%22FixFor%22+View:%22Outline%22", _fb.BaseURL, c.ParentProject.Name);
 
             return ret;
         }

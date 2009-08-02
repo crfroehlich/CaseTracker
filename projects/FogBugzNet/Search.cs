@@ -9,6 +9,11 @@ namespace FogBugzNet
     {
         public string Query;
         public Case[] Cases;
+        public Search ()
+        {
+
+
+        }
         public Search (string query, Case[] cases)
         {
             Cases = cases;
