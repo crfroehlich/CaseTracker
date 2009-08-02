@@ -84,6 +84,24 @@ namespace FogBugzNet
             return c;
         }
 
+        private MileStone ParseMileStoneNode(XmlNode node)
+        {
+            MileStone ret = new MileStone();
+            Match m = Regex.Match(node.Attributes["TEXT"].Value, "MileStone: (.*)");
+
+            if (!m.Success)
+                return null;
+
+            ret.Name = m.Groups[1].Value;
+            m = Regex.Match(node.Attributes["LINK"].Value, @"ixFixFor=(\d+)");
+            if (!m.Success)
+                return null;
+
+            ret.ID = int.Parse(m.Groups[1].Value);
+
+            return ret;
+        }
+
         public ImportAnalysis Analyze()
         {
             RunOrigQuery();
@@ -100,11 +118,14 @@ namespace FogBugzNet
 
                 Case parent = ParseCaseNode(node.ParentNode);
                 if (parent == null)
-                    continue;
+                {
+                    continue; // TODO: Figure out a way to detect when a case was moved to the root of the milestone
+                }
+                else
+                    c.ParentCase = parent.ID;
 
-                c.ParentCase = parent.ID;
                 // Now we have a case with a parent case check to see if it differs from the original case's parent
-                if (_origCases.ContainsKey(c.ID) && _origCases[c.ID].ParentCase != parent.ID)
+                if (_origCases.ContainsKey(c.ID) && _origCases[c.ID].ParentCase != c.ParentCase)
                 {
                     a.CasesWithNewParents.Add(c);
                 }

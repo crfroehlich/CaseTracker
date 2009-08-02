@@ -309,5 +309,12 @@ namespace FogBugzNet
 
             return (Project[])ret.ToArray(typeof(Project));
         }
+
+        public void SetParent(Case c, int parentID)
+        {
+            fbCommand("edit", "ixBug=" + c.ID.ToString(), "ixBugParent=" + parentID.ToString());
+        }
+
+
     }
 }

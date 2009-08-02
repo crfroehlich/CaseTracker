@@ -65,7 +65,8 @@ In order to run the test create an XML file with this format:
 //            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
 
 //            string query = "status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\"";
-            string query = "status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")";
+//            string query = "status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")";
+            string query = "project:\"infra\" milestone:\"test\"";
             Exporter ex = new Exporter(fb, new Search(query, fb.GetCases(query)));
             ex.CasesToMindMap().Save("output.mm");
         }
@@ -80,10 +81,27 @@ In order to run the test create an XML file with this format:
             fb.Logon(_creds.UserName, _creds.Password);
             Importer im = new Importer(doc, fb);
             ImportAnalysis res = im.Analyze();
-            Assert.Greater(res.CasesWithNewParents.Count, 0);
+            Assert.AreEqual(res.CasesWithNewParents.Count, 1);
             Assert.AreEqual(res.CasesWithNewParents[0].ID, 7164);
             Assert.AreEqual(res.CasesWithNewParents[0].ParentCase, 7163);
 
+
+        }
+
+        [Test]
+        public void TestModifyParent()
+        {
+
+            FogBugz fb = new FogBugz(_creds.Server);
+            fb.Logon(_creds.UserName, _creds.Password);
+            Case[] cases = fb.GetCases("7523");
+            fb.SetParent(cases[0], 7522);
+            cases = fb.GetCases("7523");
+            Assert.AreEqual(cases[0].ParentCase, 7522);
+            fb.SetParent(cases[0], 7521);
+            cases = fb.GetCases("7523");
+            Assert.AreEqual(cases[0].ParentCase, 7521);
+            
 
         }
 

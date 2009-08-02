@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FogBugzNet
 {
-    public struct MileStone
+    public class MileStone
     {
         public string Name;
         public int ID;
