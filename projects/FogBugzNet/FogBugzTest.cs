@@ -4,6 +4,7 @@ using System.Text;
 using FogBugzNet;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Web;
 
 
 namespace FogBugzNet
@@ -108,7 +109,43 @@ In order to run the test create an XML file with this format:
 
         }
 
+        [Test]
+        public void HttpTestAsync()
+        {
+            System.Threading.EventWaitHandle ewh = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
+            HttpUtils.httpGetAsync("http://www.google.com", delegate(string response)
+            {
+                ewh.Set();
+                Assert.True(response.Contains("I'm Feeling Lucky"));
+            });
+            ewh.WaitOne();
 
+        }
+
+        [Test]
+        public void TestAsyncFbCommand()
+        {
+
+            FogBugz fb = new FogBugz(_creds.Server);
+
+            string email = HttpUtility.UrlEncode(_creds.UserName);
+            System.Threading.EventWaitHandle wait = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
+            fb.FbCommandAsync(delegate (XmlDocument doc)
+            {
+                Assert.Greater(doc.SelectNodes("//token").Count, 0);
+                wait.Set();
+            },
+            delegate (Exception x)
+            {
+                Assert.Fail(x.ToString());
+                wait.Set();
+            },
+            "logon", 
+            "email=" + email, "password=" + _creds.Password);
+
+            wait.WaitOne();
+
+        }
 
     }
 }

@@ -29,22 +29,6 @@ namespace FogBugzNet
         }
     }
 
-    public class EServerError : Exception
-    {
-        public EServerError(string reason)
-            : base(reason)
-        {
-        }
-    }
-
-    public class EURLError : Exception
-    {
-        public EURLError(string reason)
-            : base(reason)
-        {
-        }
-    }
-
     public class FogBugz
     {
         private string lastError_;
@@ -70,26 +54,6 @@ namespace FogBugzNet
             this.BaseURL_ = baseURL;
         }
 
-        private string httpGet(string url)
-        {
-            try
-            {
-                WebRequest req = WebRequest.Create(url);
-                WebResponse res = req.GetResponse();
-                StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
-                return sr.ReadToEnd();
-            }
-            catch (System.Net.WebException x)
-            {
-                Utils.LogError(x.ToString() + ". Connection status: " + x.Status.ToString());
-                throw new EServerError("Unable to find FogBugz server at location: " + BaseURL);
-            }
-            catch (System.UriFormatException x)
-            {
-                Utils.LogError(x.ToString());
-                throw new EURLError("The server URL you provided appears to be malformed: " + BaseURL);
-            }
-        }
 
         public bool Logon(string email, string password)
         {
@@ -113,8 +77,10 @@ namespace FogBugzNet
             return false;
         }
 
-        private string fbCommand(string command, params string[] args)
+
+        private string FormatHttpGetRequest(string command, params string[] args)
         {
+
             string arguments = "";
             if ((IsLoggedIn) && !command.Equals("logon"))
                 arguments += "&token=" + AuthToken;
@@ -122,13 +88,52 @@ namespace FogBugzNet
             if (args != null)
                 foreach (string arg in args)
                     arguments += "&" + arg;
-            string resXML = httpGet(BaseURL + "/api.asp?cmd=" + command + arguments);
+            return BaseURL + "/api.asp?cmd=" + command + arguments;
 
+        }
+
+        public delegate void OnFbCommandDone(XmlDocument response);
+        public delegate void OnFbError(Exception x);
+
+
+        public void FbCommandAsync(OnFbCommandDone OnDone, OnFbError OnError, string command, params string[] args)
+        {
+
+            string httpGetString = FormatHttpGetRequest(command, args);
+
+            HttpUtils.httpGetAsync(httpGetString, delegate (string response)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(response);
+                try
+                {
+                    CheckForFbError(response);
+                }
+                catch(Exception x)
+                {
+                    OnError(x);
+                }
+                OnDone(doc);
+            });
+        }
+
+        private void CheckForFbError(string resXML)
+        {
             if (xmlDoc(resXML).SelectNodes("//error").Count > 0)
             {
                 lastError_ = xmlDoc(resXML).SelectSingleNode("//error").InnerText;
                 throw new ECommandFailed(lastError_);
             }
+        }
+        
+        private string fbCommand(string command, params string[] args)
+        {
+            string httpGetRequest = FormatHttpGetRequest(command, args);
+
+            string resXML = HttpUtils.httpGet(httpGetRequest);
+
+            CheckForFbError(resXML);
+
             return resXML;
         }
 
@@ -141,7 +146,7 @@ namespace FogBugzNet
             if (!IsLoggedIn)
                 return "Not logged in";
             string URL = BaseURL + "/api.asp?" + URLParams + "&token=" + AuthToken;
-            return httpGet(URL);
+            return HttpUtils.httpGet(URL);
         }
 
         private XmlDocument xmlDoc(string xml)
