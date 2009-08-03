@@ -34,11 +34,11 @@ using System.Text.RegularExpressions;
  * 
  * Ignore cases when parsing prefixes (project, milestone, bug, features, task, etc.)
  * 
- * ==== First Stage ====
- * Implement only parsing and moving cases between parents.
- * The root node should contain the link to the original search that yielded the mind map. Use it as comparison for changes.
- * The result of analysis should be a list of action objects (for now, just "Move to Parent" actions).
- * These actions need to be shown to the user for approval and then executed as batch. Basically, it's a diff before committing.
+ * ==== First Stage - Done ====
+ * [V] Implement only parsing and moving cases between parents.
+ * [V] The root node should contain the link to the original search that yielded the mind map. Use it as comparison for changes.
+ * [V] The result of analysis should be a list of action objects (for now, just "Move to Parent" actions).
+ * [V] These actions need to be shown to the user for approval and then executed as batch. Basically, it's a diff before committing.
  * 
  * 
  */

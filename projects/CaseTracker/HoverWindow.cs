@@ -56,7 +56,7 @@ namespace FogBugzCaseTracker
                 return _narrowSearch;
         }
 
-        public bool TrackingCase
+        public bool ClientTrackingCase
         {
             get
             {
@@ -81,7 +81,7 @@ namespace FogBugzCaseTracker
                 }
                 _trackedCase = value;
 
-                SetState(TrackingCase ? new StateTrackingCase(this) : new StateLoggedIn(this));
+                SetState(ClientTrackingCase ? new StateTrackingCase(this) : new StateLoggedIn(this));
             }
         }
 
@@ -109,30 +109,13 @@ namespace FogBugzCaseTracker
                 SetState(new StateUpdatingCases(this));
                 Application.DoEvents();
                 _cases = _fb.GetCases(formatSearch());
-                CaseDropDown.Items.Add("(nothing)");
-                CaseDropDown.Text = "(nothing)";
-                foreach (Case c in _cases)
-                {
-                    Application.DoEvents();
-                    CaseDropDown.Items.Add(c);
-                }
+
+                RepopulateCaseDropdown();
 
                 // Handle also case where a case is being tracked on the server side, but not on the client
-                if (TrackingCase || _fb.CaseWorkedOnNow != 0)
+                if (ClientTrackingCase || _fb.CaseWorkedOnNow != 0)
                 {
-                    bool foundCaseInDropdown = false;
-                    // Find case in drop down, and if it's not there then we can't track it any more
-                    for (int i = 1; i < CaseDropDown.Items.Count; ++i)
-                    {
-                        if (((Case)CaseDropDown.Items[i]).ID == _fb.CaseWorkedOnNow)
-                        {
-                            foundCaseInDropdown = true;
-                            CaseDropDown.SelectedIndex = i;
-                            TrackedCase = ((Case)CaseDropDown.Items[i]);
-                        }
-                    }
-
-                    if (!foundCaseInDropdown)
+                    if (!SelectWorkedOnCase())
                     {
                         TrackedCase = null;
                         SetState(new StateLoggedIn(this));
@@ -147,6 +130,45 @@ namespace FogBugzCaseTracker
             {
                 Utils.LogError("Error while updating: " + e.ToString());
                 SetState(new StateRetryLogin(this));
+            }
+        }
+
+        private int FindWorkedOnCaseIndexInDropDown()
+        {
+            for (int i = 1; i < CaseDropDown.Items.Count; ++i)
+            {
+                if (((Case)CaseDropDown.Items[i]).ID == _fb.CaseWorkedOnNow)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        private void SelectCase(int i)
+        {
+            CaseDropDown.SelectedIndex = i;
+            TrackedCase = ((Case)CaseDropDown.Items[i]);
+        }
+
+        private bool SelectWorkedOnCase()
+        {
+            int i = FindWorkedOnCaseIndexInDropDown();
+            if (i == -1)
+                return false;
+            SelectCase(i);
+            return true;
+        }
+        
+
+
+        private void RepopulateCaseDropdown()
+        {
+            CaseDropDown.Items.Add("(nothing)");
+            CaseDropDown.Text = "(nothing)";
+            foreach (Case c in _cases)
+            {
+                Application.DoEvents();
+                CaseDropDown.Items.Add(c);
             }
         }
 
@@ -210,11 +232,13 @@ namespace FogBugzCaseTracker
         {
 
             Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            if (p.X < 5)
-                p.X = 0;
-            if (p.X + Width > screen.Width - 5)
-                p.X = screen.Width - Width;
-
+            if (Screen.AllScreens.Length == 1)
+            {
+                if (p.X < 5)
+                    p.X = 0;
+                if (p.X + Width > screen.Width - 5)
+                    p.X = screen.Width - Width;
+            }
             if (p.Y < 5)
                 p.Y = 0;
             if (p.Y + Height > screen.Height - 5)
