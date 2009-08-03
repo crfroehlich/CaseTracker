@@ -61,6 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImportConfirmationDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportConfirmationDlg.Designer.cs">
+      <DependentUpon>ImportConfirmationDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ImportConfirmationDlg.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ImportConfirmationDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LoginForm.cs</DependentUpon>

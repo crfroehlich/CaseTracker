@@ -199,9 +199,9 @@ namespace FogBugzNet
                 c.AssignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
                 c.Area = node.SelectSingleNode("sArea").InnerText;
                 c.ID = int.Parse(node.SelectSingleNode("@ixBug").Value);
-                c.ParentCase = 0;
+                c.ParentCaseID = 0;
                 if (node.SelectSingleNode("ixBugParent").InnerText != "")
-                    c.ParentCase = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
+                    c.ParentCaseID = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
 
                 double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
                 c.Elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));

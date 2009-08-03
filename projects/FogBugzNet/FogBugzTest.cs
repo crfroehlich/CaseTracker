@@ -81,9 +81,12 @@ In order to run the test create an XML file with this format:
             fb.Logon(_creds.UserName, _creds.Password);
             Importer im = new Importer(doc, fb);
             ImportAnalysis res = im.Analyze();
-            Assert.AreEqual(res.CasesWithNewParents.Count, 1);
-            Assert.AreEqual(res.CasesWithNewParents[0].ID, 7164);
-            Assert.AreEqual(res.CasesWithNewParents[0].ParentCase, 7163);
+            Assert.AreEqual(res.CaseToNewParent.Count, 1);
+//            Assert.AreEqual(res.CasesWithNewParents[0].ID, 7164);
+            //Assert.AreEqual(res.CasesWithNewParents[0].ParentCase, 7163);
+
+            foreach (Case c in res.CaseToNewParent.Keys)
+                fb.SetParent(c, res.CaseToNewParent[c].ID);
 
 
         }
@@ -97,10 +100,10 @@ In order to run the test create an XML file with this format:
             Case[] cases = fb.GetCases("7523");
             fb.SetParent(cases[0], 7522);
             cases = fb.GetCases("7523");
-            Assert.AreEqual(cases[0].ParentCase, 7522);
+            Assert.AreEqual(cases[0].ParentCaseID, 7522);
             fb.SetParent(cases[0], 7521);
             cases = fb.GetCases("7523");
-            Assert.AreEqual(cases[0].ParentCase, 7521);
+            Assert.AreEqual(cases[0].ParentCaseID, 7521);
             
 
         }

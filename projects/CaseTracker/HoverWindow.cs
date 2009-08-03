@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 using Microsoft.Win32;
 using FogBugzNet;
 
@@ -763,6 +764,72 @@ namespace FogBugzCaseTracker
                 MessageBox.Show("Sorry, couldn't launch Excel");
                 Utils.LogError(x.ToString());
             }
+        }
+
+        XmlDocument GetMindMapFromUser()
+        {
+
+            OpenFileDialog d = new OpenFileDialog();
+
+            d.CheckFileExists = true;
+            d.Multiselect = false;
+            d.Filter = "FreeMind files (*.mm)|*.mm|All files (*.*)|*.*";
+
+            if (d.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(d.FileName);
+                    return doc;
+                }
+                catch (Exception x)
+                {
+                    Utils.LogError(x.ToString());
+                }
+            }
+
+            return null;
+        }
+
+        private void DoImport()
+        {
+            XmlDocument doc = GetMindMapFromUser();
+            if (doc == null)
+                return;
+
+            Importer imp = new Importer(doc, _fb);
+            ImportAnalysis results = imp.Analyze();
+            if (results.NothingToDo)
+            {
+                MessageBox.Show("No changes were detected. Nothing to import.", "Import Mind Map", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ImportConfirmationDlg dlg = new ImportConfirmationDlg(results);
+
+            if (dlg.ShowDialog() == DialogResult.Yes)
+            {
+                foreach (Case c in results.CaseToNewParent.Keys)
+                {
+                    try
+                    {
+                        _fb.SetParent(c, results.CaseToNewParent[c].ID);
+                    }
+                    catch(Exception x)
+                    {
+                        Utils.LogError(x.ToString());
+                    }
+                }
+
+
+            }
+        }
+
+        private void importFromFreeMindToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoImport();
+            
         }
 
     } // Class HoverWindow

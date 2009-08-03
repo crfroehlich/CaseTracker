@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -48,7 +49,29 @@ namespace FogBugzNet
 
     public class ImportAnalysis
     {
-        public List<Case> CasesWithNewParents = new List<Case>();
+        public bool NothingToDo
+        {
+            get
+            {
+                return CaseToNewParent.Count == 0;
+            }
+        }
+
+        public Dictionary<Case, Case> CaseToNewParent = new Dictionary<Case, Case>();
+        public string[] Describe()
+        {
+            List<String> ret = new List<String>();
+
+            foreach (Case c in CaseToNewParent.Keys)
+            {
+                Case parent = CaseToNewParent[c];
+
+                ret.Add(String.Format("Case {0} will be a sub-case of {1}. Here's how it's going to look:", c.ID, parent.ID ));
+                ret.Add(String.Format("  Parent Case {0}: {1}", parent.ID, parent.Name));
+                ret.Add(String.Format("    Sub Case {0}: {1}", c.ID, c.Name));
+            }
+            return ret.ToArray();
+        }
     }
 
     public class Importer
@@ -69,7 +92,7 @@ namespace FogBugzNet
             return Regex.Match(node.Attributes["TEXT"].Value, @"(\w+) (\d+): (.*)").Success;
         }
 
-        Case ParseCaseNode(XmlNode node)
+        private Case ParseCaseNode(XmlNode node)
         {
             // Parse case link / title
             string text = node.Attributes["TEXT"].Value;
@@ -104,11 +127,19 @@ namespace FogBugzNet
 
         public ImportAnalysis Analyze()
         {
-            RunOrigQuery();
+            RedoOriginalSearch();
+
+            IndexOriginalCases();
 
             ImportAnalysis a = new ImportAnalysis();
 
             XmlNodeList nodes = _doc.SelectNodes("//node");
+            FindCasesWithNewParents(nodes, a);
+            return a;
+        }
+
+        private void FindCasesWithNewParents(XmlNodeList nodes, ImportAnalysis a)
+        {
             foreach (XmlNode node in nodes)
             {
                 Case c = ParseCaseNode(node);
@@ -122,30 +153,33 @@ namespace FogBugzNet
                     continue; // TODO: Figure out a way to detect when a case was moved to the root of the milestone
                 }
                 else
-                    c.ParentCase = parent.ID;
+                    c.ParentCaseID = parent.ID;
 
                 // Now we have a case with a parent case check to see if it differs from the original case's parent
-                if (_origCases.ContainsKey(c.ID) && _origCases[c.ID].ParentCase != c.ParentCase)
+                if (_origCases.ContainsKey(c.ID) && _origCases[c.ID].ParentCaseID != c.ParentCaseID)
                 {
-                    a.CasesWithNewParents.Add(c);
+                    a.CaseToNewParent.Add(c, parent);
                 }
             }
-            return a;
         }
 
-        private void RunOrigQuery()
+        private string OriginalSearchLink
         {
-            string rootLink = _doc.SelectSingleNode("/map/node").Attributes["LINK"].Value;
-            _origSearch = new Search();
-            _origSearch.Query = Regex.Match(rootLink, "searchFor=(.*)").Groups[1].Value;
-            _origSearch.Cases = _fb.GetCases(_origSearch.Query);
+            get {
+                return _doc.SelectSingleNode("/map/node").Attributes["LINK"].Value;             
+            }
+        }
 
-            // Build a dictionary for speedy case by ID access
+        private void IndexOriginalCases()
+        {
             foreach (Case c in _origSearch.Cases)
                 _origCases.Add(c.ID, c);
-
-
-
+        }
+        private void RedoOriginalSearch()
+        {
+            _origSearch = new Search();
+            _origSearch.Query = Regex.Match(OriginalSearchLink, "searchFor=(.*)").Groups[1].Value;
+            _origSearch.Cases = _fb.GetCases(_origSearch.Query);
         }
         
     }

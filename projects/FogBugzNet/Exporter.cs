@@ -113,7 +113,7 @@ namespace FogBugzNet
 
         private void MoveCaseToParent(Case c)
         {
-            _caseToNode[c.ParentCase].AppendChild(_caseToNode[c.ID]);
+            _caseToNode[c.ParentCaseID].AppendChild(_caseToNode[c.ID]);
         }
         private void MoveCaseToMileStone(Case c)
         {
@@ -122,7 +122,7 @@ namespace FogBugzNet
         }
         private bool NoParentCaseAvailable(Case c)
         {
-            return (c.ParentCase == 0 || !_caseToNode.ContainsKey(c.ParentCase));
+            return (c.ParentCaseID == 0 || !_caseToNode.ContainsKey(c.ParentCaseID));
         }
         private XmlElement CreateMileStoneNode(Case c)
         {
