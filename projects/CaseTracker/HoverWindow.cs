@@ -699,6 +699,8 @@ namespace FogBugzCaseTracker
                 frm.UpdateCasesTimer.Enabled = false;
                 frm.exportToFreeMindToolStripMenuItem.Enabled = false;
                 frm.menuExportExcel.Enabled = false;
+                frm.busyPicture.Visible = false;
+
                 
             }
         };
@@ -720,6 +722,8 @@ namespace FogBugzCaseTracker
             {
                 frm.btnMain.Enabled = false;
                 frm.timerRetryLogin.Enabled = false;
+                frm.busyPicture.Visible = true;
+
 
             }
         };
@@ -736,6 +740,8 @@ namespace FogBugzCaseTracker
                 frm.btnMain.Enabled = true;
                 frm.exportToFreeMindToolStripMenuItem.Enabled = true;
                 frm.menuExportExcel.Enabled = true;
+                frm.busyPicture.Visible = false;
+
 
 
             }
@@ -752,6 +758,7 @@ namespace FogBugzCaseTracker
                 frm.UpdateCasesTimer.Enabled = false;
                 frm.CaseDropDown.Enabled = false;
                 frm.timerRetryLogin.Enabled = false;
+                frm.busyPicture.Visible = true;
 
             }
         };
@@ -767,6 +774,7 @@ namespace FogBugzCaseTracker
                 frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown, 
                     String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = true;
+                frm.busyPicture.Visible = false;
 
             }
         };

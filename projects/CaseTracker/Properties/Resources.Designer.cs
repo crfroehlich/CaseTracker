@@ -60,6 +60,14 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+       
+        internal static System.Drawing.Bitmap busy {
+            get {
+                object obj = ResourceManager.GetObject("busy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap check_icon {
             get {
                 object obj = ResourceManager.GetObject("check_icon", resourceCulture);
