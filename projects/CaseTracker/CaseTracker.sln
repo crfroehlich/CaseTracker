@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaseTracker", "CaseTracker.csproj", "{F4F7D42F-838F-4E3C-84AF-80A7D6CA655C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FogBugzNet", "..\FogBugzNet\FogBugzNet.csproj", "{FD76A654-B990-4D68-A7CF-852C3053B843}"
