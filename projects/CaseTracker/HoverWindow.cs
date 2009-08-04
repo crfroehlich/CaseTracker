@@ -392,10 +392,8 @@ namespace FogBugzCaseTracker
         {
             try
             {
-                if (forceNewCreds)
-                    _password = "";
                 SetState(new StateLoggingIn(this));
-                if (_password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
+                if (forceNewCreds || _password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
                 {
                     if (_server.Length == 0)
                     {
@@ -404,12 +402,12 @@ namespace FogBugzCaseTracker
                     }
 
                     LogonResultInfo info = DoLogonScreen(_username, _password, _server);
-                    if (info.UserChoice == DialogResult.Cancel)
-                        return;
-
-                    _username = info.User;
-                    _password = info.Password;
-                    _server = info.Server;
+                    if (info.UserChoice != DialogResult.Cancel)
+                    {
+                        _username = info.User;
+                        _password = info.Password;
+                        _server = info.Server;
+                    }
                 }
 
                 _fb = new FogBugz(_server);
@@ -809,7 +807,7 @@ namespace FogBugzCaseTracker
                     OnDone(false);
                 }
                 else
-                    OnDone(true);
+                    OnDone((bool)args.Result);
             });
             bw.RunWorkerAsync();
         }
