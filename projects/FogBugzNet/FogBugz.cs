@@ -55,15 +55,28 @@ namespace FogBugzNet
         }
 
 
-        public bool Logon(string email, string password)
+        public delegate void OnLogon(bool result);
+
+        public void Logon(string email, string password, OnLogon OnDone)
         {
             try
             {
 
                 email = HttpUtility.UrlEncode(email);
-                string res = fbCommand("logon", "email=" + email, "password=" + password);
-                token_ = xmlDoc(res).SelectSingleNode("//token").InnerText;
-                return true;
+                FbCommandAsync(
+                    delegate(XmlDocument res)
+                    {
+                        token_ = res.SelectSingleNode("//token").InnerText;
+                        OnDone(true);
+                    }, 
+                    delegate (Exception x)
+                    {
+                        Utils.LogError("Error during logon: " + x.ToString());
+                        token_ = "";
+                        OnDone(false);
+                    },
+                    "logon", 
+                    "email=" + email, "password=" + password);
             }
             catch (ECommandFailed e)
             {
@@ -73,8 +86,6 @@ namespace FogBugzNet
             {
                 Utils.LogError("Error during logon: " + e.ToString());
             }
-            token_ = "";
-            return false;
         }
 
 
@@ -101,7 +112,7 @@ namespace FogBugzNet
 
             string httpGetString = FormatHttpGetRequest(command, args);
 
-            HttpUtils.httpGetAsync(httpGetString, delegate (string response)
+            HttpUtils.httpGetAsync(httpGetString, delegate(string response)
             {
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(response);
@@ -109,11 +120,15 @@ namespace FogBugzNet
                 {
                     CheckForFbError(response);
                 }
-                catch(Exception x)
+                catch (Exception x)
                 {
                     OnError(x);
                 }
                 OnDone(doc);
+            },
+            delegate(Exception error)
+            {
+                OnError(error);
             });
         }
 

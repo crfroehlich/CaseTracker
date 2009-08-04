@@ -105,6 +105,7 @@ namespace FogBugzCaseTracker
         {
             try
             {
+                CaseDropDown.Enabled = true;
                 CaseDropDown.Items.Clear();
                 SetState(new StateUpdatingCases(this));
                 Application.DoEvents();
@@ -192,12 +193,7 @@ namespace FogBugzCaseTracker
 
             loadSettings();
 
-            if (!login())
-            {
-                SetState(new StateLoggedOff(this));
-                return;
-            }
-            updateCases();
+            loginWithPrompt();
         }
 
 
@@ -337,12 +333,6 @@ namespace FogBugzCaseTracker
             _username = info.User;
             _password = info.Password;
             _server = info.Server;
-            bool b = login();
-            if (b)
-                updateCases();
-            else
-                SetState(new StateLoggedOff(this));
-
         }
 
         public struct LogonResultInfo
@@ -376,9 +366,7 @@ namespace FogBugzCaseTracker
             return ret;
         }
 
- 
-
-        private bool login()
+        private void loginWithPrompt()
         {
             try
             {
@@ -394,7 +382,7 @@ namespace FogBugzCaseTracker
 
                     LogonResultInfo info = DoLogonScreen(_username, _password, _server);
                     if (info.UserChoice == DialogResult.Cancel)
-                        return false;
+                        return;
 
                     _username = info.User;
                     _password = info.Password;
@@ -403,17 +391,20 @@ namespace FogBugzCaseTracker
 
                 _fb = new FogBugz(_server);
 
-                if (!_fb.Logon(_username, _password))
+                _fb.Logon(_username, _password, delegate(bool succeeded)
                 {
-                    _password = "";
-                    MessageBox.Show("Login failed", "FogBugz", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-                else
-                {
-                    saveSettings();
-                }
-                return true;
+                    if (succeeded)
+                    {
+                        saveSettings();
+                        updateCases();
+                    }
+                    else
+                    {
+                        _password = "";
+                        SetState(new StateLoggedOff(this));
+                        MessageBox.Show("Login failed", "FogBugz", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
             }
             catch (Exception x)
             {
@@ -763,10 +754,13 @@ namespace FogBugzCaseTracker
         {
             // Try to login and if fail return to retry state.
             Utils.Trace("Retrying login...");
-            if (!_fb.Logon(_username, _password))
-                SetState(new StateRetryLogin(this));
-            else
-                updateCases();
+            _fb.Logon(_username, _password, delegate(bool success)
+            {
+                if (success)
+                    updateCases();
+                else
+                    SetState(new StateRetryLogin(this));
+            });
 
         }
 

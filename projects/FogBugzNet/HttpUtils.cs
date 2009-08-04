@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.ComponentModel;
 
 namespace FogBugzNet
 {
@@ -48,23 +49,29 @@ namespace FogBugzNet
         }
 
         public delegate void OnHttpDone(string response);
+        public delegate void OnError(Exception error);
 
-        public static void httpGetAsync(string url, OnHttpDone OnDone)
+        public static void httpGetAsync(string url, OnHttpDone OnDone, OnError onError)
         {
             try
             {
-                WebRequest req = WebRequest.Create(url);
-
-                AsyncCallback cb = new AsyncCallback( delegate(IAsyncResult res) { 
-
-                    WebRequest reqWhenDone = (WebRequest)res.AsyncState;
-                    WebResponse response = (WebResponse)reqWhenDone.EndGetResponse(res);
-                    StreamReader sr = new StreamReader(response.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
-                    OnDone(sr.ReadToEnd());
+                BackgroundWorker bw = new BackgroundWorker();
+                bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
+                {
+                    WebRequest req = WebRequest.Create(url);
+                    WebResponse res = req.GetResponse();
+                    StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
+                    args.Result = sr.ReadToEnd();
+                });
+                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
+                {
+                    if (args.Error != null)
+                        onError(args.Error);
+                    else
+                        OnDone((string)args.Result);
                 });
 
-                req.BeginGetResponse(cb, req);
-                //StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
+                bw.RunWorkerAsync();
             }
             catch (System.Net.WebException x)
             {

@@ -210,7 +210,8 @@ def main():
   parser.add_option('-w', '--password', dest='password',
                     help='Your Google Code password')
   parser.add_option('-l', '--labels', dest='labels',
-                    help='An optional list of labels to attach to the file')
+                    help='An optional list of comma-separated labels to attach '
+                    'to the file')
 
   options, args = parser.parse_args()
 

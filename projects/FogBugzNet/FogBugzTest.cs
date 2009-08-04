@@ -4,7 +4,9 @@ using System.Text;
 using FogBugzNet;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Threading;
 using System.Web;
+using NUnit.Framework;
 
 
 namespace FogBugzNet
@@ -41,13 +43,26 @@ In order to run the test create an XML file with this format:
         private void BadLogin()
         {
             FogBugz fb = new FogBugz("bad url");
-            fb.Logon("bad", "bad");
+            EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
+            fb.Logon("bad", "bad", delegate(bool result)
+            {
+                Assert.False(result);
+                evw.Set();
+            });
+            evw.WaitOne();
         }
 
         private void GoodLogin()
         {
             FogBugz fb = new FogBugz(_creds.Server);
-            fb.Logon(_creds.UserName, _creds.Password);
+            EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
+            fb.Logon(_creds.UserName, _creds.Password, delegate(bool result)
+            {
+                Assert.True(result);
+                evw.Set();
+            });
+            evw.WaitOne();
+
         }
 
         [Test]
@@ -58,18 +73,32 @@ In order to run the test create an XML file with this format:
         }
 
         [Test]
+        private FogBugz Login()
+        {
+
+            FogBugz fb = new FogBugz(_creds.Server);
+
+            EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
+            bool passed = true;
+            fb.Logon(_creds.UserName, _creds.Password, delegate(bool loggedIn)
+            {
+                passed = loggedIn;
+                evw.Set();
+            });
+            evw.WaitOne();
+            Assert.True(passed);
+            return fb;
+        }
+
+        [Test]
         public void TestMindMapExport()
         {
-            FogBugz fb = new FogBugz(_creds.Server);
-            fb.Logon(_creds.UserName, _creds.Password);
+            FogBugz fb = Login();
 
-//            Exporter ex = new Exporter(_creds.Server, fb.GetCases("status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")"));
-
-//            string query = "status:\"active\" OrderBy:\"project\" OrderBy:\"Milestone\" OrderBy:\"Priority\"";
-//            string query = "status:\"Active\" AND (project:\"OMTI\" OR project:\"sharp\")";
             string query = "project:\"infra\" milestone:\"test\"";
             Exporter ex = new Exporter(fb, new Search(query, fb.GetCases(query)));
             ex.CasesToMindMap().Save("output.mm");
+        
         }
 
         [Test]
@@ -78,8 +107,8 @@ In order to run the test create an XML file with this format:
 
             XmlDocument doc = new XmlDocument();
             doc.Load("input.mm");
-            FogBugz fb = new FogBugz(_creds.Server);
-            fb.Logon(_creds.UserName, _creds.Password);
+
+            FogBugz fb = Login();
             Importer im = new Importer(doc, fb);
             ImportAnalysis res = im.Analyze();
             Assert.AreEqual(res.CaseToNewParent.Count, 1);
@@ -96,8 +125,7 @@ In order to run the test create an XML file with this format:
         public void TestModifyParent()
         {
 
-            FogBugz fb = new FogBugz(_creds.Server);
-            fb.Logon(_creds.UserName, _creds.Password);
+            FogBugz fb = Login();
             Case[] cases = fb.GetCases("7523");
             fb.SetParent(cases[0], 7522);
             cases = fb.GetCases("7523");
@@ -117,11 +145,30 @@ In order to run the test create an XML file with this format:
             {
                 ewh.Set();
                 Assert.True(response.Contains("I'm Feeling Lucky"));
+            },
+            delegate(Exception error)
+            {
+                Assert.Fail(error.ToString());
             });
             ewh.WaitOne();
 
         }
 
+
+        [Test]
+        public void HttpTestAsyncShouldFail()
+        {
+            System.Threading.EventWaitHandle ewh = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
+            HttpUtils.httpGetAsync("htt://www.google.com", delegate(string response)
+            {
+                Assert.Fail("Should not get here");
+            },
+            delegate(Exception error)
+            {
+                ewh.Set();
+            });
+            ewh.WaitOne();
+        }
         [Test]
         public void TestAsyncFbCommand()
         {
