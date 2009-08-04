@@ -103,25 +103,35 @@ namespace FogBugzCaseTracker
 
         private void updateCases()
         {
-            try
+            CaseDropDown.Items.Clear();
+            SetState(new StateUpdatingCases(this));
+            Application.DoEvents();
+
+            GetCasesAsync(formatSearch(), delegate (Case[] cases, Exception error)
             {
-                CaseDropDown.Items.Clear();
-                SetState(new StateUpdatingCases(this));
-                Application.DoEvents();
-
-
-                GetCasesAsync(formatSearch(), delegate (Case[] cases)
+                try
                 {
+                    if (error != null)
+                        throw error;
                     _cases = cases;
                     RepopulateCaseDropdown();
                     UpdateStateAccordingToTracking();
-                });
-            }
-            catch (EServerError e) // Handle connection error / server down-time while updating
-            {
-                Utils.LogError("Error while updating: " + e.ToString());
-                SetState(new StateRetryLogin(this));
-            }
+                }
+                catch (ECommandFailed e) 
+                {
+                    if (e.ErrorCode == (int)ECommandFailed.Code.InvalidSearch)
+                    {
+                        _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
+                        updateCases();
+                        throw e;
+                    }
+                }
+                catch (Exception)
+                {
+                    SetState(new StateRetryLogin(this));
+                    throw;
+                }
+            });
         }
 
         private void UpdateStateAccordingToTracking()
@@ -332,13 +342,14 @@ namespace FogBugzCaseTracker
 
         private void btnConfigure_Click(object sender, EventArgs e)
         {
-            LogonResultInfo info = DoLogonScreen(_username, _password, _server);
-            if (info.UserChoice == DialogResult.Cancel)
-                // user cancelled, do nothing (keep old account)
-                return;
-            _username = info.User;
-            _password = info.Password;
-            _server = info.Server;
+            loginWithPrompt(true);
+//             LogonResultInfo info = DoLogonScreen(_username, _password, _server);
+//             if (info.UserChoice == DialogResult.Cancel)
+//                 // user cancelled, do nothing (keep old account)
+//                 return;
+//             _username = info.User;
+//             _password = info.Password;
+//             _server = info.Server;
         }
 
         public struct LogonResultInfo
@@ -374,9 +385,15 @@ namespace FogBugzCaseTracker
 
         private void loginWithPrompt()
         {
+            loginWithPrompt(false);
+        }
+
+        private void loginWithPrompt(bool forceNewCreds)
+        {
             try
             {
-
+                if (forceNewCreds)
+                    _password = "";
                 SetState(new StateLoggingIn(this));
                 if (_password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
                 {
@@ -756,7 +773,7 @@ namespace FogBugzCaseTracker
             }
         };
 
-        public delegate void OnCasesFetched(Case[] cases);
+        public delegate void OnCasesFetched(Case[] cases, Exception error);
 
         public void GetCasesAsync(string search, OnCasesFetched OnDone)
         {
@@ -768,9 +785,9 @@ namespace FogBugzCaseTracker
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
             {
                 if (args.Error != null)
-                    throw args.Error;
+                    OnDone(null, args.Error);
                 else
-                    OnDone((Case[])args.Result);
+                    OnDone((Case[])args.Result, null);
             });
             bw.RunWorkerAsync();
         }

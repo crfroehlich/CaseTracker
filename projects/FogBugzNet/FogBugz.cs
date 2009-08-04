@@ -23,17 +23,20 @@ namespace FogBugzNet
 
     public class ECommandFailed : Exception
     {
-        public ECommandFailed(string reason)
+        public enum Code
+        {
+            InvalidSearch = 10
+        };
+        public int ErrorCode;
+        public ECommandFailed(string reason, int errorCode)
             : base(reason)
         {
+            ErrorCode = errorCode;
         }
     }
 
     public class FogBugz
     {
-        private string lastError_;
-        public string LastError { get { return lastError_; } }
-
         private string token_;
         public string AuthToken { get { return token_; } }
 
@@ -69,7 +72,7 @@ namespace FogBugzNet
             }
             catch (ECommandFailed e)
             {
-                lastError_ = e.Message;
+                Utils.LogError("Error while logging on: {0}, code: {1}", e.Message, e.ErrorCode);
             }
             catch (EServerError e)
             {
@@ -100,8 +103,9 @@ namespace FogBugzNet
         {
             if (xmlDoc(resXML).SelectNodes("//error").Count > 0)
             {
-                lastError_ = xmlDoc(resXML).SelectSingleNode("//error").InnerText;
-                throw new ECommandFailed(lastError_);
+                string err = xmlDoc(resXML).SelectSingleNode("//error").InnerText;
+                int code = int.Parse(xmlDoc(resXML).SelectSingleNode("//error").Attributes["code"].Value);
+                throw new ECommandFailed(err, code);
             }
         }
         
