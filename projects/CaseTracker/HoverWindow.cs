@@ -105,27 +105,17 @@ namespace FogBugzCaseTracker
         {
             try
             {
-                CaseDropDown.Enabled = true;
                 CaseDropDown.Items.Clear();
                 SetState(new StateUpdatingCases(this));
                 Application.DoEvents();
-                _cases = _fb.GetCases(formatSearch());
 
-                RepopulateCaseDropdown();
 
-                // Handle also case where a case is being tracked on the server side, but not on the client
-                if (ClientTrackingCase || _fb.CaseWorkedOnNow != 0)
+                GetCasesAsync(formatSearch(), delegate (Case[] cases)
                 {
-                    if (!SelectWorkedOnCase())
-                    {
-                        TrackedCase = null;
-                        SetState(new StateLoggedIn(this));
-                    }
-                    else
-                        SetState(new StateTrackingCase(this));
-                }
-                else
-                    SetState(new StateLoggedIn(this));
+                    _cases = cases;
+                    RepopulateCaseDropdown();
+                    UpdateStateAccordingToTracking();
+                });
             }
             catch (EServerError e) // Handle connection error / server down-time while updating
             {
@@ -134,6 +124,22 @@ namespace FogBugzCaseTracker
             }
         }
 
+        private void UpdateStateAccordingToTracking()
+        {
+            // Handle also case where a case is being tracked on the server side, but not on the client
+            if (ClientTrackingCase || _fb.CaseWorkedOnNow != 0)
+            {
+                if (!SelectWorkedOnCase())
+                {
+                    TrackedCase = null;
+                    SetState(new StateLoggedIn(this));
+                }
+                else
+                    SetState(new StateTrackingCase(this));
+            }
+            else
+                SetState(new StateLoggedIn(this));
+        }
         private int FindWorkedOnCaseIndexInDropDown()
         {
             for (int i = 1; i < CaseDropDown.Items.Count; ++i)
@@ -391,7 +397,7 @@ namespace FogBugzCaseTracker
 
                 _fb = new FogBugz(_server);
 
-                _fb.Logon(_username, _password, delegate(bool succeeded)
+                LogonAsync(_username, _password, delegate(bool succeeded)
                 {
                     if (succeeded)
                     {
@@ -750,11 +756,52 @@ namespace FogBugzCaseTracker
             }
         };
 
+        public delegate void OnCasesFetched(Case[] cases);
+
+        public void GetCasesAsync(string search, OnCasesFetched OnDone)
+        {
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
+            {
+                args.Result = _fb.GetCases(search);
+            });
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
+            {
+                if (args.Error != null)
+                    throw args.Error;
+                else
+                    OnDone((Case[])args.Result);
+            });
+            bw.RunWorkerAsync();
+        }
+
+        public delegate void OnLogon(bool succeeded);
+
+        public void LogonAsync(string email, string password, OnLogon OnDone)
+        {
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
+            {
+                args.Result = _fb.Logon(email, password);
+            });
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
+            {
+                if (args.Error != null)
+                {
+                    Utils.LogError("Error during login: {0}", args.Error.ToString());
+                    OnDone(false);
+                }
+                else
+                    OnDone(true);
+            });
+            bw.RunWorkerAsync();
+        }
+
         private void timerRetryLogin_Tick(object sender, EventArgs e)
         {
             // Try to login and if fail return to retry state.
             Utils.Trace("Retrying login...");
-            _fb.Logon(_username, _password, delegate(bool success)
+            LogonAsync(_username, _password, delegate(bool success)
             {
                 if (success)
                     updateCases();

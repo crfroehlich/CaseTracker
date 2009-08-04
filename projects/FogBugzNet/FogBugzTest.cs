@@ -43,26 +43,13 @@ In order to run the test create an XML file with this format:
         private void BadLogin()
         {
             FogBugz fb = new FogBugz("bad url");
-            EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
-            fb.Logon("bad", "bad", delegate(bool result)
-            {
-                Assert.False(result);
-                evw.Set();
-            });
-            evw.WaitOne();
+            fb.Logon("bad", "bad");
         }
 
         private void GoodLogin()
         {
             FogBugz fb = new FogBugz(_creds.Server);
-            EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
-            fb.Logon(_creds.UserName, _creds.Password, delegate(bool result)
-            {
-                Assert.True(result);
-                evw.Set();
-            });
-            evw.WaitOne();
-
+            fb.Logon(_creds.UserName, _creds.Password);
         }
 
         [Test]
@@ -79,14 +66,7 @@ In order to run the test create an XML file with this format:
             FogBugz fb = new FogBugz(_creds.Server);
 
             EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
-            bool passed = true;
-            fb.Logon(_creds.UserName, _creds.Password, delegate(bool loggedIn)
-            {
-                passed = loggedIn;
-                evw.Set();
-            });
-            evw.WaitOne();
-            Assert.True(passed);
+            Assert.True(fb.Logon(_creds.UserName, _creds.Password));
             return fb;
         }
 
@@ -137,62 +117,6 @@ In order to run the test create an XML file with this format:
 
         }
 
-        [Test]
-        public void HttpTestAsync()
-        {
-            System.Threading.EventWaitHandle ewh = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
-            HttpUtils.httpGetAsync("http://www.google.com", delegate(string response)
-            {
-                ewh.Set();
-                Assert.True(response.Contains("I'm Feeling Lucky"));
-            },
-            delegate(Exception error)
-            {
-                Assert.Fail(error.ToString());
-            });
-            ewh.WaitOne();
-
-        }
-
-
-        [Test]
-        public void HttpTestAsyncShouldFail()
-        {
-            System.Threading.EventWaitHandle ewh = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
-            HttpUtils.httpGetAsync("htt://www.google.com", delegate(string response)
-            {
-                Assert.Fail("Should not get here");
-            },
-            delegate(Exception error)
-            {
-                ewh.Set();
-            });
-            ewh.WaitOne();
-        }
-        [Test]
-        public void TestAsyncFbCommand()
-        {
-
-            FogBugz fb = new FogBugz(_creds.Server);
-
-            string email = HttpUtility.UrlEncode(_creds.UserName);
-            System.Threading.EventWaitHandle wait = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
-            fb.FbCommandAsync(delegate (XmlDocument doc)
-            {
-                Assert.Greater(doc.SelectNodes("//token").Count, 0);
-                wait.Set();
-            },
-            delegate (Exception x)
-            {
-                Assert.Fail(x.ToString());
-                wait.Set();
-            },
-            "logon", 
-            "email=" + email, "password=" + _creds.Password);
-
-            wait.WaitOne();
-
-        }
 
     }
 }

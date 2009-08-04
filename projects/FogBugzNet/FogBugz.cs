@@ -55,28 +55,17 @@ namespace FogBugzNet
         }
 
 
-        public delegate void OnLogon(bool result);
 
-        public void Logon(string email, string password, OnLogon OnDone)
+        public bool Logon(string email, string password)
         {
             try
             {
-
                 email = HttpUtility.UrlEncode(email);
-                FbCommandAsync(
-                    delegate(XmlDocument res)
-                    {
-                        token_ = res.SelectSingleNode("//token").InnerText;
-                        OnDone(true);
-                    }, 
-                    delegate (Exception x)
-                    {
-                        Utils.LogError("Error during logon: " + x.ToString());
-                        token_ = "";
-                        OnDone(false);
-                    },
-                    "logon", 
-                    "email=" + email, "password=" + password);
+                string ret = fbCommand("logon", "email=" + email, "password=" + password);
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(ret);
+                token_ = doc.SelectSingleNode("//token").InnerText;
+                return true;
             }
             catch (ECommandFailed e)
             {
@@ -86,6 +75,7 @@ namespace FogBugzNet
             {
                 Utils.LogError("Error during logon: " + e.ToString());
             }
+            return false;
         }
 
 
@@ -105,32 +95,6 @@ namespace FogBugzNet
 
         public delegate void OnFbCommandDone(XmlDocument response);
         public delegate void OnFbError(Exception x);
-
-
-        public void FbCommandAsync(OnFbCommandDone OnDone, OnFbError OnError, string command, params string[] args)
-        {
-
-            string httpGetString = FormatHttpGetRequest(command, args);
-
-            HttpUtils.httpGetAsync(httpGetString, delegate(string response)
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(response);
-                try
-                {
-                    CheckForFbError(response);
-                }
-                catch (Exception x)
-                {
-                    OnError(x);
-                }
-                OnDone(doc);
-            },
-            delegate(Exception error)
-            {
-                OnError(error);
-            });
-        }
 
         private void CheckForFbError(string resXML)
         {
