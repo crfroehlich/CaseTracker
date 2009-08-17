@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VersionInfo>
+  <Release>
+    <Version>1.1.0.90</Version>
+    <Notes>Auto-update checks for new version every hour</Notes>
+  </Release>
+</VersionInfo>
