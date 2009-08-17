@@ -97,6 +97,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>HoverWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VersionUpdatePrompt.resx">
+      <DependentUpon>VersionUpdatePrompt.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -122,6 +125,12 @@
     </Compile>
     <Compile Include="HoverWindow.Designer.cs">
       <DependentUpon>HoverWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VersionUpdatePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VersionUpdatePrompt.Designer.cs">
+      <DependentUpon>VersionUpdatePrompt.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\busy.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

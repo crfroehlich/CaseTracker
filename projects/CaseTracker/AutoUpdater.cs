@@ -118,6 +118,19 @@ namespace FogBugzCaseTracker
 
         private void SuggestUpdate(string setup)
         {
+            VersionUpdatePrompt dlg = new VersionUpdatePrompt();
+
+            dlg.WhatsNew = _latest.SelectSingleNode("Notes").InnerText;
+            dlg.LatestVersion = _latest.SelectSingleNode("Version").InnerText;
+            dlg.CurrentVersion = _versionInfo.ProductVersion;
+            
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Yes)
+                DoUpdate();
+        }
+
+        private void DoUpdate()
+        {
+
 
         }
 
