@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VersionInfo>
   <Release>
-    <Version>1.2.0.92</Version>
+    <Version>1.2.0.93</Version>
     <Notes>* Auto-update checks for new version every hour</Notes>
     <URL>http://visionmap.googlecode.com/files/CaseTracker-1.1.0.60-setup.exe</URL>
     <MD5>C2FD13B997FF3DE9BE5E83EF1FEDC3AE</MD5>
