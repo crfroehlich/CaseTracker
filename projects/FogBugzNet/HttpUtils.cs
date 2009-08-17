@@ -48,6 +48,44 @@ namespace FogBugzNet
             }
         }
 
+        public static void ReadStreamToFile(Stream src, string dst)
+        {
+
+            FileStream fs = new FileStream(dst, FileMode.Create, FileAccess.Write, FileShare.None);
+            BinaryWriter br = new BinaryWriter(fs);
+
+            byte[] buffer = new byte[4096];
+            int count = 0;
+            do
+            {
+                count = src.Read(buffer, 0, buffer.Length);
+                br.Write(buffer, 0, count);
+            } while (count != 0);
+
+            fs.Close();
+
+        }
+
+        public static void httpGetBinary(string url, string targetFile)
+        {
+            try
+            {
+                WebRequest req = WebRequest.Create(url);
+                WebResponse res = req.GetResponse();
+                ReadStreamToFile(res.GetResponseStream(), targetFile);
+            }
+            catch (System.Net.WebException x)
+            {
+                Utils.LogError(x.ToString() + ". Connection status: " + x.Status.ToString());
+                throw new EServerError("Unable to find FogBugz server at location: " + url);
+            }
+            catch (System.UriFormatException x)
+            {
+                Utils.LogError(x.ToString());
+                throw new EURLError("The server URL you provided appears to be malformed: " + url);
+            }
+        }
+
 
 
     }
