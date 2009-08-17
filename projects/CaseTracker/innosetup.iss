@@ -8,7 +8,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{7FB91CB0-CEB7-42B3-AC96-B608B4C89E53}
 AppName=Case Tracker
-AppVerName=Case Tracker 1.5
+AppVerName=Case Tracker
 AppPublisher=VisionMap Inc.
 AppPublisherURL=http://www.visionmap.com/
 AppSupportURL=http://www.visionmap.com/

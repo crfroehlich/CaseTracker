@@ -18,6 +18,7 @@ namespace FogBugzCaseTracker
         private TimeSpan _interval;
         private FileVersionInfo _versionInfo;
         private XmlElement _latest;
+        private string _setup;
 
         public AutoUpdater(string url, TimeSpan interval)
         {
@@ -116,7 +117,7 @@ namespace FogBugzCaseTracker
             return localFilePath;
         }
 
-        private void SuggestUpdate(string setup)
+        private void SuggestUpdate()
         {
             VersionUpdatePrompt dlg = new VersionUpdatePrompt();
 
@@ -130,7 +131,7 @@ namespace FogBugzCaseTracker
 
         private void DoUpdate()
         {
-
+            System.Diagnostics.Process.Start(_setup);
 
         }
 
@@ -141,8 +142,8 @@ namespace FogBugzCaseTracker
 
             if (IsLatestNewerThanMe())
             {
-                string setup = DownloadLatestVersion();
-                SuggestUpdate(setup);
+                _setup = DownloadLatestVersion();
+                SuggestUpdate();
             }
 
         }
