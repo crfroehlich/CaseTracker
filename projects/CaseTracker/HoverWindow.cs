@@ -30,6 +30,8 @@ namespace FogBugzCaseTracker
         private String _baseSearch;
         private String _narrowSearch;
 
+        private Case _caseBeforePause;
+
         private bool _dragging = false;
         private DateTime _startDragTime;
         private int _mouseDownX;
@@ -705,6 +707,8 @@ namespace FogBugzCaseTracker
                 frm.exportToFreeMindToolStripMenuItem.Enabled = false;
                 frm.menuExportExcel.Enabled = false;
                 frm.busyPicture.Visible = false;
+                frm.btnPause.Enabled = false;
+                frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_disabled"];
 
                 
             }
@@ -780,6 +784,10 @@ namespace FogBugzCaseTracker
                     String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.busyPicture.Visible = false;
+                frm.btnPause.Enabled = true;
+                frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_enabled"];
+
+
 
             }
         };
@@ -923,6 +931,12 @@ namespace FogBugzCaseTracker
         {
             DoImport();
             
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            _caseBeforePause = TrackedCase;
+
         }
 
     } // Class HoverWindow
