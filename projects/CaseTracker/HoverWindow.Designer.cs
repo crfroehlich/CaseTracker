@@ -56,10 +56,13 @@ namespace FogBugzCaseTracker
             this.btnRefresh = new System.Windows.Forms.Button();
             this.backgroundPic = new System.Windows.Forms.PictureBox();
             this.btnImages = new System.Windows.Forms.ImageList(this.components);
+            this.pnlPaused = new System.Windows.Forms.Panel();
+            this.lblImBack = new System.Windows.Forms.Label();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.busyPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).BeginInit();
+            this.pnlPaused.SuspendLayout();
             this.SuspendLayout();
             // 
             // UpdateCasesTimer
@@ -329,6 +332,31 @@ namespace FogBugzCaseTracker
             this.btnImages.Images.SetKeyName(0, "pause_enabled");
             this.btnImages.Images.SetKeyName(1, "pause_disabled");
             // 
+            // pnlPaused
+            // 
+            this.pnlPaused.Controls.Add(this.lblImBack);
+            this.pnlPaused.Location = new System.Drawing.Point(106, 6);
+            this.pnlPaused.Name = "pnlPaused";
+            this.pnlPaused.Size = new System.Drawing.Size(203, 17);
+            this.pnlPaused.TabIndex = 19;
+            this.pnlPaused.Visible = false;
+            // 
+            // lblImBack
+            // 
+            this.lblImBack.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblImBack.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblImBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImBack.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblImBack.Location = new System.Drawing.Point(3, 1);
+            this.lblImBack.Name = "lblImBack";
+            this.lblImBack.Size = new System.Drawing.Size(197, 16);
+            this.lblImBack.TabIndex = 0;
+            this.lblImBack.Text = "I\'m Back";
+            this.lblImBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblImBack.Click += new System.EventHandler(this.lblImBack_Click);
+            // 
             // HoverWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,6 +364,7 @@ namespace FogBugzCaseTracker
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(500, 26);
             this.ControlBox = false;
+            this.Controls.Add(this.pnlPaused);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.busyPicture);
             this.Controls.Add(this.extensionGrip);
@@ -366,6 +395,7 @@ namespace FogBugzCaseTracker
             ((System.ComponentModel.ISupportInitialize)(this.busyPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).EndInit();
+            this.pnlPaused.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -399,5 +429,7 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.PictureBox busyPicture;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.ImageList btnImages;
+        private System.Windows.Forms.Panel pnlPaused;
+        private System.Windows.Forms.Label lblImBack;
     }
 }

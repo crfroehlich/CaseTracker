@@ -111,8 +111,6 @@ namespace FogBugzCaseTracker
                 HttpUtils.httpGetBinary(remoteURL, localFilePath);
                 VerifyMd5(localFilePath, _latest.SelectSingleNode("MD5").InnerText);
             }
-            else
-                Utils.Trace("This release was already downloaded to {0}", localFilePath);
                 
             return localFilePath;
         }
@@ -137,7 +135,6 @@ namespace FogBugzCaseTracker
 
         private void FindNewerReleases(XmlDocument doc)
         {
-            Utils.Trace("Looking for newer releases (current: {0})", _versionInfo.ProductVersion);
             _latest = (XmlElement)doc.SelectNodes("//Release").Item(0);
 
             if (IsLatestNewerThanMe())

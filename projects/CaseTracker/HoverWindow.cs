@@ -709,6 +709,7 @@ namespace FogBugzCaseTracker
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enabled = false;
                 frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_disabled"];
+                frm.pnlPaused.Visible = false;
 
                 
             }
@@ -786,11 +787,32 @@ namespace FogBugzCaseTracker
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enabled = true;
                 frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_enabled"];
-
-
-
             }
         };
+
+
+        private class StatePaused : StateTrackingCase
+        {
+            public StatePaused(HoverWindow frm)
+                : base(frm)
+            {
+                frm.btnResolve.Enabled = false;
+                frm.btnViewCase.Enabled = false;
+                frm.btnResolveClose.Enabled = false;
+                frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown,
+                    String.Format("[PAUSED] Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
+                frm.UpdateCasesTimer.Enabled = false;
+                frm.busyPicture.Visible = false;
+                frm.btnPause.Enabled = false;
+                frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_disabled"];
+                frm.pnlPaused.Visible = true;
+                frm.pnlPaused.Top = 1;
+                frm.pnlPaused.Left = 1;
+                frm.pnlPaused.Width = frm.Width - 2;
+                frm.pnlPaused.Height = frm.Height - 2;
+            }
+        };
+
 
         public delegate void OnCasesFetched(Case[] cases, Exception error);
 
@@ -936,7 +958,14 @@ namespace FogBugzCaseTracker
         private void btnPause_Click(object sender, EventArgs e)
         {
             _caseBeforePause = TrackedCase;
+            TrackedCase = null;
+            SetState(new StatePaused(this));
+        }
 
+        private void lblImBack_Click(object sender, EventArgs e)
+        {
+            TrackedCase = _caseBeforePause;
+            SetState(new StateTrackingCase(this));
         }
 
     } // Class HoverWindow
