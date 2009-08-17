@@ -698,17 +698,22 @@ namespace FogBugzCaseTracker
                 frm.CaseDropDown.Text = "(please login)";
                 frm.CaseDropDown.Enabled = false;
                 frm.btnFilter.Enabled = false;
+                frm.btnFilter.BackgroundImage = frm.imageList.Images["filter_disabled.png"];
                 frm.btnRefresh.Enabled = false;
+                frm.btnRefresh.BackgroundImage = frm.imageList.Images["refresh_disabled.gif"];
                 frm.btnNewCase.Enabled = false;
+                frm.btnNewCase.Image = frm.imageList.Images["new_case_disabled.png"];
                 frm.btnResolve.Enabled = false;
+                frm.btnResolve.Image = frm.imageList.Images["check_icon_disabled.gif"];
                 frm.btnViewCase.Enabled = false;
                 frm.btnResolveClose.Enabled = false;
+                frm.btnResolveClose.Image = frm.imageList.Images["fat_check_disabled.png"];
                 frm.UpdateCasesTimer.Enabled = false;
                 frm.exportToFreeMindToolStripMenuItem.Enabled = false;
                 frm.menuExportExcel.Enabled = false;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enabled = false;
-                frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_disabled"];
+                frm.btnPause.BackgroundImage = frm.imageList.Images["pause_disabled"];
                 frm.pnlPaused.Visible = false;
 
                 
@@ -744,8 +749,12 @@ namespace FogBugzCaseTracker
             {
                 frm.CaseDropDown.Enabled = true;
                 frm.btnFilter.Enabled = true;
+                frm.btnFilter.BackgroundImage = frm.imageList.Images["filter.png"];
+                frm.btnRefresh.BackgroundImage = frm.imageList.Images["refresh.gif"];
                 frm.btnRefresh.Enabled = true;
                 frm.btnNewCase.Enabled = true;
+                frm.btnNewCase.Image = frm.imageList.Images["new_case.png"];
+
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.btnMain.Enabled = true;
                 frm.exportToFreeMindToolStripMenuItem.Enabled = true;
@@ -779,14 +788,18 @@ namespace FogBugzCaseTracker
                 : base(frm)
             {
                 frm.btnResolve.Enabled = true;
+                frm.btnResolve.Image = frm.imageList.Images["check_icon.gif"];
+
                 frm.btnViewCase.Enabled = true;
                 frm.btnResolveClose.Enabled = true;
+                frm.btnResolveClose.Image = frm.imageList.Images["fat_check.png"];
+        
                 frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown, 
                     String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enabled = true;
-                frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_enabled"];
+                frm.btnPause.BackgroundImage = frm.imageList.Images["pause_enabled"];
             }
         };
 
@@ -797,14 +810,19 @@ namespace FogBugzCaseTracker
                 : base(frm)
             {
                 frm.btnResolve.Enabled = false;
+                frm.btnResolve.Image = frm.imageList.Images["check_icon_disabled.gif"];
+
+
                 frm.btnViewCase.Enabled = false;
                 frm.btnResolveClose.Enabled = false;
+                frm.btnResolveClose.Image = frm.imageList.Images["fat_check_disabled.png"];
+        
                 frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown,
                     String.Format("[PAUSED] Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = false;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enabled = false;
-                frm.btnPause.BackgroundImage = frm.btnImages.Images["pause_disabled"];
+                frm.btnPause.BackgroundImage = frm.imageList.Images["pause_disabled"];
                 frm.pnlPaused.Visible = true;
                 frm.pnlPaused.Top = 1;
                 frm.pnlPaused.Left = 1;

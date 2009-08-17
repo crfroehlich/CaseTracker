@@ -55,7 +55,7 @@ namespace FogBugzCaseTracker
             this.btnMain = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.backgroundPic = new System.Windows.Forms.PictureBox();
-            this.btnImages = new System.Windows.Forms.ImageList(this.components);
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.pnlPaused = new System.Windows.Forms.Panel();
             this.lblImBack = new System.Windows.Forms.Label();
             this.MainMenu.SuspendLayout();
@@ -325,12 +325,32 @@ namespace FogBugzCaseTracker
             this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
             this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
             // 
-            // btnImages
+            // imageList
             // 
-            this.btnImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("btnImages.ImageStream")));
-            this.btnImages.TransparentColor = System.Drawing.Color.Transparent;
-            this.btnImages.Images.SetKeyName(0, "pause_enabled");
-            this.btnImages.Images.SetKeyName(1, "pause_disabled");
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "pause_enabled");
+            this.imageList.Images.SetKeyName(1, "pause_disabled");
+            this.imageList.Images.SetKeyName(2, "freemind_disabled.png");
+            this.imageList.Images.SetKeyName(3, "excel.png");
+            this.imageList.Images.SetKeyName(4, "excel_disabled.png");
+            this.imageList.Images.SetKeyName(5, "firefox_16.png");
+            this.imageList.Images.SetKeyName(6, "firefox_16_disabled.png");
+            this.imageList.Images.SetKeyName(7, "freemind.png");
+            this.imageList.Images.SetKeyName(8, "icon.bmp");
+            this.imageList.Images.SetKeyName(9, "icon_disabled.bmp");
+            this.imageList.Images.SetKeyName(10, "key.gif");
+            this.imageList.Images.SetKeyName(11, "key_disabled.gif");
+            this.imageList.Images.SetKeyName(12, "new_case.png");
+            this.imageList.Images.SetKeyName(13, "new_case_disabled.png");
+            this.imageList.Images.SetKeyName(14, "filter.png");
+            this.imageList.Images.SetKeyName(15, "filter_disabled.png");
+            this.imageList.Images.SetKeyName(16, "refresh_disabled.gif");
+            this.imageList.Images.SetKeyName(17, "refresh.gif");
+            this.imageList.Images.SetKeyName(18, "check_icon_disabled.gif");
+            this.imageList.Images.SetKeyName(19, "check_icon.gif");
+            this.imageList.Images.SetKeyName(20, "fat_check.png");
+            this.imageList.Images.SetKeyName(21, "fat_check_disabled.png");
             // 
             // pnlPaused
             // 
@@ -428,7 +448,7 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.ToolStripMenuItem importFromFreeMindToolStripMenuItem;
         private System.Windows.Forms.PictureBox busyPicture;
         private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.ImageList btnImages;
+        private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Panel pnlPaused;
         private System.Windows.Forms.Label lblImBack;
     }
