@@ -24,6 +24,7 @@ namespace FogBugzCaseTracker
         private string _password;
         private Case[] _cases;
         private bool _resizing = false;
+        private AutoUpdater _autoUpdate;
 
         private bool _ignoreBaseSearch;
         private String _baseSearch;
@@ -99,6 +100,10 @@ namespace FogBugzCaseTracker
             _baseSearch = ConfigurationManager.AppSettings["BaseSearch"];
             _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
             _ignoreBaseSearch =  bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]);
+            _autoUpdate = new AutoUpdater(  ConfigurationManager.AppSettings["AutoUpdateURL"], 
+                                            new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
+
+            _autoUpdate.Run();
         }
 
         private void updateCases()
