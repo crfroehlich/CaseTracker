@@ -88,7 +88,7 @@ namespace FogBugzCaseTracker
             StringBuilder sb = new StringBuilder();
             byte[] actualHash = md5.ComputeHash(new FileStream(filename, FileMode.Open, FileAccess.Read));
             foreach (Byte b in actualHash)
-                sb.Append(String.Format("{0,2:X1}", b));
+                sb.Append(String.Format("{0,2:X}", b));
             string actualHashStr = sb.ToString();
             if (actualHashStr != expectedHash)
             {
