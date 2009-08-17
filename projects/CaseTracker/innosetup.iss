@@ -51,5 +51,5 @@ Name: "{commondesktop}\Case Tracker"; Filename: "{app}\CaseTracker.exe"; Tasks: 
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Case Tracker"; Filename: "{app}\CaseTracker.exe"; Tasks: quicklaunchicon
 
 [Run]
-Filename: "{app}\CaseTracker.exe"; Description: "{cm:LaunchProgram,Case Tracker}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\CaseTracker.exe"; Description: "{cm:LaunchProgram,Case Tracker}"; Flags: nowait postinstall
 

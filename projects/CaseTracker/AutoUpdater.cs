@@ -88,10 +88,13 @@ namespace FogBugzCaseTracker
             StringBuilder sb = new StringBuilder();
             byte[] actualHash = md5.ComputeHash(new FileStream(filename, FileMode.Open, FileAccess.Read));
             foreach (Byte b in actualHash)
-                sb.Append(String.Format("{0:X1}", b));
+                sb.Append(String.Format("{0,2:X1}", b));
             string actualHashStr = sb.ToString();
             if (actualHashStr != expectedHash)
+            {
+                File.Delete(filename);
                 throw new Exception(String.Format("Bad hash of downloaded version.\nExpected: {0}\n  Actual: {1}", expectedHash, actualHashStr));
+            }
         }
 
         private string DownloadLatestVersion()
@@ -129,7 +132,7 @@ namespace FogBugzCaseTracker
 
         private void DoUpdate()
         {
-            System.Diagnostics.Process.Start(_setup);
+            System.Diagnostics.Process.Start(_setup, "/SILENT");
 
         }
 
