@@ -32,16 +32,12 @@ namespace FogBugzCaseTracker
 
             trayIcon.ShowBalloonTip(2000);
 
-            Point p = new Point();
-            p.X = (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2;
-            p.Y = 0;
-            Location = p;
+            MoveWindowToCenter();
 
             loadSettings();
 
             loginWithPrompt();
         }
-
 
 
         private void HoverWindow_MouseDown(object sender, MouseEventArgs e)
@@ -74,18 +70,7 @@ namespace FogBugzCaseTracker
 
         private void listCases_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                // If the selected item is changed as part of the update process, 
-                // don't count it as the user changing selection
-                if (_currentState.GetType() == typeof(StateUpdatingCases))
-                    return;
-                TrackedCase = SelectedItemIsCase() ? (Case)CaseDropDown.SelectedItem : null;
-            }
-            catch(System.InvalidCastException x)
-            {
-                Utils.LogError(x.ToString() + "Selected item (index:{0}) is not a Case!", CaseDropDown.SelectedIndex);
-            }
+            UpdateTrackedItem();
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -104,7 +89,7 @@ namespace FogBugzCaseTracker
             if (e.Button == MouseButtons.Left)
             {
                 Visible = !Visible;
-                btnShowHide.Text = Visible ? "Hide" : "Show";
+                btnShowHide.Text = Visible ? "Hide" : "Show"; // TODO: should be handled by the state classes
             }
 
         }
@@ -112,28 +97,12 @@ namespace FogBugzCaseTracker
         private void btnConfigure_Click(object sender, EventArgs e)
         {
             loginWithPrompt(true);
-//             LogonResultInfo info = DoLogonScreen(_username, _password, _server);
-//             if (info.UserChoice == DialogResult.Cancel)
-//                 // user cancelled, do nothing (keep old account)
-//                 return;
-//             _username = info.User;
-//             _password = info.Password;
-//             _server = info.Server;
         }
 
         private void HoverWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            try
-            {
-                if (_switchToNothinUponClosing)
-                    _fb.ToggleWorkingOnCase(0);
-                saveSettings();
-            }
-            catch (System.Exception x)
-            {
-                Utils.LogError(x.ToString());
-            	
-            }
+
+            CloseApplication();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -181,20 +150,11 @@ namespace FogBugzCaseTracker
 
         private void SetFilter()
         {
-            SearchForm f = new SearchForm();
-            f.fb = _fb;
-            f.dad = this;
-            f.UserSearch = _narrowSearch;
-            f.BaseSearch = _baseSearch;
-            f.IgnoreBaseSearch = _ignoreBaseSearch;
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                _narrowSearch = f.UserSearch;
-                _ignoreBaseSearch = f.IgnoreBaseSearch;
-                updateCases();
-            }
+            ShowFilterDialog();
+
 
         }
+
         private void btnMain_Click(object sender, EventArgs e)
         {
             Point p = new Point(Location.X + btnMain.Location.X,
@@ -226,10 +186,8 @@ namespace FogBugzCaseTracker
         private void grip_MouseMove(object sender, MouseEventArgs e)
         {
             if (_resizing)
-            {
-                Width += Cursor.Position.X - _gripStartX;
-                _gripStartX = Cursor.Position.X;
-            }
+                ResizeWidth();
+
         }
 
         private void btnResolveClose_Click(object sender, EventArgs e)
@@ -278,67 +236,23 @@ namespace FogBugzCaseTracker
 
         private void menuExportExcel_Click(object sender, EventArgs e)
         {
-            try
-            {
+            ExportToExcel();
 
-                String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".txt";
-                // create a writer and open the file
-                System.IO.TextWriter tw = new System.IO.StreamWriter(tempTabSep);
-
-                for (int i = 1; i < CaseDropDown.Items.Count; ++i)
-                {
-                    Case c = (Case)CaseDropDown.Items[i];
-                    tw.WriteLine("({0:D}) {1}\t{2}h\t{3}", c.ID, c.Name, c.Estimate.TotalHours, c.AssignedTo);
-                }
-
-                tw.Close();
-                System.Diagnostics.Process.Start("excel.exe", "\"" + tempTabSep + "\"");
-            }
-            catch (System.Exception x)
-            {
-                MessageBox.Show("Sorry, couldn't launch Excel");
-                Utils.LogError(x.ToString());
-            }
         }
-
-
-
 
         private void timerRetryLogin_Tick(object sender, EventArgs e)
         {
-            // Try to login and if fail return to retry state.
-            Utils.Trace("Retrying login...");
-            LogonAsync(_username, _password, delegate(bool success)
-            {
-                if (success)
-                    updateCases();
-                else
-                    SetState(new StateRetryLogin(this));
-            });
+
+            RetryLogin();
 
         }
 
         private void exportToFreeMindToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-
-                String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".mm";
-                // create a writer and open the file
-
-                Exporter ex = new Exporter(_fb, new Search(formatSearch(), _cases));
-                ex.CasesToMindMap().Save(tempTabSep);
-
-                System.Diagnostics.Process.Start("\"" + tempTabSep + "\"");
-            }
-            catch (System.Exception x)
-            {
-                MessageBox.Show("Sorry, couldn't launch Excel");
-                Utils.LogError(x.ToString());
-            }
+            ExportToFreeMind();
         }
 
-
+        
         private void importFromFreeMindToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoImport();

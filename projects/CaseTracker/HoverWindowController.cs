@@ -493,11 +493,124 @@ namespace FogBugzCaseTracker
                         Utils.LogError(x.ToString());
                     }
                 }
-
-
             }
         }
 
 
-    }
-}
+        private void MoveWindowToCenter()
+        {
+            Point p = new Point();
+            p.X = (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2;
+            p.Y = 0;
+            Location = p;
+        }
+        private void UpdateTrackedItem()
+        {
+            try
+            {
+                // If the selected item is changed as part of the update process, 
+                // don't count it as the user changing selection
+                if (_currentState.GetType() == typeof(StateUpdatingCases))
+                    return;
+                TrackedCase = SelectedItemIsCase() ? (Case)CaseDropDown.SelectedItem : null;
+            }
+            catch (System.InvalidCastException x)
+            {
+                Utils.LogError(x.ToString() + "Selected item (index:{0}) is not a Case!", CaseDropDown.SelectedIndex);
+            }
+        }
+
+        private void ShowFilterDialog()
+        {
+            SearchForm f = new SearchForm();
+            f.fb = _fb;
+            f.dad = this;
+            f.UserSearch = _narrowSearch;
+            f.BaseSearch = _baseSearch;
+            f.IgnoreBaseSearch = _ignoreBaseSearch;
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                _narrowSearch = f.UserSearch;
+                _ignoreBaseSearch = f.IgnoreBaseSearch;
+                updateCases();
+            }
+        }
+
+        private void ResizeWidth()
+        {
+            Width += Cursor.Position.X - _gripStartX;
+            _gripStartX = Cursor.Position.X;
+        }
+        private void ExportToExcel()
+        {
+            try
+            {
+
+                String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".txt";
+                // create a writer and open the file
+                System.IO.TextWriter tw = new System.IO.StreamWriter(tempTabSep);
+
+                for (int i = 1; i < CaseDropDown.Items.Count; ++i)
+                {
+                    Case c = (Case)CaseDropDown.Items[i];
+                    tw.WriteLine("({0:D}) {1}\t{2}h\t{3}", c.ID, c.Name, c.Estimate.TotalHours, c.AssignedTo);
+                }
+
+                tw.Close();
+                System.Diagnostics.Process.Start("excel.exe", "\"" + tempTabSep + "\"");
+            }
+            catch (System.Exception x)
+            {
+                MessageBox.Show("Sorry, couldn't launch Excel");
+                Utils.LogError(x.ToString());
+            }
+        }
+
+        private void RetryLogin()
+        {
+            Utils.Trace("Retrying login...");
+            LogonAsync(_username, _password, delegate(bool success)
+            {
+                if (success)
+                    updateCases();
+                else
+                    SetState(new StateRetryLogin(this));
+            });
+        }
+        private void ExportToFreeMind()
+        {
+            try
+            {
+
+                String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".mm";
+                // create a writer and open the file
+
+                Exporter ex = new Exporter(_fb, new Search(formatSearch(), _cases));
+                ex.CasesToMindMap().Save(tempTabSep);
+
+                System.Diagnostics.Process.Start("\"" + tempTabSep + "\"");
+            }
+            catch (System.Exception x)
+            {
+                MessageBox.Show("Sorry, couldn't launch Excel");
+                Utils.LogError(x.ToString());
+            }
+        }
+
+        private void CloseApplication()
+        {
+            try
+            {
+                if (_switchToNothinUponClosing)
+                    _fb.ToggleWorkingOnCase(0);
+                saveSettings();
+            }
+            catch (System.Exception x)
+            {
+                Utils.LogError(x.ToString());
+
+            }
+        }
+        
+    } // class HoverWindow
+} // ns FogBugzCaseTracker
