@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Xml;
-using Microsoft.Win32;
 using FogBugzNet;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Configuration;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace FogBugzCaseTracker
 {
@@ -14,18 +10,8 @@ namespace FogBugzCaseTracker
     {
         private FogBugz _fb;
 
-        private string _username;
-        private string _server;
-        private string _password;
-        private Case[] _cases;
         private bool _resizing = false;
         private AutoUpdater _autoUpdate;
-
-        private bool _ignoreBaseSearch;
-        private String _baseSearch;
-        private String _narrowSearch;
-
-        private Case _caseBeforePause;
 
         private bool _dragging = false;
         private DateTime _startDragTime;
@@ -33,54 +19,9 @@ namespace FogBugzCaseTracker
 
         private int _mouseDownY;
         private int _dragDistance = 0;
-        private bool _switchToNothinUponClosing = false;
 
         private int _gripStartX;
 
-        private object _currentState;
-        private Case _trackedCase = null;
-
-        private bool SelectedItemIsCase()
-        {
-            return CaseDropDown.SelectedItem.GetType() == typeof(Case);
-        }
-
-        private string formatSearch()
-        {
-            if (!_ignoreBaseSearch)
-                return _baseSearch + " " + _narrowSearch;
-            else
-                return _narrowSearch;
-        }
-
-        public bool ClientTrackingCase
-        {
-            get
-            {
-                return TrackedCase != null;
-            }
-        }
-
-        public Case TrackedCase
-        {
-            get
-            {
-                return _trackedCase;
-            }
-
-            set
-            {
-                if (!_fb.ToggleWorkingOnCase(value != null ? value.ID : 0))
-                {
-                    Process.Start(_fb.CaseEditURL(0));
-                    _trackedCase = null;
-                    trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
-                }
-                _trackedCase = value;
-
-                SetState(ClientTrackingCase ? new StateTrackingCase(this) : new StateLoggedIn(this));
-            }
-        }
 
         public HoverWindow()
         {
@@ -95,93 +36,6 @@ namespace FogBugzCaseTracker
             _autoUpdate.Run();
         }
 
-        private void updateCases()
-        {
-            CaseDropDown.Items.Clear();
-            SetState(new StateUpdatingCases(this));
-            Application.DoEvents();
-
-            GetCasesAsync(formatSearch(), delegate(Case[] cases, Exception error)
-            {
-                try
-                {
-                    if (error != null)
-                        throw error;
-                    _cases = cases;
-                    RepopulateCaseDropdown();
-                    UpdateStateAccordingToTracking();
-                }
-                catch (ECommandFailed e)
-                {
-                    if (e.ErrorCode == (int)ECommandFailed.Code.InvalidSearch)
-                    {
-                        _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
-                        updateCases();
-                        throw e;
-                    }
-                }
-                catch (Exception)
-                {
-                    SetState(new StateRetryLogin(this));
-                    throw;
-                }
-            });
-        }
-
-        private void UpdateStateAccordingToTracking()
-        {
-            // Handle also case where a case is being tracked on the server side, but not on the client
-            if (ClientTrackingCase || _fb.CaseWorkedOnNow != 0)
-            {
-                if (!SelectWorkedOnCase())
-                {
-                    TrackedCase = null;
-                    SetState(new StateLoggedIn(this));
-                }
-                else
-                    SetState(new StateTrackingCase(this));
-            }
-            else
-                SetState(new StateLoggedIn(this));
-        }
-        private int FindWorkedOnCaseIndexInDropDown()
-        {
-            for (int i = 1; i < CaseDropDown.Items.Count; ++i)
-            {
-                if (((Case)CaseDropDown.Items[i]).ID == _fb.CaseWorkedOnNow)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-        private void SelectCase(int i)
-        {
-            CaseDropDown.SelectedIndex = i;
-            TrackedCase = ((Case)CaseDropDown.Items[i]);
-        }
-
-        private bool SelectWorkedOnCase()
-        {
-            int i = FindWorkedOnCaseIndexInDropDown();
-            if (i == -1)
-                return false;
-            SelectCase(i);
-            return true;
-        }
-
-
-
-        private void RepopulateCaseDropdown()
-        {
-            CaseDropDown.Items.Add("(nothing)");
-            CaseDropDown.Text = "(nothing)";
-            foreach (Case c in _cases)
-            {
-                Application.DoEvents();
-                CaseDropDown.Items.Add(c);
-            }
-        }
         private void startDragging(MouseEventArgs e)
         {
             _startDragTime = DateTime.Now;
@@ -243,154 +97,6 @@ namespace FogBugzCaseTracker
             }
 
         }
-        public struct LogonResultInfo
-        {
-            public String User;
-            public string Password;
-            public string Server;
-            public DialogResult UserChoice;
-        };
-
-        LogonResultInfo DoLogonScreen(string initialUser, string initialPassword, string initialServer)
-        {
-            LogonResultInfo ret = new LogonResultInfo();
-
-            LoginForm f = new LoginForm();
-            f.Password = initialPassword;
-            f.Email = initialUser;
-            f.Server = initialServer;
-
-
-            if (f.ShowDialog() == DialogResult.Cancel)
-                ret.UserChoice = DialogResult.Cancel;
-            else
-            {
-                ret.UserChoice = DialogResult.OK;
-                ret.User = f.Email;
-                ret.Password = f.Password;
-                ret.Server = f.Server;
-
-            }
-            return ret;
-        }
-
-        private void loginWithPrompt()
-        {
-            loginWithPrompt(false);
-        }
-
-        private void loginWithPrompt(bool forceNewCreds)
-        {
-            try
-            {
-                SetState(new StateLoggingIn(this));
-                if (forceNewCreds || _password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
-                {
-                    if (_server.Length == 0)
-                    {
-                        string url = ConfigurationManager.AppSettings["FogBugzBaseURL"] ?? "";
-                        _server = (url.Length > 0) ? url : (string)ConfigurationManager.AppSettings["ExampleServerURL"];
-                    }
-
-                    LogonResultInfo info = DoLogonScreen(_username, _password, _server);
-                    if (info.UserChoice != DialogResult.Cancel)
-                    {
-                        _username = info.User;
-                        _password = info.Password;
-                        _server = info.Server;
-                    }
-                }
-
-                _fb = new FogBugz(_server);
-
-                LogonAsync(_username, _password, delegate(bool succeeded)
-                {
-                    if (succeeded)
-                    {
-                        saveSettings();
-                        updateCases();
-                    }
-                    else
-                    {
-                        _password = "";
-                        SetState(new StateLoggedOff(this));
-                        MessageBox.Show("Login failed", "FogBugz", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                });
-            }
-            catch (Exception x)
-            {
-                SetState(new StateLoggedOff(this));
-                throw x;
-            }
-        }
-
-
-        public delegate void OnCasesFetched(Case[] cases, Exception error);
-
-        public void GetCasesAsync(string search, OnCasesFetched OnDone)
-        {
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
-            {
-                args.Result = _fb.GetCases(search);
-            });
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
-            {
-                if (args.Error != null)
-                    OnDone(null, args.Error);
-                else
-                    OnDone((Case[])args.Result, null);
-            });
-            bw.RunWorkerAsync();
-        }
-
-        public delegate void OnLogon(bool succeeded);
-
-        public void LogonAsync(string email, string password, OnLogon OnDone)
-        {
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
-            {
-                args.Result = _fb.Logon(email, password);
-            });
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
-            {
-                if (args.Error != null)
-                {
-                    Utils.LogError("Error during login: {0}", args.Error.ToString());
-                    OnDone(false);
-                }
-                else
-                    OnDone((bool)args.Result);
-            });
-            bw.RunWorkerAsync();
-        }
-        XmlDocument GetMindMapFromUser()
-        {
-
-            OpenFileDialog d = new OpenFileDialog();
-
-            d.CheckFileExists = true;
-            d.Multiselect = false;
-            d.Filter = "FreeMind files (*.mm)|*.mm|All files (*.*)|*.*";
-
-            if (d.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(d.FileName);
-                    return doc;
-                }
-                catch (Exception x)
-                {
-                    Utils.LogError(x.ToString());
-                }
-            }
-
-            return null;
-        }
 
         private void MoveWindowToCenter()
         {
@@ -399,80 +105,12 @@ namespace FogBugzCaseTracker
             p.Y = 0;
             Location = p;
         }
-        private void UpdateTrackedItem()
-        {
-            try
-            {
-                // If the selected item is changed as part of the update process, 
-                // don't count it as the user changing selection
-                if (_currentState.GetType() == typeof(StateUpdatingCases))
-                    return;
-                TrackedCase = SelectedItemIsCase() ? (Case)CaseDropDown.SelectedItem : null;
-            }
-            catch (System.InvalidCastException x)
-            {
-                Utils.LogError(x.ToString() + "Selected item (index:{0}) is not a Case!", CaseDropDown.SelectedIndex);
-            }
-        }
-
-        private void ShowFilterDialog()
-        {
-            SearchForm f = new SearchForm();
-            f.fb = _fb;
-            f.dad = this;
-            f.UserSearch = _narrowSearch;
-            f.BaseSearch = _baseSearch;
-            f.IgnoreBaseSearch = _ignoreBaseSearch;
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                _narrowSearch = f.UserSearch;
-                _ignoreBaseSearch = f.IgnoreBaseSearch;
-                updateCases();
-            }
-        }
 
         private void ResizeWidth()
         {
             Width += Cursor.Position.X - _gripStartX;
             _gripStartX = Cursor.Position.X;
         }
-        private void ExportToExcel()
-        {
-            try
-            {
-
-                String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".txt";
-                // create a writer and open the file
-                System.IO.TextWriter tw = new System.IO.StreamWriter(tempTabSep);
-
-                for (int i = 1; i < CaseDropDown.Items.Count; ++i)
-                {
-                    Case c = (Case)CaseDropDown.Items[i];
-                    tw.WriteLine("({0:D}) {1}\t{2}h\t{3}", c.ID, c.Name, c.Estimate.TotalHours, c.AssignedTo);
-                }
-
-                tw.Close();
-                System.Diagnostics.Process.Start("excel.exe", "\"" + tempTabSep + "\"");
-            }
-            catch (System.Exception x)
-            {
-                MessageBox.Show("Sorry, couldn't launch Excel");
-                Utils.LogError(x.ToString());
-            }
-        }
-
-        private void RetryLogin()
-        {
-            Utils.Trace("Retrying login...");
-            LogonAsync(_username, _password, delegate(bool success)
-            {
-                if (success)
-                    updateCases();
-                else
-                    SetState(new StateRetryLogin(this));
-            });
-        }
-
 
         private void CloseApplication()
         {

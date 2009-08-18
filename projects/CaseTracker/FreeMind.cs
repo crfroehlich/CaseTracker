@@ -60,6 +60,32 @@ namespace FogBugzCaseTracker
             }
         }
 
+        XmlDocument GetMindMapFromUser()
+        {
+
+            OpenFileDialog d = new OpenFileDialog();
+
+            d.CheckFileExists = true;
+            d.Multiselect = false;
+            d.Filter = "FreeMind files (*.mm)|*.mm|All files (*.*)|*.*";
+
+            if (d.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(d.FileName);
+                    return doc;
+                }
+                catch (Exception x)
+                {
+                    Utils.LogError(x.ToString());
+                }
+            }
+
+            return null;
+        }
+
 
     }
 }

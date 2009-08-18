@@ -1,16 +1,7 @@
 using System;
 using System.Diagnostics;
-using System.Configuration;
-using System.Security.Cryptography;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
-using Microsoft.Win32;
 using FogBugzNet;
 
 namespace FogBugzCaseTracker
