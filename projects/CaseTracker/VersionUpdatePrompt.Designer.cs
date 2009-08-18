@@ -34,13 +34,13 @@
             this.picNew = new System.Windows.Forms.PictureBox();
             this.lblCurrentVersion = new System.Windows.Forms.Label();
             this.grpWhatsNew = new System.Windows.Forms.GroupBox();
+            this.richWhatsNew = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblInstall = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnYes = new System.Windows.Forms.Button();
             this.btnHellsYea = new System.Windows.Forms.Button();
             this.btnLater = new System.Windows.Forms.Button();
-            this.richWhatsNew = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picNew)).BeginInit();
             this.grpWhatsNew.SuspendLayout();
             this.SuspendLayout();
@@ -96,6 +96,18 @@
             this.grpWhatsNew.TabIndex = 4;
             this.grpWhatsNew.TabStop = false;
             this.grpWhatsNew.Text = "What\'s New";
+            // 
+            // richWhatsNew
+            // 
+            this.richWhatsNew.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richWhatsNew.Location = new System.Drawing.Point(11, 20);
+            this.richWhatsNew.Name = "richWhatsNew";
+            this.richWhatsNew.ReadOnly = true;
+            this.richWhatsNew.Size = new System.Drawing.Size(323, 121);
+            this.richWhatsNew.TabIndex = 0;
+            this.richWhatsNew.Text = "";
             // 
             // label1
             // 
@@ -159,15 +171,6 @@
             this.btnLater.TabIndex = 10;
             this.btnLater.Text = "Later...";
             this.btnLater.UseVisualStyleBackColor = true;
-            // 
-            // richWhatsNew
-            // 
-            this.richWhatsNew.Location = new System.Drawing.Point(11, 20);
-            this.richWhatsNew.Name = "richWhatsNew";
-            this.richWhatsNew.ReadOnly = true;
-            this.richWhatsNew.Size = new System.Drawing.Size(323, 121);
-            this.richWhatsNew.TabIndex = 0;
-            this.richWhatsNew.Text = "";
             // 
             // VersionUpdatePrompt
             // 
