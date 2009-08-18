@@ -62,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoUpdater.cs" />
+    <Compile Include="HoverWindowController.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="HoverWindowState.cs">
       <SubType>Form</SubType>
     </Compile>
