@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using FogBugzNet;
+using System.Configuration;
 
 namespace FogBugzCaseTracker
 {
@@ -24,8 +25,6 @@ namespace FogBugzCaseTracker
             trayIcon.ShowBalloonTip(2000);
 
             MoveWindowToCenter();
-
-            loadSettings();
 
             loginWithPrompt();
         }

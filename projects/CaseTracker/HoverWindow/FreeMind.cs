@@ -17,7 +17,7 @@ namespace FogBugzCaseTracker
                 String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".mm";
                 // create a writer and open the file
 
-                Exporter ex = new Exporter(_fb, new Search(formatSearch(), _cases));
+                Exporter ex = new Exporter(_fb, new Search(FormatSearch(), _cases));
                 ex.CasesToMindMap().Save(tempTabSep);
 
                 System.Diagnostics.Process.Start("\"" + tempTabSep + "\"");

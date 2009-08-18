@@ -17,7 +17,7 @@ namespace FogBugzCaseTracker
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
 
-            GetCasesAsync(formatSearch(), delegate(Case[] cases, Exception error)
+            GetCasesAsync(FormatSearch(), delegate(Case[] cases, Exception error)
             {
                 try
                 {

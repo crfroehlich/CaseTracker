@@ -14,18 +14,19 @@ namespace FogBugzCaseTracker
 {
     public partial class SearchForm : Form
     {
+        private SearchHistory _history;
         public HoverWindow dad;
         public FogBugz fb;
         public String UserSearch
         {
             get
             {
-                return txtNarrowSearch.Text;
+                return cmboNarrowSearch.Text;
             }
 
             set
             {
-                txtNarrowSearch.Text = value;
+                cmboNarrowSearch.Text = value;
             }
         }
 
@@ -51,17 +52,18 @@ namespace FogBugzCaseTracker
             }
         }
 
-        public SearchForm()
+        public SearchForm(SearchHistory history)
         {
+            _history = history;
             InitializeComponent();
         }
 
         private string formatSearch()
         {
             if (!chkIgnoreBaseSearch.Checked)
-                return txtBaseSearch.Text + " " + txtNarrowSearch.Text;
+                return txtBaseSearch.Text + " " + cmboNarrowSearch.Text;
             else
-                return txtNarrowSearch.Text;
+                return cmboNarrowSearch.Text;
         }
 
         private void testSearch()
@@ -106,6 +108,13 @@ namespace FogBugzCaseTracker
         {
             txtBaseSearch.Enabled = !chkIgnoreBaseSearch.Checked;
 
+        }
+
+        private void SearchForm_Load(object sender, EventArgs e)
+        {
+            cmboNarrowSearch.Items.Clear();
+            if (_history.History.Count > 0)
+                cmboNarrowSearch.Items.AddRange(_history.History.ToArray());
         }
 
 

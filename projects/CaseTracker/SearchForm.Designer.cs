@@ -32,15 +32,15 @@ namespace FogBugzCaseTracker
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SearchFilterBox = new System.Windows.Forms.GroupBox();
+            this.chkIgnoreBaseSearch = new System.Windows.Forms.CheckBox();
             this.lnkSearchHelp = new System.Windows.Forms.LinkLabel();
             this.lblNarrowSearch = new System.Windows.Forms.Label();
             this.btnTest = new System.Windows.Forms.Button();
             this.txtBaseSearch = new System.Windows.Forms.TextBox();
             this.lblBaseSearch = new System.Windows.Forms.Label();
-            this.txtNarrowSearch = new System.Windows.Forms.TextBox();
             this.SearchResultBox = new System.Windows.Forms.GroupBox();
             this.listTestResults = new System.Windows.Forms.ListBox();
-            this.chkIgnoreBaseSearch = new System.Windows.Forms.CheckBox();
+            this.cmboNarrowSearch = new System.Windows.Forms.ComboBox();
             this.SearchFilterBox.SuspendLayout();
             this.SearchResultBox.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +49,7 @@ namespace FogBugzCaseTracker
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(540, 429);
+            this.btnOk.Location = new System.Drawing.Point(484, 366);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 1;
@@ -60,7 +60,7 @@ namespace FogBugzCaseTracker
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(621, 429);
+            this.btnCancel.Location = new System.Drawing.Point(565, 366);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -71,25 +71,37 @@ namespace FogBugzCaseTracker
             // 
             this.SearchFilterBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchFilterBox.Controls.Add(this.cmboNarrowSearch);
             this.SearchFilterBox.Controls.Add(this.chkIgnoreBaseSearch);
             this.SearchFilterBox.Controls.Add(this.lnkSearchHelp);
             this.SearchFilterBox.Controls.Add(this.lblNarrowSearch);
             this.SearchFilterBox.Controls.Add(this.btnTest);
             this.SearchFilterBox.Controls.Add(this.txtBaseSearch);
             this.SearchFilterBox.Controls.Add(this.lblBaseSearch);
-            this.SearchFilterBox.Controls.Add(this.txtNarrowSearch);
             this.SearchFilterBox.Location = new System.Drawing.Point(12, 12);
             this.SearchFilterBox.Name = "SearchFilterBox";
-            this.SearchFilterBox.Size = new System.Drawing.Size(684, 96);
+            this.SearchFilterBox.Size = new System.Drawing.Size(628, 96);
             this.SearchFilterBox.TabIndex = 0;
             this.SearchFilterBox.TabStop = false;
             this.SearchFilterBox.Text = "Search Filter";
+            // 
+            // chkIgnoreBaseSearch
+            // 
+            this.chkIgnoreBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkIgnoreBaseSearch.AutoSize = true;
+            this.chkIgnoreBaseSearch.Location = new System.Drawing.Point(535, 24);
+            this.chkIgnoreBaseSearch.Name = "chkIgnoreBaseSearch";
+            this.chkIgnoreBaseSearch.Size = new System.Drawing.Size(56, 17);
+            this.chkIgnoreBaseSearch.TabIndex = 7;
+            this.chkIgnoreBaseSearch.Text = "Ignore";
+            this.chkIgnoreBaseSearch.UseVisualStyleBackColor = true;
+            this.chkIgnoreBaseSearch.CheckedChanged += new System.EventHandler(this.chkIgnoreBaseSearch_CheckedChanged);
             // 
             // lnkSearchHelp
             // 
             this.lnkSearchHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkSearchHelp.AutoSize = true;
-            this.lnkSearchHelp.Location = new System.Drawing.Point(429, 74);
+            this.lnkSearchHelp.Location = new System.Drawing.Point(373, 74);
             this.lnkSearchHelp.Name = "lnkSearchHelp";
             this.lnkSearchHelp.Size = new System.Drawing.Size(158, 13);
             this.lnkSearchHelp.TabIndex = 6;
@@ -109,7 +121,7 @@ namespace FogBugzCaseTracker
             // btnTest
             // 
             this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(591, 49);
+            this.btnTest.Location = new System.Drawing.Point(535, 49);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 1;
@@ -124,7 +136,7 @@ namespace FogBugzCaseTracker
             this.txtBaseSearch.Location = new System.Drawing.Point(203, 22);
             this.txtBaseSearch.Name = "txtBaseSearch";
             this.txtBaseSearch.ReadOnly = true;
-            this.txtBaseSearch.Size = new System.Drawing.Size(382, 20);
+            this.txtBaseSearch.Size = new System.Drawing.Size(326, 20);
             this.txtBaseSearch.TabIndex = 4;
             this.txtBaseSearch.TabStop = false;
             this.txtBaseSearch.Text = "AssignedTo:\"Me\" AND Status:\"Active\" AND -EstimateCurrent:\"0\"";
@@ -138,17 +150,6 @@ namespace FogBugzCaseTracker
             this.lblBaseSearch.TabIndex = 2;
             this.lblBaseSearch.Text = "Base Search (mandatory conditions):";
             // 
-            // txtNarrowSearch
-            // 
-            this.txtNarrowSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNarrowSearch.Location = new System.Drawing.Point(104, 51);
-            this.txtNarrowSearch.Name = "txtNarrowSearch";
-            this.txtNarrowSearch.Size = new System.Drawing.Size(481, 20);
-            this.txtNarrowSearch.TabIndex = 0;
-            this.txtNarrowSearch.Text = "AND ";
-            this.txtNarrowSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
-            // 
             // SearchResultBox
             // 
             this.SearchResultBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -157,7 +158,7 @@ namespace FogBugzCaseTracker
             this.SearchResultBox.Controls.Add(this.listTestResults);
             this.SearchResultBox.Location = new System.Drawing.Point(12, 114);
             this.SearchResultBox.Name = "SearchResultBox";
-            this.SearchResultBox.Size = new System.Drawing.Size(684, 309);
+            this.SearchResultBox.Size = new System.Drawing.Size(628, 246);
             this.SearchResultBox.TabIndex = 3;
             this.SearchResultBox.TabStop = false;
             this.SearchResultBox.Text = "Test Search Results";
@@ -171,26 +172,25 @@ namespace FogBugzCaseTracker
             this.listTestResults.FormattingEnabled = true;
             this.listTestResults.Location = new System.Drawing.Point(20, 28);
             this.listTestResults.Name = "listTestResults";
-            this.listTestResults.Size = new System.Drawing.Size(646, 251);
+            this.listTestResults.Size = new System.Drawing.Size(590, 186);
             this.listTestResults.TabIndex = 2;
             // 
-            // chkIgnoreBaseSearch
+            // cmboNarrowSearch
             // 
-            this.chkIgnoreBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkIgnoreBaseSearch.AutoSize = true;
-            this.chkIgnoreBaseSearch.Location = new System.Drawing.Point(591, 24);
-            this.chkIgnoreBaseSearch.Name = "chkIgnoreBaseSearch";
-            this.chkIgnoreBaseSearch.Size = new System.Drawing.Size(56, 17);
-            this.chkIgnoreBaseSearch.TabIndex = 7;
-            this.chkIgnoreBaseSearch.Text = "Ignore";
-            this.chkIgnoreBaseSearch.UseVisualStyleBackColor = true;
-            this.chkIgnoreBaseSearch.CheckedChanged += new System.EventHandler(this.chkIgnoreBaseSearch_CheckedChanged);
+            this.cmboNarrowSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmboNarrowSearch.FormattingEnabled = true;
+            this.cmboNarrowSearch.Location = new System.Drawing.Point(104, 51);
+            this.cmboNarrowSearch.Name = "cmboNarrowSearch";
+            this.cmboNarrowSearch.Size = new System.Drawing.Size(425, 21);
+            this.cmboNarrowSearch.TabIndex = 8;
+            this.cmboNarrowSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
             // 
             // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 462);
+            this.ClientSize = new System.Drawing.Size(652, 399);
             this.Controls.Add(this.SearchResultBox);
             this.Controls.Add(this.SearchFilterBox);
             this.Controls.Add(this.btnCancel);
@@ -200,6 +200,7 @@ namespace FogBugzCaseTracker
             this.Name = "SearchForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search Filter";
+            this.Load += new System.EventHandler(this.SearchForm_Load);
             this.SearchFilterBox.ResumeLayout(false);
             this.SearchFilterBox.PerformLayout();
             this.SearchResultBox.ResumeLayout(false);
@@ -212,7 +213,6 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.GroupBox SearchFilterBox;
-        private System.Windows.Forms.TextBox txtNarrowSearch;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Label lblBaseSearch;
         private System.Windows.Forms.Label lblNarrowSearch;
@@ -221,5 +221,6 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.ListBox listTestResults;
         private System.Windows.Forms.LinkLabel lnkSearchHelp;
         private System.Windows.Forms.CheckBox chkIgnoreBaseSearch;
+        private System.Windows.Forms.ComboBox cmboNarrowSearch;
     }
 }

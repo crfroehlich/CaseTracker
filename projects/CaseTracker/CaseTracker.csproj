@@ -83,6 +83,7 @@
     <Compile Include="HoverWindow\HoverWindowState.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HoverWindow\SearchHistory.cs" />
     <Compile Include="ImportConfirmationDlg.cs">
       <SubType>Form</SubType>
     </Compile>

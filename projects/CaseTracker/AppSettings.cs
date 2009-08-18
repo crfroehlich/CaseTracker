@@ -19,17 +19,19 @@ namespace FogBugzCaseTracker
             _key.SetValue("server", _server);
             _key.SetValue("LastX", Location.X);
             _key.SetValue("LastY", Location.Y);
-            _key.SetValue("NarrowSearch", _narrowSearch);
             _key.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
             _key.SetValue("LastWidth", Width);
             _key.SetValue("PollingInterval", UpdateCasesTimer.Interval);
             _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
-
             _key.Close();
+            _history.Save();
         }
 
         private void loadSettings()
         {
+            _history = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
+            _history.Load();
+
             _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (_key == null)
             {
@@ -55,11 +57,11 @@ namespace FogBugzCaseTracker
                 Location = newLoc;
 
                 Width = (int)_key.GetValue("LastWidth", Width);
-                _narrowSearch = (String)_key.GetValue("NarrowSearch", "");
                 UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
                 UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
                 _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
                 _ignoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
+
                 _key.Close();
             }
         }
