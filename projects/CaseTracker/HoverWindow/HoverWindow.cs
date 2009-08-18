@@ -14,7 +14,7 @@ namespace FogBugzCaseTracker
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (_fb.IsLoggedIn)
-                updateCases();
+                updateCases(true);
         }
 
         private void HoverWindow_Load(object sender, EventArgs e)

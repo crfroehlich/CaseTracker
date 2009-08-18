@@ -122,7 +122,7 @@ namespace FogBugzCaseTracker
             LogonAsync(_username, _password, delegate(bool success)
             {
                 if (success)
-                    updateCases();
+                    updateCases(true);
                 else
                     SetState(new StateRetryLogin(this));
             });

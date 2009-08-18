@@ -57,8 +57,7 @@ namespace FogBugzCaseTracker
                 Location = newLoc;
 
                 Width = (int)_key.GetValue("LastWidth", Width);
-                UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
-                UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
+                UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]));
                 _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
                 _ignoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
 
