@@ -697,23 +697,17 @@ namespace FogBugzCaseTracker
                 frm.btnMain.Enabled = true;
                 frm.CaseDropDown.Text = "(please login)";
                 frm.CaseDropDown.Enabled = false;
-                frm.btnFilter.Enabled = false;
-                frm.btnFilter.BackgroundImage = frm.imageList.Images["filter_disabled.png"];
-                frm.btnRefresh.Enabled = false;
-                frm.btnRefresh.BackgroundImage = frm.imageList.Images["refresh_disabled.gif"];
-                frm.btnNewCase.Enabled = false;
-                frm.btnNewCase.Image = frm.imageList.Images["new_case_disabled.png"];
-                frm.btnResolve.Enabled = false;
-                frm.btnResolve.Image = frm.imageList.Images["check_icon_disabled.gif"];
-                frm.btnViewCase.Enabled = false;
-                frm.btnResolveClose.Enabled = false;
-                frm.btnResolveClose.Image = frm.imageList.Images["fat_check_disabled.png"];
+                frm.btnFilter.Enable(false);
+                frm.btnRefresh.Enable(false);
+                frm.btnNewCase.Enable(false);
+                frm.btnResolve.Enable(false);
+                frm.btnViewCase.Enable(false);
+                frm.btnResolveClose.Enable(false);
                 frm.UpdateCasesTimer.Enabled = false;
-                frm.exportToFreeMindToolStripMenuItem.Enabled = false;
-                frm.menuExportExcel.Enabled = false;
+                frm.exportToFreeMindToolStripMenuItem.Enable(false);
+                frm.menuExportExcel.Enable(false);
                 frm.busyPicture.Visible = false;
-                frm.btnPause.Enabled = false;
-                frm.btnPause.BackgroundImage = frm.imageList.Images["pause_disabled"];
+                frm.btnPause.Enable(false);
                 frm.pnlPaused.Visible = false;
 
                 
@@ -735,7 +729,7 @@ namespace FogBugzCaseTracker
         {
             public StateLoggingIn(HoverWindow frm) : base(frm)
             {
-                frm.btnMain.Enabled = false;
+                frm.btnMain.Enabled = true;
                 frm.timerRetryLogin.Enabled = false;
                 frm.busyPicture.Visible = true;
 
@@ -748,21 +742,14 @@ namespace FogBugzCaseTracker
             public StateLoggedIn(HoverWindow frm) : base(frm)
             {
                 frm.CaseDropDown.Enabled = true;
-                frm.btnFilter.Enabled = true;
-                frm.btnFilter.BackgroundImage = frm.imageList.Images["filter.png"];
-                frm.btnRefresh.BackgroundImage = frm.imageList.Images["refresh.gif"];
-                frm.btnRefresh.Enabled = true;
-                frm.btnNewCase.Enabled = true;
-                frm.btnNewCase.Image = frm.imageList.Images["new_case.png"];
-
+                frm.btnFilter.Enable(true);
+                frm.btnRefresh.Enable(true);
+                frm.btnNewCase.Enable(true);
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.btnMain.Enabled = true;
-                frm.exportToFreeMindToolStripMenuItem.Enabled = true;
-                frm.menuExportExcel.Enabled = true;
+                frm.exportToFreeMindToolStripMenuItem.Enable(true);
+                frm.menuExportExcel.Enable(true);
                 frm.busyPicture.Visible = false;
-
-
-
             }
         };
 
@@ -787,19 +774,16 @@ namespace FogBugzCaseTracker
             public StateTrackingCase(HoverWindow frm)
                 : base(frm)
             {
-                frm.btnResolve.Enabled = true;
-                frm.btnResolve.Image = frm.imageList.Images["check_icon.gif"];
+                frm.btnResolve.Enable(true);
 
-                frm.btnViewCase.Enabled = true;
-                frm.btnResolveClose.Enabled = true;
-                frm.btnResolveClose.Image = frm.imageList.Images["fat_check.png"];
+                frm.btnViewCase.Enable(true);
+                frm.btnResolveClose.Enable(true);
         
                 frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown, 
                     String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.busyPicture.Visible = false;
-                frm.btnPause.Enabled = true;
-                frm.btnPause.BackgroundImage = frm.imageList.Images["pause_enabled"];
+                frm.btnPause.Enable(true);
             }
         };
 
@@ -809,20 +793,15 @@ namespace FogBugzCaseTracker
             public StatePaused(HoverWindow frm)
                 : base(frm)
             {
-                frm.btnResolve.Enabled = false;
-                frm.btnResolve.Image = frm.imageList.Images["check_icon_disabled.gif"];
+                frm.btnResolve.Enable(false);
 
-
-                frm.btnViewCase.Enabled = false;
-                frm.btnResolveClose.Enabled = false;
-                frm.btnResolveClose.Image = frm.imageList.Images["fat_check_disabled.png"];
-        
+                frm.btnViewCase.Enable(false);
+                frm.btnResolveClose.Enable(false);
                 frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown,
                     String.Format("[PAUSED] Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
                 frm.UpdateCasesTimer.Enabled = false;
                 frm.busyPicture.Visible = false;
-                frm.btnPause.Enabled = false;
-                frm.btnPause.BackgroundImage = frm.imageList.Images["pause_disabled"];
+                frm.btnPause.Enable(false);
                 frm.pnlPaused.Visible = true;
                 frm.pnlPaused.Top = 1;
                 frm.pnlPaused.Left = 1;

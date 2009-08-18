@@ -88,6 +88,13 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap check_icon_disabled {
+            get {
+                object obj = ResourceManager.GetObject("check_icon_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ellipsis_vertical {
             get {
                 object obj = ResourceManager.GetObject("ellipsis_vertical", resourceCulture);
@@ -102,9 +109,30 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap excel_disabled {
+            get {
+                object obj = ResourceManager.GetObject("excel_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap excel1 {
+            get {
+                object obj = ResourceManager.GetObject("excel1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap fat_check {
             get {
                 object obj = ResourceManager.GetObject("fat_check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fat_check_disabled {
+            get {
+                object obj = ResourceManager.GetObject("fat_check_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +144,20 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap filter_disabled {
+            get {
+                object obj = ResourceManager.GetObject("filter_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap filter1 {
+            get {
+                object obj = ResourceManager.GetObject("filter1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap firefox_16 {
             get {
                 object obj = ResourceManager.GetObject("firefox_16", resourceCulture);
@@ -123,9 +165,23 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap firefox_16_disabled {
+            get {
+                object obj = ResourceManager.GetObject("firefox_16_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap freemind {
             get {
                 object obj = ResourceManager.GetObject("freemind", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap freemind_disabled {
+            get {
+                object obj = ResourceManager.GetObject("freemind_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -144,9 +200,23 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap key_disabled {
+            get {
+                object obj = ResourceManager.GetObject("key_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap new_case {
             get {
                 object obj = ResourceManager.GetObject("new_case", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap new_case_disabled {
+            get {
+                object obj = ResourceManager.GetObject("new_case_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -158,9 +228,23 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap pause_disabled {
+            get {
+                object obj = ResourceManager.GetObject("pause_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap refresh {
             get {
                 object obj = ResourceManager.GetObject("refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap refresh_disabled {
+            get {
+                object obj = ResourceManager.GetObject("refresh_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

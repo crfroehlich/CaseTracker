@@ -118,52 +118,88 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="key" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\key.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\filter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="new" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\new.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="busy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\busy.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="check_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check_icon.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ellipsis_vertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ellipsis_vertical.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\excel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="excel_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\excel_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_case_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new_case_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="busy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\busy.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="freemind" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\freemind.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="check_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\check_icon.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="new_case" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\new_case.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="refresh1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="fat_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fat_check.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="firefox_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\firefox_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="check_icon_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check_icon_disabled.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="busy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\busy.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="refresh1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="fat_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fat_check.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="freemind_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freemind_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="firefox_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\firefox_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="key_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\key_disabled.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pause.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filter1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_case" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new_case.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="firefox_16_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\firefox_16_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="key" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\key.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filter_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\excel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="excel1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\excel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refresh_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\refresh_disabled.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fat_check_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fat_check_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pause_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pause_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -74,6 +74,18 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MultiImageButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MultiImageButton.Designer.cs">
+      <DependentUpon>MultiImageButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MultiImageToolStripMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MultiImageToolStripMenuItem.Designer.cs">
+      <DependentUpon>MultiImageToolStripMenuItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ImportConfirmationDlg.resx">
@@ -191,6 +203,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_disabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new_case_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check_icon_disabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fat_check_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\firefox_16_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key_disabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\freemind_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause_disabled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
