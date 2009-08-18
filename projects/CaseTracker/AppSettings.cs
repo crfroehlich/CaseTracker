@@ -10,27 +10,28 @@ namespace FogBugzCaseTracker
 {
     public partial class HoverWindow
     {
+        private RegistryKey _key;
         private void saveSettings()
         {
-            RegistryKey ttkey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
-            ttkey.SetValue("username", _username);
-            ttkey.SetValue("password", Convert.ToBase64String(Utils.EncryptCurrentUser(_password)));
-            ttkey.SetValue("server", _server);
-            ttkey.SetValue("LastX", Location.X);
-            ttkey.SetValue("LastY", Location.Y);
-            ttkey.SetValue("NarrowSearch", _narrowSearch);
-            ttkey.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
-            ttkey.SetValue("LastWidth", Width);
-            ttkey.SetValue("PollingInterval", UpdateCasesTimer.Interval);
-            ttkey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
+            _key = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
+            _key.SetValue("username", _username);
+            _key.SetValue("password", Convert.ToBase64String(Utils.EncryptCurrentUser(_password)));
+            _key.SetValue("server", _server);
+            _key.SetValue("LastX", Location.X);
+            _key.SetValue("LastY", Location.Y);
+            _key.SetValue("NarrowSearch", _narrowSearch);
+            _key.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
+            _key.SetValue("LastWidth", Width);
+            _key.SetValue("PollingInterval", UpdateCasesTimer.Interval);
+            _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
 
-            ttkey.Close();
+            _key.Close();
         }
 
         private void loadSettings()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
-            if (key == null)
+            _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
+            if (_key == null)
             {
                 _username = "";
                 _password = "";
@@ -38,44 +39,49 @@ namespace FogBugzCaseTracker
             }
             else
             {
-                _username = (String)key.GetValue("email", "");
-                _server = (String)key.GetValue("server", "");
+                _username = (String)_key.GetValue("email", "");
+                _server = (String)_key.GetValue("server", "");
 
                 if (_server == "")
-                {
                     _server = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
-                }
 
-                try
-                {
-                    _password = Utils.DecryptCurrentUser(Convert.FromBase64String((String)key.GetValue("password", "")));
-                }
-                catch (System.FormatException x)
-                {
-                    _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
-                    Utils.LogError("Base 64 of pwd is bad: " + x.ToString());
-                }
-                catch (System.Security.Cryptography.CryptographicException x)
-                {
-                    _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
-                    Utils.LogError("Unable to decode password: " + x.ToString());
-                }
+                RecoverPassword(_key);
+
                 Point newLoc = new Point();
                 timerRetryLogin.Interval = int.Parse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"]);
 
-                newLoc.X = (int)key.GetValue("LastX", Location.X);
-                newLoc.Y = (int)key.GetValue("LastY", Location.Y);
-                Width = (int)key.GetValue("LastWidth", Width);
-                _narrowSearch = (String)key.GetValue("NarrowSearch", "");
-                UpdateCasesTimer.Interval = (int)key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
-                UpdateCasesTimer.Interval = (int)key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
-                _switchToNothinUponClosing = (int)key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
-                _ignoreBaseSearch = (int)key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
+                newLoc.X = (int)_key.GetValue("LastX", Location.X);
+                newLoc.Y = (int)_key.GetValue("LastY", Location.Y);
                 Location = newLoc;
-                key.Close();
+
+                Width = (int)_key.GetValue("LastWidth", Width);
+                _narrowSearch = (String)_key.GetValue("NarrowSearch", "");
+                UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
+                UpdateCasesTimer.Interval = (int)_key.GetValue("PollingInterval", UpdateCasesTimer.Interval);
+                _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
+                _ignoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
+                _key.Close();
             }
         }
 
+        private void RecoverPassword(RegistryKey key)
+        {
+            try
+            {
+                _password = Utils.DecryptCurrentUser(Convert.FromBase64String((String)key.GetValue("password", "")));
+            }
+            catch (System.FormatException x)
+            {
+                _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
+                Utils.LogError("Base 64 of pwd is bad: " + x.ToString());
+            }
+            catch (System.Security.Cryptography.CryptographicException x)
+            {
+                _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
+                Utils.LogError("Unable to decode password: " + x.ToString());
+            }
+
+        }
 
     }
 }
