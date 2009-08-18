@@ -27,7 +27,9 @@ namespace FogBugzCaseTracker
 
                 if (_key == null)
                 {
-                    History.Add((String)_key.GetValue("NarrowSearch", ""));
+                    _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
+                    if (_key != null)
+                        History.Add((String)_key.GetValue("NarrowSearch", "")); // To support transition from before search history was implemented
                     return;
                 }
 
@@ -49,7 +51,7 @@ namespace FogBugzCaseTracker
 
         public void Save()
         {
-            Registry.CurrentUser.DeleteSubKeyTree("Software\\VisionMap\\CaseTracker\\SearchHistory");
+            try { Registry.CurrentUser.DeleteSubKeyTree("Software\\VisionMap\\CaseTracker\\SearchHistory"); } catch (Exception) {}
             _key = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker\\SearchHistory");
             
             try
