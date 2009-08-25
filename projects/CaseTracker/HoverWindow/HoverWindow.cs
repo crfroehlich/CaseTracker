@@ -269,7 +269,7 @@ namespace FogBugzCaseTracker
 
         private void btnNewSubcase_Click(object sender, EventArgs e)
         {
-            Process.Start(_fb.NewSubCaseURL());
+            Process.Start(_fb.NewSubCaseURL(_trackedCase.ID));
         }
 
     } // Class HoverWindow

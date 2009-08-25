@@ -272,9 +272,9 @@ namespace FogBugzNet
             }
         }
 
-        public string NewSubCaseURL()
+        public string NewSubCaseURL(int parentID)
         {
-            throw new Exception("not yet implemneted");
+            return NewCaseURL + "&ixBugParent=" + parentID.ToString();
         }
 
 
