@@ -272,6 +272,13 @@ namespace FogBugzNet
             }
         }
 
+        public string NewSubCaseURL()
+        {
+            throw new Exception("not yet implemneted");
+        }
+
+
+
         public void SetEstimate(int caseid, string estimate)
         {
             throw new Exception("Not yet implemented");

@@ -25,12 +25,13 @@ namespace FogBugzCaseTracker
                 frm.btnFilter.Enable(false);
                 frm.btnRefresh.Enable(false);
                 frm.btnNewCase.Enable(false);
+                frm.btnNewSubcase.Enable(false);
                 frm.btnResolve.Enable(false);
                 frm.btnViewCase.Enable(false);
                 frm.btnResolveClose.Enable(false);
                 frm.UpdateCasesTimer.Enabled = false;
-                frm.exportToFreeMindToolStripMenuItem.Enable(false);
-                frm.menuExportExcel.Enable(false);
+                frm.btnExportFreeMind.Enable(false);
+                frm.btnExportExcel.Enable(false);
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(false);
                 frm.pnlPaused.Visible = false;
@@ -75,8 +76,8 @@ namespace FogBugzCaseTracker
                 frm.btnNewCase.Enable(true);
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.btnMain.Enabled = true;
-                frm.exportToFreeMindToolStripMenuItem.Enable(true);
-                frm.menuExportExcel.Enable(true);
+                frm.btnExportFreeMind.Enable(true);
+                frm.btnExportExcel.Enable(true);
                 frm.busyPicture.Visible = false;
             }
         };
@@ -112,6 +113,7 @@ namespace FogBugzCaseTracker
                 frm.UpdateCasesTimer.Enabled = true;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(true);
+                frm.btnNewSubcase.Enable(true);
             }
         };
 
@@ -135,6 +137,7 @@ namespace FogBugzCaseTracker
                 frm.pnlPaused.Left = 1;
                 frm.pnlPaused.Width = frm.Width - 2;
                 frm.pnlPaused.Height = frm.Height - 2;
+                frm.btnNewSubcase.Enable(false);
             }
         };
 

@@ -262,5 +262,15 @@ namespace FogBugzCaseTracker
             SetState(new StateTrackingCase(this));
         }
 
+        private void multiImageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNewSubcase_Click(object sender, EventArgs e)
+        {
+            Process.Start(_fb.NewSubCaseURL());
+        }
+
     } // Class HoverWindow
 }
