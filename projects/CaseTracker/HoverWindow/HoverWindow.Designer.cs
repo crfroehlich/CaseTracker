@@ -84,8 +84,8 @@ namespace FogBugzCaseTracker
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "FogBugz";
             this.trayIcon.Visible = true;
-            this.trayIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseUp);
-            this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            this.trayIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseUp);
+            this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
             // 
             // MainMenu
             // 
@@ -143,8 +143,8 @@ namespace FogBugzCaseTracker
             this.lblWorkingOn.Size = new System.Drawing.Size(38, 13);
             this.lblWorkingOn.TabIndex = 12;
             this.lblWorkingOn.Text = "I\'m on:";
-            this.lblWorkingOn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label1_MouseMove);
-            this.lblWorkingOn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
+            this.lblWorkingOn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblWorkingOn_MouseMove);
+            this.lblWorkingOn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblWorkingOn_MouseDown);
             this.lblWorkingOn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.label1_MouseUp);
             // 
             // timerRetryLogin
@@ -386,7 +386,7 @@ namespace FogBugzCaseTracker
             this.btnExportFreeMind.Name = "btnExportFreeMind";
             this.btnExportFreeMind.Size = new System.Drawing.Size(178, 22);
             this.btnExportFreeMind.Text = "Export to &FreeMind";
-            this.btnExportFreeMind.Click += new System.EventHandler(this.exportToFreeMindToolStripMenuItem_Click);
+            this.btnExportFreeMind.Click += new System.EventHandler(this.btnExportFreeMind_Click);
             // 
             // btnImportFreeMind
             // 
@@ -397,7 +397,7 @@ namespace FogBugzCaseTracker
             this.btnImportFreeMind.Size = new System.Drawing.Size(178, 22);
             this.btnImportFreeMind.Text = "Import from FreeMind";
             this.btnImportFreeMind.Visible = false;
-            this.btnImportFreeMind.Click += new System.EventHandler(this.importFromFreeMindToolStripMenuItem_Click);
+            this.btnImportFreeMind.Click += new System.EventHandler(this.btnImportFreeMind_Click);
             // 
             // btnExportExcel
             // 
@@ -407,7 +407,7 @@ namespace FogBugzCaseTracker
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(178, 22);
             this.btnExportExcel.Text = "Export to Excel";
-            this.btnExportExcel.Click += new System.EventHandler(this.menuExportExcel_Click);
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
             // btnConfigure
             // 

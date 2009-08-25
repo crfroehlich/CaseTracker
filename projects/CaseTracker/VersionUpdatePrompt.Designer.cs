@@ -35,9 +35,9 @@
             this.lblCurrentVersion = new System.Windows.Forms.Label();
             this.grpWhatsNew = new System.Windows.Forms.GroupBox();
             this.richWhatsNew = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCurrentVersionTitle = new System.Windows.Forms.Label();
             this.lblInstall = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTakes4Seconds = new System.Windows.Forms.Label();
             this.btnYes = new System.Windows.Forms.Button();
             this.btnHellsYea = new System.Windows.Forms.Button();
             this.btnLater = new System.Windows.Forms.Button();
@@ -109,14 +109,14 @@
             this.richWhatsNew.TabIndex = 0;
             this.richWhatsNew.Text = "";
             // 
-            // label1
+            // lblCurrentVersionTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(144, 41);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "The currently installed version is:";
+            this.lblCurrentVersionTitle.AutoSize = true;
+            this.lblCurrentVersionTitle.Location = new System.Drawing.Point(144, 41);
+            this.lblCurrentVersionTitle.Name = "lblCurrentVersionTitle";
+            this.lblCurrentVersionTitle.Size = new System.Drawing.Size(160, 13);
+            this.lblCurrentVersionTitle.TabIndex = 5;
+            this.lblCurrentVersionTitle.Text = "The currently installed version is:";
             // 
             // lblInstall
             // 
@@ -129,15 +129,15 @@
             this.lblInstall.TabIndex = 6;
             this.lblInstall.Text = "Install now?";
             // 
-            // label2
+            // lblTakes4Seconds
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(101, 239);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(223, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "(takes exactly 4 seconds, or you money back)";
+            this.lblTakes4Seconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTakes4Seconds.AutoSize = true;
+            this.lblTakes4Seconds.Location = new System.Drawing.Point(101, 239);
+            this.lblTakes4Seconds.Name = "lblTakes4Seconds";
+            this.lblTakes4Seconds.Size = new System.Drawing.Size(223, 13);
+            this.lblTakes4Seconds.TabIndex = 7;
+            this.lblTakes4Seconds.Text = "(takes exactly 4 seconds, or you money back)";
             // 
             // btnYes
             // 
@@ -180,9 +180,9 @@
             this.Controls.Add(this.btnLater);
             this.Controls.Add(this.btnHellsYea);
             this.Controls.Add(this.btnYes);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblTakes4Seconds);
             this.Controls.Add(this.lblInstall);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblCurrentVersionTitle);
             this.Controls.Add(this.grpWhatsNew);
             this.Controls.Add(this.lblCurrentVersion);
             this.Controls.Add(this.picNew);
@@ -208,9 +208,9 @@
         private System.Windows.Forms.PictureBox picNew;
         private System.Windows.Forms.Label lblCurrentVersion;
         private System.Windows.Forms.GroupBox grpWhatsNew;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCurrentVersionTitle;
         private System.Windows.Forms.Label lblInstall;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTakes4Seconds;
         private System.Windows.Forms.Button btnYes;
         private System.Windows.Forms.Button btnHellsYea;
         private System.Windows.Forms.Button btnLater;

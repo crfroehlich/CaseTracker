@@ -47,13 +47,13 @@ namespace FogBugzCaseTracker
             Close();
         }
 
-        private void label1_MouseMove(object sender, MouseEventArgs e)
+        private void lblWorkingOn_MouseMove(object sender, MouseEventArgs e)
         {
             if (_dragging)
                 dragWindow(e);
         }
 
-        private void label1_MouseDown(object sender, MouseEventArgs e)
+        private void lblWorkingOn_MouseDown(object sender, MouseEventArgs e)
         {
             startDragging(e);
         }
@@ -63,18 +63,13 @@ namespace FogBugzCaseTracker
             UpdateTrackedItem();
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            Hide();
-        }
-
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        private void trayIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
                 MainMenu.Show();
         }
 
-        private void notifyIcon1_MouseUp(object sender, MouseEventArgs e)
+        private void trayIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -224,7 +219,7 @@ namespace FogBugzCaseTracker
 
         }
 
-        private void menuExportExcel_Click(object sender, EventArgs e)
+        private void btnExportExcel_Click(object sender, EventArgs e)
         {
             ExportToExcel();
 
@@ -237,13 +232,13 @@ namespace FogBugzCaseTracker
 
         }
 
-        private void exportToFreeMindToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnExportFreeMind_Click(object sender, EventArgs e)
         {
             ExportToFreeMind();
         }
 
         
-        private void importFromFreeMindToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnImportFreeMind_Click(object sender, EventArgs e)
         {
             DoImport();
             
@@ -260,11 +255,6 @@ namespace FogBugzCaseTracker
         {
             TrackedCase = _caseBeforePause;
             SetState(new StateTrackingCase(this));
-        }
-
-        private void multiImageToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnNewSubcase_Click(object sender, EventArgs e)
