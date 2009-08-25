@@ -17,9 +17,9 @@ namespace FogBugzCaseTracker
                 // create a writer and open the file
                 System.IO.TextWriter tw = new System.IO.StreamWriter(tempTabSep);
 
-                for (int i = 1; i < CaseDropDown.Items.Count; ++i)
+                for (int i = 1; i < dropCaseList.Items.Count; ++i)
                 {
-                    Case c = (Case)CaseDropDown.Items[i];
+                    Case c = (Case)dropCaseList.Items[i];
                     tw.WriteLine("({0:D}) {1}\t{2}h\t{3}", c.ID, c.Name, c.Estimate.TotalHours, c.AssignedTo);
                 }
 

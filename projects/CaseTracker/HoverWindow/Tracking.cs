@@ -61,9 +61,9 @@ namespace FogBugzCaseTracker
         }
         private int FindWorkedOnCaseIndexInDropDown()
         {
-            for (int i = 1; i < CaseDropDown.Items.Count; ++i)
+            for (int i = 1; i < dropCaseList.Items.Count; ++i)
             {
-                if (((Case)CaseDropDown.Items[i]).ID == _fb.CaseWorkedOnNow)
+                if (((Case)dropCaseList.Items[i]).ID == _fb.CaseWorkedOnNow)
                 {
                     return i;
                 }
@@ -72,8 +72,8 @@ namespace FogBugzCaseTracker
         }
         private void SelectCase(int i)
         {
-            CaseDropDown.SelectedIndex = i;
-            TrackedCase = ((Case)CaseDropDown.Items[i]);
+            dropCaseList.SelectedIndex = i;
+            TrackedCase = ((Case)dropCaseList.Items[i]);
         }
 
         private bool SelectWorkedOnCase()
@@ -93,18 +93,18 @@ namespace FogBugzCaseTracker
                 // don't count it as the user changing selection
                 if (_currentState.GetType() == typeof(StateUpdatingCases))
                     return;
-                TrackedCase = SelectedItemIsCase() ? (Case)CaseDropDown.SelectedItem : null;
+                TrackedCase = SelectedItemIsCase() ? (Case)dropCaseList.SelectedItem : null;
             }
             catch (System.InvalidCastException x)
             {
-                Utils.LogError(x.ToString() + "Selected item (index:{0}) is not a Case!", CaseDropDown.SelectedIndex);
+                Utils.LogError(x.ToString() + "Selected item (index:{0}) is not a Case!", dropCaseList.SelectedIndex);
             }
         }
 
 
         private bool SelectedItemIsCase()
         {
-            return CaseDropDown.SelectedItem.GetType() == typeof(Case);
+            return dropCaseList.SelectedItem.GetType() == typeof(Case);
         }
 
     }

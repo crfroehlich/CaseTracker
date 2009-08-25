@@ -11,7 +11,7 @@ namespace FogBugzCaseTracker
     {
 
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void updateCasesTimer_Click(object sender, EventArgs e)
         {
             if (_fb.IsLoggedIn)
                 updateCases(true);
@@ -42,7 +42,7 @@ namespace FogBugzCaseTracker
         }
 
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -66,7 +66,7 @@ namespace FogBugzCaseTracker
         private void trayIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-                MainMenu.Show();
+                menuMain.Show();
         }
 
         private void trayIcon_MouseUp(object sender, MouseEventArgs e)
@@ -104,7 +104,7 @@ namespace FogBugzCaseTracker
 
         private void btnViewCase_Click(object sender, EventArgs e)
         {
-            Process.Start(_fb.CaseEditURL(((Case)CaseDropDown.SelectedItem).ID));
+            Process.Start(_fb.CaseEditURL(((Case)dropCaseList.SelectedItem).ID));
         }
 
         private void btnShowHide_Click(object sender, EventArgs e)
@@ -115,22 +115,22 @@ namespace FogBugzCaseTracker
 
         private void listCases_DropDown(object sender, EventArgs e)
         {
-            UpdateCasesTimer.Enabled = false;
+            timerUpdateCases.Enabled = false;
         }
 
         private void listCases_DropDownClosed(object sender, EventArgs e)
         {
-            UpdateCasesTimer.Enabled = true;
+            timerUpdateCases.Enabled = true;
         }
 
         private void contextMenuStrip1_Opened(object sender, EventArgs e)
         {
-            UpdateCasesTimer.Enabled = false;
+            timerUpdateCases.Enabled = false;
         }
 
         private void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            UpdateCasesTimer.Enabled = true;
+            timerUpdateCases.Enabled = true;
         }
 
         private void SetFilter()
@@ -144,7 +144,7 @@ namespace FogBugzCaseTracker
         {
             Point p = new Point(Location.X + btnMain.Location.X,
                                 Location.Y + btnMain.Location.Y + btnMain.Height);
-            MainMenu.Show(p);
+            menuMain.Show(p);
             backgroundPic.Focus();
 
         }

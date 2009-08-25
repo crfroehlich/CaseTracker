@@ -20,8 +20,8 @@ namespace FogBugzCaseTracker
             public StateLoggedOff(HoverWindow frm)
             {
                 frm.btnMain.Enabled = true;
-                frm.CaseDropDown.Text = "(please login)";
-                frm.CaseDropDown.Enabled = false;
+                frm.dropCaseList.Text = "(please login)";
+                frm.dropCaseList.Enabled = false;
                 frm.btnFilter.Enable(false);
                 frm.btnRefresh.Enable(false);
                 frm.btnNewCase.Enable(false);
@@ -29,7 +29,7 @@ namespace FogBugzCaseTracker
                 frm.btnResolve.Enable(false);
                 frm.btnViewCase.Enable(false);
                 frm.btnResolveClose.Enable(false);
-                frm.UpdateCasesTimer.Enabled = false;
+                frm.timerUpdateCases.Enabled = false;
                 frm.btnExportFreeMind.Enable(false);
                 frm.btnExportExcel.Enable(false);
                 frm.busyPicture.Visible = false;
@@ -46,7 +46,7 @@ namespace FogBugzCaseTracker
             public StateRetryLogin(HoverWindow frm)
                 : base(frm)
             {
-                frm.CaseDropDown.Text = "(FogBugz server disconnection)";
+                frm.dropCaseList.Text = "(FogBugz server disconnection)";
                 frm.timerRetryLogin.Enabled = true;
             }
         };
@@ -70,11 +70,11 @@ namespace FogBugzCaseTracker
             public StateLoggedIn(HoverWindow frm)
                 : base(frm)
             {
-                frm.CaseDropDown.Enabled = true;
+                frm.dropCaseList.Enabled = true;
                 frm.btnFilter.Enable(true);
                 frm.btnRefresh.Enable(true);
                 frm.btnNewCase.Enable(true);
-                frm.UpdateCasesTimer.Enabled = true;
+                frm.timerUpdateCases.Enabled = true;
                 frm.btnMain.Enabled = true;
                 frm.btnExportFreeMind.Enable(true);
                 frm.btnExportExcel.Enable(true);
@@ -88,10 +88,10 @@ namespace FogBugzCaseTracker
             public StateUpdatingCases(HoverWindow frm)
                 : base(frm)
             {
-                frm.CaseDropDown.Text = "(Updating cases...)";
+                frm.dropCaseList.Text = "(Updating cases...)";
                 frm.btnMain.Enabled = false;
-                frm.UpdateCasesTimer.Enabled = false;
-                frm.CaseDropDown.Enabled = false;
+                frm.timerUpdateCases.Enabled = false;
+                frm.dropCaseList.Enabled = false;
                 frm.timerRetryLogin.Enabled = false;
                 frm.busyPicture.Visible = true;
 
@@ -108,9 +108,9 @@ namespace FogBugzCaseTracker
                 frm.btnViewCase.Enable(true);
                 frm.btnResolveClose.Enable(true);
 
-                frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown,
-                    String.Format("Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
-                frm.UpdateCasesTimer.Enabled = true;
+                frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList,
+                    String.Format("Working on: {0} (elapsed time: {1})", frm.dropCaseList.Text, ((Case)frm.dropCaseList.SelectedItem).ElapsedTime_h_m));
+                frm.timerUpdateCases.Enabled = true;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(true);
                 frm.btnNewSubcase.Enable(true);
@@ -127,9 +127,9 @@ namespace FogBugzCaseTracker
 
                 frm.btnViewCase.Enable(false);
                 frm.btnResolveClose.Enable(false);
-                frm.CurrentCaseTooltip.SetToolTip(frm.CaseDropDown,
-                    String.Format("[PAUSED] Working on: {0} (elapsed time: {1})", frm.CaseDropDown.Text, ((Case)frm.CaseDropDown.SelectedItem).ElapsedTime_h_m));
-                frm.UpdateCasesTimer.Enabled = false;
+                frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList,
+                    String.Format("[PAUSED] Working on: {0} (elapsed time: {1})", frm.dropCaseList.Text, ((Case)frm.dropCaseList.SelectedItem).ElapsedTime_h_m));
+                frm.timerUpdateCases.Enabled = false;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(false);
                 frm.pnlPaused.Visible = true;

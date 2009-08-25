@@ -18,7 +18,7 @@ namespace FogBugzCaseTracker
 
         private void updateCases(bool backgroundOperation)
         {
-            CaseDropDown.Items.Clear();
+            dropCaseList.Items.Clear();
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
 
@@ -54,12 +54,12 @@ namespace FogBugzCaseTracker
 
         private void RepopulateCaseDropdown()
         {
-            CaseDropDown.Items.Add("(nothing)");
-            CaseDropDown.Text = "(nothing)";
+            dropCaseList.Items.Add("(nothing)");
+            dropCaseList.Text = "(nothing)";
             foreach (Case c in _cases)
             {
                 Application.DoEvents();
-                CaseDropDown.Items.Add(c);
+                dropCaseList.Items.Add(c);
             }
         }
         public delegate void OnCasesFetched(Case[] cases, Exception error);
