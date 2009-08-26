@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VersionInfo>
   <Release>
+    <Version>1.2.2.133</Version>
+    <Notes>* Reorganized main menu into groups
+* Added "New Sub-Case" button (to create a sub case of the current case)
+* Disabled FreeMind
+ Import feature, since it's not quite ready yet</Notes>
+    <URL>http://visionmap.googlecode.com/files/CaseTracker-1.2.2.133-setup.exe</URL>
+    <MD5>110233067CE4FF0CDB5034E6BA8E2613</MD5>
+  </Release>
+  <Release>
     <Version>1.2.1.120</Version>
     <Notes>* Added Seach History for filter page (remembers your last 20 filters)
 * UI Enhancement - disabled buttons are now grey</Notes>
