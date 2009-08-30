@@ -35,7 +35,7 @@ namespace FogBugzCaseTracker
 
         private void ShowFilterDialog()
         {
-            SearchForm f = new SearchForm(_history);
+            FilterDialog f = new FilterDialog(_history);
             f.fb = _fb;
             f.dad = this;
             f.UserSearch = _narrowSearch;

@@ -126,9 +126,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SearchForm.resx">
+    <EmbeddedResource Include="FilterDialog.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>SearchForm.cs</DependentUpon>
+      <DependentUpon>FilterDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HoverWindow\HoverWindow.resx">
       <SubType>Designer</SubType>
@@ -151,11 +151,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SearchForm.cs">
+    <Compile Include="FilterDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SearchForm.Designer.cs">
-      <DependentUpon>SearchForm.cs</DependentUpon>
+    <Compile Include="FilterDialog.Designer.cs">
+      <DependentUpon>FilterDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="HoverWindow\HoverWindow.cs">
       <SubType>Form</SubType>

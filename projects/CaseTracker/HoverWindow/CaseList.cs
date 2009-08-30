@@ -16,6 +16,13 @@ namespace FogBugzCaseTracker
             updateCases(false);
         }
 
+        private void updateCaseDropdown(Case[] cases)
+        {
+            _cases = cases;
+            RepopulateCaseDropdown();
+            UpdateStateAccordingToTracking();
+        }
+
         private void updateCases(bool failSilently)
         {
             dropCaseList.Items.Clear();
@@ -28,9 +35,7 @@ namespace FogBugzCaseTracker
                 {
                     if (error != null)
                         throw error;
-                    _cases = cases;
-                    RepopulateCaseDropdown();
-                    UpdateStateAccordingToTracking();
+                    updateCaseDropdown(cases);
                 }
                 catch (ECommandFailed e)
                 {

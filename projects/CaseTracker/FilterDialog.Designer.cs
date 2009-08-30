@@ -1,6 +1,6 @@
 namespace FogBugzCaseTracker
 {
-    partial class SearchForm
+    partial class FilterDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace FogBugzCaseTracker
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FilterDialog));
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SearchFilterBox = new System.Windows.Forms.GroupBox();

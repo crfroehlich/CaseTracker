@@ -12,7 +12,7 @@ using FogBugzNet;
 
 namespace FogBugzCaseTracker
 {
-    public partial class SearchForm : Form
+    public partial class FilterDialog : Form
     {
         private SearchHistory _history;
         public HoverWindow dad;
@@ -52,7 +52,7 @@ namespace FogBugzCaseTracker
             }
         }
 
-        public SearchForm(SearchHistory history)
+        public FilterDialog(SearchHistory history)
         {
             _history = history;
             InitializeComponent();
