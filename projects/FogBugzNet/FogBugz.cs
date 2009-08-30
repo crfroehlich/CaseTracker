@@ -217,6 +217,8 @@ namespace FogBugzNet
                 // If the last time interval has no "End" value, then it's still 
                 // active -> this is the case we're working on.
                 XmlNode lastInterval = doc.SelectSingleNode("//interval[last()]");
+                if (lastInterval == null)
+                    return 0;
                 XmlNode lastEndTime = lastInterval.SelectSingleNode("dtEnd");
                 if (lastEndTime.InnerText.Length == 0)
                     return int.Parse(lastInterval.SelectSingleNode("ixBug").InnerText);
