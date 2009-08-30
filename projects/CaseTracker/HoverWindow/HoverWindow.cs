@@ -133,13 +133,6 @@ namespace FogBugzCaseTracker
             timerUpdateCases.Enabled = true;
         }
 
-        private void SetFilter()
-        {
-            ShowFilterDialog();
-
-
-        }
-
         private void btnMain_Click(object sender, EventArgs e)
         {
             Point p = new Point(Location.X + btnMain.Location.X,
@@ -151,9 +144,8 @@ namespace FogBugzCaseTracker
 
         private void btnFilter_Click_1(object sender, EventArgs e)
         {
-            SetFilter();
+            ShowFilterDialog();
             backgroundPic.Focus();
-
         }
 
         private void grip_MouseDown(object sender, MouseEventArgs e)
