@@ -17,6 +17,7 @@ namespace FogBugzCaseTracker
         private SearchHistory _history;
         public HoverWindow dad;
         public FogBugz fb;
+        public Case[] Cases;
         public String UserSearch
         {
             get
@@ -68,9 +69,9 @@ namespace FogBugzCaseTracker
 
         private void testSearch()
         {
-            Case[] cases = fb.GetCases(formatSearch());
+            Cases = fb.GetCases(formatSearch());
             listTestResults.Items.Clear();
-            foreach (Case c in cases)
+            foreach (Case c in Cases)
                 listTestResults.Items.Add(c);
 
             

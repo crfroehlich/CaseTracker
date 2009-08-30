@@ -19,13 +19,13 @@ namespace FogBugzCaseTracker
         private void updateCaseDropdown(Case[] cases)
         {
             _cases = cases;
+            dropCaseList.Items.Clear();
             RepopulateCaseDropdown();
             UpdateStateAccordingToTracking();
         }
 
         private void updateCases(bool failSilently)
         {
-            dropCaseList.Items.Clear();
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
 
