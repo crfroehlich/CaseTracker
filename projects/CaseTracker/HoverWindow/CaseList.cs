@@ -16,7 +16,7 @@ namespace FogBugzCaseTracker
             updateCases(false);
         }
 
-        private void updateCases(bool backgroundOperation)
+        private void updateCases(bool failSilently)
         {
             dropCaseList.Items.Clear();
             SetState(new StateUpdatingCases(this));
@@ -37,15 +37,15 @@ namespace FogBugzCaseTracker
                     if (e.ErrorCode == (int)ECommandFailed.Code.InvalidSearch)
                     {
                         _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
-                        updateCases(backgroundOperation);
-                        if (!backgroundOperation)
+                        updateCases(failSilently);
+                        if (!failSilently)
                             throw;
                     }
                 }
                 catch (Exception)
                 {
                     SetState(new StateRetryLogin(this));
-                    if (!backgroundOperation)
+                    if (!failSilently)
                         throw;
                 }
             });
