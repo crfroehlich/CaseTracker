@@ -230,6 +230,7 @@ namespace FogBugzNet
         }
 
         // Start working on case id (0: stop working).
+        // returns false if case has no estimate (or cannot work on it for any other reason)
         public bool ToggleWorkingOnCase(int id)
         {
             if (id == 0)
@@ -240,10 +241,11 @@ namespace FogBugzNet
                 {
                     string ret = fbCommand("startWork", "ixBug=" + id.ToString());
                 }
-                catch (Exception x)
+                catch (ECommandFailed x)
                 {
-                    Utils.LogError(x.Message);
-                    return false;
+                    if (x.ErrorCode == (int)ECommandFailed.Code.TimeTrackingProblem)
+                        return false;
+                    throw;
                 }
             }
             return true;

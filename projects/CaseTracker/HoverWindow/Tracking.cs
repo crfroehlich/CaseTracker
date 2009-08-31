@@ -32,17 +32,48 @@ namespace FogBugzCaseTracker
 
             set
             {
-                if (!_fb.ToggleWorkingOnCase(value != null ? value.ID : 0))
+                bool tracking = false;
+                if (value == null)
                 {
-                    Process.Start(_fb.CaseEditURL(0));
-                    _trackedCase = null;
-                    trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
+                    _fb.ToggleWorkingOnCase(0);
+                    SetState(new StateLoggedIn(this));
+                    return;
                 }
-                _trackedCase = value;
 
-                SetState(ClientTrackingCase ? new StateTrackingCase(this) : new StateLoggedIn(this));
+
+                if (!_fb.ToggleWorkingOnCase(value.ID))
+                {
+                    tracking = HandleCaseWithoutEstimate(value.ID);
+                    _fb.ToggleWorkingOnCase(tracking ? value.ID : 0);
+                }
+                else
+                    tracking = true;
+
+                _trackedCase = tracking ? value : null;
+                if (!tracking) 
+                    SelectNothing();
+                SetState(tracking ? new StateTrackingCase(this) : new StateLoggedIn(this));
             }
         }
+
+        private void SelectNothing()
+        {
+            foreach (Object o in dropCaseList.Items)
+                if (o.GetType() != typeof(Case))
+                {
+                    dropCaseList.SelectedItem = o;
+                    break;
+                }
+        }
+
+        private bool HandleCaseWithoutEstimate(int caseid)
+        {
+            Process.Start(_fb.CaseEditURL(caseid));
+            _trackedCase = null;
+            trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
+            return false;
+        }
+
         private void UpdateStateAccordingToTracking()
         {
             // Handle also case where a case is being tracked on the server side, but not on the client
