@@ -125,6 +125,8 @@ In order to run the test create an XML file with this format:
             fb.SetEstimate(testCase.ID, "30m");
 
             Assert.AreEqual(new TimeSpan(0, 30, 0), fb.GetCases("7523")[0].Estimate);
+
+            Assert.Throws(typeof(ECommandFailed), delegate () { fb.SetEstimate(testCase.ID, "$%#$RSD time"); });
         }
 
     }

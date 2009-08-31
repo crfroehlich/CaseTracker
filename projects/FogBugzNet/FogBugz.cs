@@ -25,7 +25,9 @@ namespace FogBugzNet
     {
         public enum Code
         {
-            InvalidSearch = 10
+            // These correlate to the error code values documented here: http://www.fogcreek.com/FogBugz/docs/60/topics/advanced/API.html
+            InvalidSearch = 10,
+            TimeTrackingProblem = 7
         };
         public int ErrorCode;
         public ECommandFailed(string reason, int errorCode)
@@ -282,6 +284,10 @@ namespace FogBugzNet
         public void SetEstimate(int caseid, string estimate)
         {
             fbCommand("edit", "ixBug=" + caseid.ToString(), "hrsCurrEst=" + estimate);
+            TimeSpan newEstimate = GetCases(caseid.ToString())[0].Estimate;
+            if (newEstimate.TotalHours == 0)
+                throw new ECommandFailed(String.Format("Invalid estimate provided: '%s.\nEstimate now set to 0 hours.", estimate), (int)ECommandFailed.Code.TimeTrackingProblem);
+
         }
 
         public Project[] ListProjects()
