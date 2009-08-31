@@ -98,7 +98,6 @@ In order to run the test create an XML file with this format:
             foreach (Case c in res.CaseToNewParent.Keys)
                 fb.SetParent(c, res.CaseToNewParent[c].ID);
 
-
         }
 
         [Test]
@@ -113,10 +112,20 @@ In order to run the test create an XML file with this format:
             fb.SetParent(cases[0], 7521);
             cases = fb.GetCases("7523");
             Assert.AreEqual(cases[0].ParentCaseID, 7521);
-            
-
         }
 
+        [Test]
+        public void TestEstimate()
+        {
+            FogBugz fb = Login();
+            Case testCase = fb.GetCases("7523")[0];
+            fb.SetEstimate(testCase.ID, "1h");
+
+            Assert.AreEqual(new TimeSpan(1, 0, 0), fb.GetCases("7523")[0].Estimate);
+            fb.SetEstimate(testCase.ID, "30m");
+
+            Assert.AreEqual(new TimeSpan(0, 30, 0), fb.GetCases("7523")[0].Estimate);
+        }
 
     }
 }

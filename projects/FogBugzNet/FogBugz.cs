@@ -279,12 +279,9 @@ namespace FogBugzNet
             return NewCaseURL + "&ixBugParent=" + parentID.ToString();
         }
 
-
-
         public void SetEstimate(int caseid, string estimate)
         {
-            throw new Exception("Not yet implemented");
-
+            fbCommand("edit", "ixBug=" + caseid.ToString(), "hrsCurrEst=" + estimate);
         }
 
         public Project[] ListProjects()
