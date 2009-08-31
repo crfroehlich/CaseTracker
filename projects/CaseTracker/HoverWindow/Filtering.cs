@@ -45,7 +45,10 @@ namespace FogBugzCaseTracker
             {
                 _narrowSearch = f.UserSearch;
                 _ignoreBaseSearch = f.IgnoreBaseSearch;
-                updateCaseDropdown(f.Cases);
+                if (f.Cases != null)
+                    updateCaseDropdown(f.Cases);
+                else
+                    updateCases();
                 _history.Save();
             }
         }
