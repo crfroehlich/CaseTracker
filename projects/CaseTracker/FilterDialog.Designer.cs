@@ -31,17 +31,16 @@ namespace FogBugzCaseTracker
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FilterDialog));
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.SearchFilterBox = new System.Windows.Forms.GroupBox();
-            this.chkIgnoreBaseSearch = new System.Windows.Forms.CheckBox();
-            this.lnkSearchHelp = new System.Windows.Forms.LinkLabel();
-            this.lblNarrowSearch = new System.Windows.Forms.Label();
-            this.btnTest = new System.Windows.Forms.Button();
-            this.txtBaseSearch = new System.Windows.Forms.TextBox();
-            this.lblBaseSearch = new System.Windows.Forms.Label();
             this.SearchResultBox = new System.Windows.Forms.GroupBox();
+            this.chkIncludeNoEstimate = new System.Windows.Forms.CheckBox();
             this.listTestResults = new System.Windows.Forms.ListBox();
+            this.lblBaseSearch = new System.Windows.Forms.Label();
+            this.chkIgnoreBaseSearch = new System.Windows.Forms.CheckBox();
+            this.txtBaseSearch = new System.Windows.Forms.TextBox();
             this.cmboNarrowSearch = new System.Windows.Forms.ComboBox();
-            this.SearchFilterBox.SuspendLayout();
+            this.lnkSearchHelp = new System.Windows.Forms.LinkLabel();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.lblNarrowSearch = new System.Windows.Forms.Label();
             this.SearchResultBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,119 +48,53 @@ namespace FogBugzCaseTracker
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(484, 366);
+            this.btnOk.Location = new System.Drawing.Point(511, 348);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 1;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(565, 366);
+            this.btnCancel.Location = new System.Drawing.Point(592, 348);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // SearchFilterBox
-            // 
-            this.SearchFilterBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchFilterBox.Controls.Add(this.cmboNarrowSearch);
-            this.SearchFilterBox.Controls.Add(this.chkIgnoreBaseSearch);
-            this.SearchFilterBox.Controls.Add(this.lnkSearchHelp);
-            this.SearchFilterBox.Controls.Add(this.lblNarrowSearch);
-            this.SearchFilterBox.Controls.Add(this.btnTest);
-            this.SearchFilterBox.Controls.Add(this.txtBaseSearch);
-            this.SearchFilterBox.Controls.Add(this.lblBaseSearch);
-            this.SearchFilterBox.Location = new System.Drawing.Point(12, 12);
-            this.SearchFilterBox.Name = "SearchFilterBox";
-            this.SearchFilterBox.Size = new System.Drawing.Size(628, 96);
-            this.SearchFilterBox.TabIndex = 0;
-            this.SearchFilterBox.TabStop = false;
-            this.SearchFilterBox.Text = "Search Filter";
-            // 
-            // chkIgnoreBaseSearch
-            // 
-            this.chkIgnoreBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkIgnoreBaseSearch.AutoSize = true;
-            this.chkIgnoreBaseSearch.Location = new System.Drawing.Point(535, 24);
-            this.chkIgnoreBaseSearch.Name = "chkIgnoreBaseSearch";
-            this.chkIgnoreBaseSearch.Size = new System.Drawing.Size(56, 17);
-            this.chkIgnoreBaseSearch.TabIndex = 7;
-            this.chkIgnoreBaseSearch.Text = "Ignore";
-            this.chkIgnoreBaseSearch.UseVisualStyleBackColor = true;
-            this.chkIgnoreBaseSearch.CheckedChanged += new System.EventHandler(this.chkIgnoreBaseSearch_CheckedChanged);
-            // 
-            // lnkSearchHelp
-            // 
-            this.lnkSearchHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkSearchHelp.AutoSize = true;
-            this.lnkSearchHelp.Location = new System.Drawing.Point(373, 74);
-            this.lnkSearchHelp.Name = "lnkSearchHelp";
-            this.lnkSearchHelp.Size = new System.Drawing.Size(158, 13);
-            this.lnkSearchHelp.TabIndex = 6;
-            this.lnkSearchHelp.TabStop = true;
-            this.lnkSearchHelp.Text = "what\'s the search syntax again?";
-            this.lnkSearchHelp.Click += new System.EventHandler(this.lnkSearchHelp_Click);
-            // 
-            // lblNarrowSearch
-            // 
-            this.lblNarrowSearch.AutoSize = true;
-            this.lblNarrowSearch.Location = new System.Drawing.Point(17, 54);
-            this.lblNarrowSearch.Name = "lblNarrowSearch";
-            this.lblNarrowSearch.Size = new System.Drawing.Size(81, 13);
-            this.lblNarrowSearch.TabIndex = 5;
-            this.lblNarrowSearch.Text = "Narrow Search:";
-            // 
-            // btnTest
-            // 
-            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(535, 49);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(75, 23);
-            this.btnTest.TabIndex = 1;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
-            // 
-            // txtBaseSearch
-            // 
-            this.txtBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBaseSearch.Location = new System.Drawing.Point(203, 22);
-            this.txtBaseSearch.Name = "txtBaseSearch";
-            this.txtBaseSearch.ReadOnly = true;
-            this.txtBaseSearch.Size = new System.Drawing.Size(326, 20);
-            this.txtBaseSearch.TabIndex = 4;
-            this.txtBaseSearch.TabStop = false;
-            this.txtBaseSearch.Text = "AssignedTo:\"Me\" AND Status:\"Active\" AND -EstimateCurrent:\"0\"";
-            // 
-            // lblBaseSearch
-            // 
-            this.lblBaseSearch.AutoSize = true;
-            this.lblBaseSearch.Location = new System.Drawing.Point(17, 25);
-            this.lblBaseSearch.Name = "lblBaseSearch";
-            this.lblBaseSearch.Size = new System.Drawing.Size(180, 13);
-            this.lblBaseSearch.TabIndex = 2;
-            this.lblBaseSearch.Text = "Base Search (mandatory conditions):";
-            // 
             // SearchResultBox
             // 
             this.SearchResultBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchResultBox.Controls.Add(this.chkIncludeNoEstimate);
             this.SearchResultBox.Controls.Add(this.listTestResults);
-            this.SearchResultBox.Location = new System.Drawing.Point(12, 114);
+            this.SearchResultBox.Controls.Add(this.lblBaseSearch);
+            this.SearchResultBox.Controls.Add(this.chkIgnoreBaseSearch);
+            this.SearchResultBox.Controls.Add(this.txtBaseSearch);
+            this.SearchResultBox.Location = new System.Drawing.Point(15, 66);
             this.SearchResultBox.Name = "SearchResultBox";
-            this.SearchResultBox.Size = new System.Drawing.Size(628, 246);
+            this.SearchResultBox.Size = new System.Drawing.Size(652, 276);
             this.SearchResultBox.TabIndex = 3;
             this.SearchResultBox.TabStop = false;
-            this.SearchResultBox.Text = "Test Search Results";
+            this.SearchResultBox.Text = "Search Results";
+            // 
+            // chkIncludeNoEstimate
+            // 
+            this.chkIncludeNoEstimate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkIncludeNoEstimate.AutoSize = true;
+            this.chkIncludeNoEstimate.Location = new System.Drawing.Point(469, 251);
+            this.chkIncludeNoEstimate.Name = "chkIncludeNoEstimate";
+            this.chkIncludeNoEstimate.Size = new System.Drawing.Size(171, 17);
+            this.chkIncludeNoEstimate.TabIndex = 17;
+            this.chkIncludeNoEstimate.Text = "Include cases without estimate";
+            this.chkIncludeNoEstimate.UseVisualStyleBackColor = true;
+            this.chkIncludeNoEstimate.CheckedChanged += new System.EventHandler(this.chkIncludeNoEstimate_CheckedChanged);
             // 
             // listTestResults
             // 
@@ -172,39 +105,106 @@ namespace FogBugzCaseTracker
             this.listTestResults.FormattingEnabled = true;
             this.listTestResults.Location = new System.Drawing.Point(20, 28);
             this.listTestResults.Name = "listTestResults";
-            this.listTestResults.Size = new System.Drawing.Size(590, 186);
+            this.listTestResults.Size = new System.Drawing.Size(614, 186);
             this.listTestResults.TabIndex = 2;
+            // 
+            // lblBaseSearch
+            // 
+            this.lblBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblBaseSearch.AutoSize = true;
+            this.lblBaseSearch.Location = new System.Drawing.Point(63, 229);
+            this.lblBaseSearch.Name = "lblBaseSearch";
+            this.lblBaseSearch.Size = new System.Drawing.Size(147, 13);
+            this.lblBaseSearch.TabIndex = 11;
+            this.lblBaseSearch.Text = "Base Search (recommended):";
+            // 
+            // chkIgnoreBaseSearch
+            // 
+            this.chkIgnoreBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkIgnoreBaseSearch.AutoSize = true;
+            this.chkIgnoreBaseSearch.Location = new System.Drawing.Point(469, 228);
+            this.chkIgnoreBaseSearch.Name = "chkIgnoreBaseSearch";
+            this.chkIgnoreBaseSearch.Size = new System.Drawing.Size(117, 17);
+            this.chkIgnoreBaseSearch.TabIndex = 15;
+            this.chkIgnoreBaseSearch.Text = "Ignore base search";
+            this.chkIgnoreBaseSearch.UseVisualStyleBackColor = true;
+            // 
+            // txtBaseSearch
+            // 
+            this.txtBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBaseSearch.Location = new System.Drawing.Point(216, 226);
+            this.txtBaseSearch.Name = "txtBaseSearch";
+            this.txtBaseSearch.ReadOnly = true;
+            this.txtBaseSearch.Size = new System.Drawing.Size(247, 20);
+            this.txtBaseSearch.TabIndex = 12;
+            this.txtBaseSearch.TabStop = false;
+            this.txtBaseSearch.Text = "AssignedTo:\"Me\"";
             // 
             // cmboNarrowSearch
             // 
             this.cmboNarrowSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.cmboNarrowSearch.FormattingEnabled = true;
-            this.cmboNarrowSearch.Location = new System.Drawing.Point(104, 51);
+            this.cmboNarrowSearch.Location = new System.Drawing.Point(62, 12);
             this.cmboNarrowSearch.Name = "cmboNarrowSearch";
-            this.cmboNarrowSearch.Size = new System.Drawing.Size(425, 21);
-            this.cmboNarrowSearch.TabIndex = 8;
+            this.cmboNarrowSearch.Size = new System.Drawing.Size(524, 21);
+            this.cmboNarrowSearch.TabIndex = 16;
             this.cmboNarrowSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
             // 
-            // SearchForm
+            // lnkSearchHelp
+            // 
+            this.lnkSearchHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkSearchHelp.AutoSize = true;
+            this.lnkSearchHelp.Location = new System.Drawing.Point(428, 36);
+            this.lnkSearchHelp.Name = "lnkSearchHelp";
+            this.lnkSearchHelp.Size = new System.Drawing.Size(158, 13);
+            this.lnkSearchHelp.TabIndex = 14;
+            this.lnkSearchHelp.TabStop = true;
+            this.lnkSearchHelp.Text = "what\'s the search syntax again?";
+            this.lnkSearchHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSearchHelp_LinkClicked);
+            // 
+            // btnTest
+            // 
+            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTest.Location = new System.Drawing.Point(592, 10);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 10;
+            this.btnTest.Text = "Go";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // lblNarrowSearch
+            // 
+            this.lblNarrowSearch.AutoSize = true;
+            this.lblNarrowSearch.Location = new System.Drawing.Point(12, 15);
+            this.lblNarrowSearch.Name = "lblNarrowSearch";
+            this.lblNarrowSearch.Size = new System.Drawing.Size(44, 13);
+            this.lblNarrowSearch.TabIndex = 13;
+            this.lblNarrowSearch.Text = "Search:";
+            // 
+            // FilterDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 399);
+            this.ClientSize = new System.Drawing.Size(679, 381);
+            this.Controls.Add(this.cmboNarrowSearch);
+            this.Controls.Add(this.lnkSearchHelp);
+            this.Controls.Add(this.lblNarrowSearch);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.SearchResultBox);
-            this.Controls.Add(this.SearchFilterBox);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(574, 262);
-            this.Name = "SearchForm";
+            this.MinimumSize = new System.Drawing.Size(687, 408);
+            this.Name = "FilterDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search Filter";
             this.Load += new System.EventHandler(this.SearchForm_Load);
-            this.SearchFilterBox.ResumeLayout(false);
-            this.SearchFilterBox.PerformLayout();
             this.SearchResultBox.ResumeLayout(false);
+            this.SearchResultBox.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -212,15 +212,15 @@ namespace FogBugzCaseTracker
 
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.GroupBox SearchFilterBox;
-        private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.Label lblBaseSearch;
-        private System.Windows.Forms.Label lblNarrowSearch;
-        private System.Windows.Forms.TextBox txtBaseSearch;
         private System.Windows.Forms.GroupBox SearchResultBox;
         private System.Windows.Forms.ListBox listTestResults;
-        private System.Windows.Forms.LinkLabel lnkSearchHelp;
-        private System.Windows.Forms.CheckBox chkIgnoreBaseSearch;
+        private System.Windows.Forms.CheckBox chkIncludeNoEstimate;
         private System.Windows.Forms.ComboBox cmboNarrowSearch;
+        private System.Windows.Forms.CheckBox chkIgnoreBaseSearch;
+        private System.Windows.Forms.LinkLabel lnkSearchHelp;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.TextBox txtBaseSearch;
+        private System.Windows.Forms.Label lblBaseSearch;
+        private System.Windows.Forms.Label lblNarrowSearch;
     }
 }

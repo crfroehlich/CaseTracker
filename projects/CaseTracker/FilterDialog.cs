@@ -31,6 +31,18 @@ namespace FogBugzCaseTracker
             }
         }
 
+        public bool IncludeNoEstimate
+        {
+            set 
+            {
+                chkIncludeNoEstimate.Checked = value;
+            }
+            get
+            {
+                return chkIncludeNoEstimate.Checked;
+            }
+        }
+
         public String BaseSearch
         {
             set 
@@ -102,7 +114,7 @@ namespace FogBugzCaseTracker
         private void lnkSearchHelp_Click(object sender, EventArgs e)
         {
 
-            Process.Start((string)ConfigurationManager.AppSettings["FogBugzBaseURL"] + "/help/topics/basics/Searchingforcases.html");
+            Process.Start((string)ConfigurationManager.AppSettings["SearchSyntaxHelpURL"]);
         }
 
         private void chkIgnoreBaseSearch_CheckedChanged(object sender, EventArgs e)
@@ -118,7 +130,19 @@ namespace FogBugzCaseTracker
                 cmboNarrowSearch.Items.AddRange(_history.History.ToArray());
         }
 
+        private void btnOk_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void lnkSearchHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        private void chkIncludeNoEstimate_CheckedChanged(object sender, EventArgs e)
+        {
+            IncludeNoEstimate = chkIncludeNoEstimate.Checked;
+        }
     }
 }

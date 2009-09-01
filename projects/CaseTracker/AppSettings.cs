@@ -20,6 +20,7 @@ namespace FogBugzCaseTracker
             _key.SetValue("LastX", Location.X);
             _key.SetValue("LastY", Location.Y);
             _key.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
+            _key.SetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0);
             _key.SetValue("LastWidth", Width);
             _key.SetValue("PollingInterval", timerUpdateCases.Interval);
             _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
@@ -60,6 +61,7 @@ namespace FogBugzCaseTracker
                 timerUpdateCases.Interval = (int)_key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]));
                 _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
                 _ignoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
+                _includeNoEstimate = (int)_key.GetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0) != 0;
 
                 _key.Close();
             }
