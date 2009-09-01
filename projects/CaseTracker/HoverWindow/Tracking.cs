@@ -32,27 +32,32 @@ namespace FogBugzCaseTracker
 
             set
             {
-                bool tracking = false;
                 if (value == null)
                 {
-                    _fb.ToggleWorkingOnCase(0);
+                    _fb.StopWorking();
                     SetState(new StateLoggedIn(this));
                     return;
                 }
 
+                bool serverTrackInitiated = _fb.StartWorking(value.ID);
 
-                if (!_fb.ToggleWorkingOnCase(value.ID))
+                if (!serverTrackInitiated)
                 {
-                    tracking = HandleCaseWithoutEstimate(value.ID);
-                    _fb.ToggleWorkingOnCase(tracking ? value.ID : 0);
+                    if (ObtainUserEstimate(value.ID))
+                        serverTrackInitiated = _fb.StartWorking(value.ID);
+                }
+
+                if (serverTrackInitiated)
+                {
+                    _trackedCase = value;
+                    SetState(new StateTrackingCase(this));
                 }
                 else
-                    tracking = true;
-
-                _trackedCase = tracking ? value : null;
-                if (!tracking) 
+                {
+                    _trackedCase = null;
                     SelectNothing();
-                SetState(tracking ? new StateTrackingCase(this) : new StateLoggedIn(this));
+                    SetState(new StateLoggedIn(this));
+                }
             }
         }
 
@@ -66,7 +71,7 @@ namespace FogBugzCaseTracker
                 }
         }
 
-        private bool HandleCaseWithoutEstimate(int caseid)
+        private bool ObtainUserEstimate(int caseid)
         {
             Process.Start(_fb.CaseEditURL(caseid));
             _trackedCase = null;

@@ -27,13 +27,14 @@ namespace FogBugzCaseTracker
         {
             InitializeComponent();
 
-            loadSettings();
 
 
             _baseSearch = ConfigurationManager.AppSettings["BaseSearch"];
             _ignoreBaseSearch = bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]);
             _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
                                             new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
+
+            loadSettings();
 
             _autoUpdate.Run();
         }
@@ -119,7 +120,7 @@ namespace FogBugzCaseTracker
             try
             {
                 if (_switchToNothinUponClosing)
-                    _fb.ToggleWorkingOnCase(0);
+                    _fb.StopWorking();
                 saveSettings();
             }
             catch (System.Exception x)

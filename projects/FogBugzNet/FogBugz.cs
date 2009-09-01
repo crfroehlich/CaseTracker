@@ -229,24 +229,24 @@ namespace FogBugzNet
             }
         }
 
-        // Start working on case id (0: stop working).
-        // returns false if case has no estimate (or cannot work on it for any other reason)
-        public bool ToggleWorkingOnCase(int id)
+
+        public void StopWorking()
         {
-            if (id == 0)
-                fbCommand("stopWork", null);
-            else
+            fbCommand("stopWork", null);
+        }
+
+        // returns false if case has no estimate (or cannot work on it for any other reason)
+        public bool StartWorking(int id)
+        {
+            try
             {
-                try
-                {
-                    string ret = fbCommand("startWork", "ixBug=" + id.ToString());
-                }
-                catch (ECommandFailed x)
-                {
-                    if (x.ErrorCode == (int)ECommandFailed.Code.TimeTrackingProblem)
-                        return false;
-                    throw;
-                }
+                string ret = fbCommand("startWork", "ixBug=" + id.ToString());
+            }
+            catch (ECommandFailed x)
+            {
+                if (x.ErrorCode == (int)ECommandFailed.Code.TimeTrackingProblem)
+                    return false;
+                throw;
             }
             return true;
         }
