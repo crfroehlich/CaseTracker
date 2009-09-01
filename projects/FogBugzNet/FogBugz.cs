@@ -283,13 +283,11 @@ namespace FogBugzNet
             return NewCaseURL + "&ixBugParent=" + parentID.ToString();
         }
 
-        public void SetEstimate(int caseid, string estimate)
+        public bool SetEstimate(int caseid, string estimate)
         {
             fbCommand("edit", "ixBug=" + caseid.ToString(), "hrsCurrEst=" + estimate);
             TimeSpan newEstimate = GetCases(caseid.ToString())[0].Estimate;
-            if (newEstimate.TotalHours == 0)
-                throw new ECommandFailed(String.Format("Invalid estimate provided: '%s.\nEstimate now set to 0 hours.", estimate), (int)ECommandFailed.Code.TimeTrackingProblem);
-
+            return newEstimate.TotalHours != 0;
         }
 
         public Project[] ListProjects()

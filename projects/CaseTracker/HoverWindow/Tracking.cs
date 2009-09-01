@@ -73,10 +73,28 @@ namespace FogBugzCaseTracker
 
         private bool ObtainUserEstimate(int caseid)
         {
-            Process.Start(_fb.CaseEditURL(caseid));
-            _trackedCase = null;
-            trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
-            return false;
+            EstimateDialog dlg = new EstimateDialog();
+            dlg.Left = ((Left + Width / 2) - dlg.Width / 2);
+            dlg.Top = Bottom + 5;
+            DialogResult res = dlg.ShowDialog(this);
+            if (res == DialogResult.OK)
+            {
+                if (!_fb.SetEstimate(caseid, dlg.UserEstimate))
+                {
+                    Utils.ShowErrorMessage(String.Format("Invalid estimate provided: '{0}'\nCurrent estimate was reset to 0 hours.", dlg.UserEstimate), "Invalid Estimate");
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                Process.Start(_fb.CaseEditURL(caseid));
+                _trackedCase = null;
+
+                // TODO: why is this tip not showing?
+                trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a valid time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
+                return false;
+            }
         }
 
         private void UpdateStateAccordingToTracking()
