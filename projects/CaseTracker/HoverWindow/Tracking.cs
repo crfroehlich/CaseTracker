@@ -73,11 +73,20 @@ namespace FogBugzCaseTracker
                 }
         }
 
+        private void LocateDialogBelowOrAboveWindow(Form f)
+        {
+            f.Left = ((Left + Width / 2) - f.Width / 2);
+            if (Bottom + 5 + f.Height > Screen.PrimaryScreen.Bounds.Height)
+                f.Top = Top - 5 - f.Height;
+            else
+                f.Top = Bottom + 5;
+        }
+
         private bool ObtainUserEstimate(int caseid)
         {
             EstimateDialog dlg = new EstimateDialog();
-            dlg.Left = ((Left + Width / 2) - dlg.Width / 2);
-            dlg.Top = Bottom + 5;
+            LocateDialogBelowOrAboveWindow(dlg);
+
             DialogResult res = dlg.ShowDialog(this);
             if (res == DialogResult.OK)
             {

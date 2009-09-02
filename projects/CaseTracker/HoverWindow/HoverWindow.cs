@@ -270,5 +270,25 @@ namespace FogBugzCaseTracker
             dlg.ShowDialog();
         }
 
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            SettingsDlg dlg = new SettingsDlg();
+            LocateDialogBelowOrAboveWindow(dlg);
+
+            // TODO: keep previous settings
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                // TODO: apply new settings
+                // TODO: Save settings
+
+            }
+            else
+            {
+                // TODO: restore previous settings
+
+
+            }
+        }
+
     } // Class HoverWindow
 }

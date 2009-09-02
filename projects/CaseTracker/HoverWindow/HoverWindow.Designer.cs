@@ -33,9 +33,9 @@ namespace FogBugzCaseTracker
             this.timerUpdateCases = new System.Windows.Forms.Timer(this.components);
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuCurrentCase = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCurrentFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.btnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tooltipCurrentCase = new System.Windows.Forms.ToolTip(this.components);
             this.dropCaseList = new System.Windows.Forms.ComboBox();
@@ -44,28 +44,29 @@ namespace FogBugzCaseTracker
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.pnlPaused = new System.Windows.Forms.Panel();
             this.lblImBack = new System.Windows.Forms.Label();
+            this.btnShowHide = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
+            this.btnPause = new FogBugzCaseTracker.MultiImageButton();
             this.busyPicture = new System.Windows.Forms.PictureBox();
             this.extensionGrip = new System.Windows.Forms.PictureBox();
-            this.btnMain = new System.Windows.Forms.Button();
-            this.backgroundPic = new System.Windows.Forms.PictureBox();
-            this.btnPause = new FogBugzCaseTracker.MultiImageButton();
             this.btnFilter = new FogBugzCaseTracker.MultiImageButton();
+            this.btnMain = new System.Windows.Forms.Button();
+            this.btnRefresh = new FogBugzCaseTracker.MultiImageButton();
+            this.backgroundPic = new System.Windows.Forms.PictureBox();
             this.menuNew = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnNewCase = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnNewSubcase = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
+            this.menuCurrentCase = new System.Windows.Forms.ToolStripMenuItem();
             this.btnViewCase = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnViewCaseOutline = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnNewEstimate = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnResolve = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnResolveClose = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
+            this.menuCurrentFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExportFreeMind = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnImportFreeMind = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnExportExcel = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
+            this.btnSettings = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnConfigure = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
-            this.btnShowHide = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
-            this.btnRefresh = new FogBugzCaseTracker.MultiImageButton();
-            this.sepToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.pnlPaused.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.busyPicture)).BeginInit();
@@ -97,6 +98,7 @@ namespace FogBugzCaseTracker
             this.menuNew,
             this.menuCurrentCase,
             this.menuCurrentFilter,
+            this.btnSettings,
             this.btnConfigure,
             this.toolStripSeparator1,
             this.aboutToolStripMenuItem,
@@ -104,38 +106,26 @@ namespace FogBugzCaseTracker
             this.btnShowHide,
             this.btnExit});
             this.menuMain.Name = "contextMenuStrip1";
-            this.menuMain.Size = new System.Drawing.Size(153, 192);
+            this.menuMain.Size = new System.Drawing.Size(153, 214);
             this.menuMain.Opened += new System.EventHandler(this.contextMenuStrip1_Opened);
             this.menuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStrip1_Closed);
-            // 
-            // menuCurrentCase
-            // 
-            this.menuCurrentCase.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnViewCase,
-            this.btnViewCaseOutline,
-            this.btnNewEstimate,
-            this.btnResolve,
-            this.btnResolveClose});
-            this.menuCurrentCase.Image = global::FogBugzCaseTracker.Properties.Resources.icon;
-            this.menuCurrentCase.Name = "menuCurrentCase";
-            this.menuCurrentCase.Size = new System.Drawing.Size(152, 22);
-            this.menuCurrentCase.Text = "Current Case";
-            // 
-            // menuCurrentFilter
-            // 
-            this.menuCurrentFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnExportFreeMind,
-            this.btnImportFreeMind,
-            this.btnExportExcel});
-            this.menuCurrentFilter.Image = global::FogBugzCaseTracker.Properties.Resources.filter1;
-            this.menuCurrentFilter.Name = "menuCurrentFilter";
-            this.menuCurrentFilter.Size = new System.Drawing.Size(152, 22);
-            this.menuCurrentFilter.Text = "Current Filter";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // sepToolStripMenuItem
+            // 
+            this.sepToolStripMenuItem.Name = "sepToolStripMenuItem";
+            this.sepToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
             // 
             // btnExit
             // 
@@ -233,6 +223,34 @@ namespace FogBugzCaseTracker
             this.lblImBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblImBack.Click += new System.EventHandler(this.lblImBack_Click);
             // 
+            // btnShowHide
+            // 
+            this.btnShowHide.DisabledImage = null;
+            this.btnShowHide.EnabledImage = null;
+            this.btnShowHide.Name = "btnShowHide";
+            this.btnShowHide.Size = new System.Drawing.Size(152, 22);
+            this.btnShowHide.Text = "&Hide";
+            this.btnShowHide.Click += new System.EventHandler(this.btnShowHide_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnPause.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.pause;
+            this.btnPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnPause.DisabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.pause_disabled;
+            this.btnPause.EnabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.pause;
+            this.btnPause.FlatAppearance.BorderSize = 0;
+            this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPause.Location = new System.Drawing.Point(411, 3);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(22, 20);
+            this.btnPause.TabIndex = 18;
+            this.btnPause.TabStop = false;
+            this.btnPause.UseVisualStyleBackColor = false;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
             // busyPicture
             // 
             this.busyPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -260,54 +278,6 @@ namespace FogBugzCaseTracker
             this.extensionGrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grip_MouseDown);
             this.extensionGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grip_MouseUp);
             // 
-            // btnMain
-            // 
-            this.btnMain.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.icon;
-            this.btnMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnMain.ContextMenuStrip = this.menuMain;
-            this.btnMain.FlatAppearance.BorderSize = 0;
-            this.btnMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMain.Location = new System.Drawing.Point(2, 3);
-            this.btnMain.Name = "btnMain";
-            this.btnMain.Size = new System.Drawing.Size(22, 20);
-            this.btnMain.TabIndex = 9;
-            this.btnMain.TabStop = false;
-            this.btnMain.UseVisualStyleBackColor = true;
-            this.btnMain.Click += new System.EventHandler(this.btnMain_Click);
-            // 
-            // backgroundPic
-            // 
-            this.backgroundPic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.backgroundPic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.backgroundPic.Location = new System.Drawing.Point(0, 0);
-            this.backgroundPic.Name = "backgroundPic";
-            this.backgroundPic.Size = new System.Drawing.Size(500, 26);
-            this.backgroundPic.TabIndex = 16;
-            this.backgroundPic.TabStop = false;
-            this.backgroundPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseMove);
-            this.backgroundPic.Click += new System.EventHandler(this.backgroundPic_Click);
-            this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
-            this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
-            // 
-            // btnPause
-            // 
-            this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPause.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnPause.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.pause;
-            this.btnPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnPause.DisabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.pause_disabled;
-            this.btnPause.EnabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.pause;
-            this.btnPause.FlatAppearance.BorderSize = 0;
-            this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPause.Location = new System.Drawing.Point(411, 3);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(22, 20);
-            this.btnPause.TabIndex = 18;
-            this.btnPause.TabStop = false;
-            this.btnPause.UseVisualStyleBackColor = false;
-            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
-            // 
             // btnFilter
             // 
             this.btnFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -326,6 +296,54 @@ namespace FogBugzCaseTracker
             this.btnFilter.TabStop = false;
             this.btnFilter.UseVisualStyleBackColor = false;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click_1);
+            // 
+            // btnMain
+            // 
+            this.btnMain.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.icon;
+            this.btnMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnMain.ContextMenuStrip = this.menuMain;
+            this.btnMain.FlatAppearance.BorderSize = 0;
+            this.btnMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMain.Location = new System.Drawing.Point(2, 3);
+            this.btnMain.Name = "btnMain";
+            this.btnMain.Size = new System.Drawing.Size(22, 20);
+            this.btnMain.TabIndex = 9;
+            this.btnMain.TabStop = false;
+            this.btnMain.UseVisualStyleBackColor = true;
+            this.btnMain.Click += new System.EventHandler(this.btnMain_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnRefresh.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh;
+            this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRefresh.DisabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh_disabled;
+            this.btnRefresh.EnabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Location = new System.Drawing.Point(463, 3);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(22, 20);
+            this.btnRefresh.TabIndex = 10;
+            this.btnRefresh.TabStop = false;
+            this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // backgroundPic
+            // 
+            this.backgroundPic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.backgroundPic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backgroundPic.Location = new System.Drawing.Point(0, 0);
+            this.backgroundPic.Name = "backgroundPic";
+            this.backgroundPic.Size = new System.Drawing.Size(500, 26);
+            this.backgroundPic.TabIndex = 16;
+            this.backgroundPic.TabStop = false;
+            this.backgroundPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseMove);
+            this.backgroundPic.Click += new System.EventHandler(this.backgroundPic_Click);
+            this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
+            this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
             // 
             // menuNew
             // 
@@ -358,6 +376,19 @@ namespace FogBugzCaseTracker
             this.btnNewSubcase.Size = new System.Drawing.Size(179, 22);
             this.btnNewSubcase.Text = "Sub-Case (of current)";
             this.btnNewSubcase.Click += new System.EventHandler(this.btnNewSubcase_Click);
+            // 
+            // menuCurrentCase
+            // 
+            this.menuCurrentCase.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnViewCase,
+            this.btnViewCaseOutline,
+            this.btnNewEstimate,
+            this.btnResolve,
+            this.btnResolveClose});
+            this.menuCurrentCase.Image = global::FogBugzCaseTracker.Properties.Resources.icon;
+            this.menuCurrentCase.Name = "menuCurrentCase";
+            this.menuCurrentCase.Size = new System.Drawing.Size(152, 22);
+            this.menuCurrentCase.Text = "Current Case";
             // 
             // btnViewCase
             // 
@@ -409,6 +440,17 @@ namespace FogBugzCaseTracker
             this.btnResolveClose.Text = "Resolve && &Close this case";
             this.btnResolveClose.Click += new System.EventHandler(this.btnResolveClose_Click);
             // 
+            // menuCurrentFilter
+            // 
+            this.menuCurrentFilter.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExportFreeMind,
+            this.btnImportFreeMind,
+            this.btnExportExcel});
+            this.menuCurrentFilter.Image = global::FogBugzCaseTracker.Properties.Resources.filter1;
+            this.menuCurrentFilter.Name = "menuCurrentFilter";
+            this.menuCurrentFilter.Size = new System.Drawing.Size(152, 22);
+            this.menuCurrentFilter.Text = "Current Filter";
+            // 
             // btnExportFreeMind
             // 
             this.btnExportFreeMind.DisabledImage = null;
@@ -440,6 +482,16 @@ namespace FogBugzCaseTracker
             this.btnExportExcel.Text = "Export to Excel";
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.DisabledImage = global::FogBugzCaseTracker.Properties.Resources.settings;
+            this.btnSettings.EnabledImage = global::FogBugzCaseTracker.Properties.Resources.settings;
+            this.btnSettings.Image = global::FogBugzCaseTracker.Properties.Resources.settings;
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(152, 22);
+            this.btnSettings.Text = "Se&ttings";
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
             // btnConfigure
             // 
             this.btnConfigure.DisabledImage = global::FogBugzCaseTracker.Properties.Resources.key_disabled;
@@ -449,46 +501,6 @@ namespace FogBugzCaseTracker
             this.btnConfigure.Size = new System.Drawing.Size(152, 22);
             this.btnConfigure.Text = "&Switch user";
             this.btnConfigure.Click += new System.EventHandler(this.btnConfigure_Click);
-            // 
-            // btnShowHide
-            // 
-            this.btnShowHide.DisabledImage = null;
-            this.btnShowHide.EnabledImage = null;
-            this.btnShowHide.Name = "btnShowHide";
-            this.btnShowHide.Size = new System.Drawing.Size(152, 22);
-            this.btnShowHide.Text = "&Hide";
-            this.btnShowHide.Click += new System.EventHandler(this.btnShowHide_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnRefresh.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh;
-            this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnRefresh.DisabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh_disabled;
-            this.btnRefresh.EnabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.refresh;
-            this.btnRefresh.FlatAppearance.BorderSize = 0;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Location = new System.Drawing.Point(463, 3);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(22, 20);
-            this.btnRefresh.TabIndex = 10;
-            this.btnRefresh.TabStop = false;
-            this.btnRefresh.UseVisualStyleBackColor = false;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // sepToolStripMenuItem
-            // 
-            this.sepToolStripMenuItem.Name = "sepToolStripMenuItem";
-            this.sepToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // HoverWindow
             // 
@@ -573,5 +585,6 @@ namespace FogBugzCaseTracker
         private MultiImageToolStripMenuItem btnNewEstimate;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator sepToolStripMenuItem;
+        private MultiImageToolStripMenuItem btnSettings;
     }
 }

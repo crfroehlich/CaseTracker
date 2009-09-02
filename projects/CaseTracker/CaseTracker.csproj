@@ -152,6 +152,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>HoverWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SettingsDlg.resx">
+      <DependentUpon>SettingsDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VersionUpdatePrompt.resx">
       <DependentUpon>VersionUpdatePrompt.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +186,12 @@
     </Compile>
     <Compile Include="HoverWindow\Tracking.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsDlg.Designer.cs">
+      <DependentUpon>SettingsDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="VersionUpdatePrompt.cs">
       <SubType>Form</SubType>
@@ -297,6 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
