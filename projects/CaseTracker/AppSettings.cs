@@ -23,6 +23,8 @@ namespace FogBugzCaseTracker
             _key.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
             _key.SetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0);
             _key.SetValue("LastWidth", Width);
+            _key.SetValue("Font", dropCaseList.Font.Name);
+            _key.SetValue("FontSize", dropCaseList.Font.SizeInPoints * 100, RegistryValueKind.DWord);
             _key.SetValue("PollingInterval", timerUpdateCases.Interval);
             _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             _key.Close();
@@ -57,6 +59,11 @@ namespace FogBugzCaseTracker
                 newLoc.X = (int)_key.GetValue("LastX", Location.X);
                 newLoc.Y = (int)_key.GetValue("LastY", Location.Y);
                 int opac = (int)_key.GetValue("Opacity", (int)(Opacity * 100));
+
+                string fontName = (String)_key.GetValue("Font", dropCaseList.Font.Name);
+                float  fontSize = (int)_key.GetValue("FontSize", (int)(dropCaseList.Font.SizeInPoints * 100)) / (float)100.0;
+                dropCaseList.Font = new Font(fontName, fontSize);
+
                 Opacity = (double)opac / 100.0;
                 
                 Location = newLoc;

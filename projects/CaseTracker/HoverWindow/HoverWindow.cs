@@ -276,22 +276,20 @@ namespace FogBugzCaseTracker
             dlg.Owner = this;
             LocateDialogBelowOrAboveWindow(dlg);
             dlg.UserOpacity = Opacity;
+            dlg.UserFont = dropCaseList.Font;
 
             double oldOpacity = Opacity;
-            // TODO: keep previous settings
+            Font oldFont = dropCaseList.Font;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Opacity = dlg.UserOpacity;
-                // TODO: apply new settings
-                // TODO: Save settings
-
+                dropCaseList.Font = dlg.UserFont;
+                saveSettings();
             }
             else
             {
                 Opacity = oldOpacity;
-                // TODO: restore previous settings
-
-
+                dropCaseList.Font = oldFont;
             }
         }
 

@@ -50,9 +50,10 @@
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOk.Location = new System.Drawing.Point(270, 181);
+            this.btnOk.Location = new System.Drawing.Point(329, 181);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -61,9 +62,10 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(189, 181);
+            this.btnCancel.Location = new System.Drawing.Point(248, 181);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -72,6 +74,8 @@
             // 
             // grpAppearance
             // 
+            this.grpAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.grpAppearance.Controls.Add(this.btnChooseFont);
             this.grpAppearance.Controls.Add(this.lblChosenFont);
             this.grpAppearance.Controls.Add(this.lblFont);
@@ -81,7 +85,7 @@
             this.grpAppearance.ForeColor = System.Drawing.Color.Black;
             this.grpAppearance.Location = new System.Drawing.Point(12, 12);
             this.grpAppearance.Name = "grpAppearance";
-            this.grpAppearance.Size = new System.Drawing.Size(348, 100);
+            this.grpAppearance.Size = new System.Drawing.Size(407, 100);
             this.grpAppearance.TabIndex = 4;
             this.grpAppearance.TabStop = false;
             this.grpAppearance.Text = "Appearance";
@@ -140,16 +144,20 @@
             // 
             // btnChooseFont
             // 
+            this.btnChooseFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChooseFont.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnChooseFont.Location = new System.Drawing.Point(258, 59);
+            this.btnChooseFont.Location = new System.Drawing.Point(317, 59);
             this.btnChooseFont.Name = "btnChooseFont";
             this.btnChooseFont.Size = new System.Drawing.Size(75, 23);
             this.btnChooseFont.TabIndex = 5;
             this.btnChooseFont.Text = "Change";
             this.btnChooseFont.UseVisualStyleBackColor = true;
+            this.btnChooseFont.Click += new System.EventHandler(this.btnChooseFont_Click);
             // 
             // grpBehavior
             // 
+            this.grpBehavior.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.grpBehavior.Controls.Add(this.lblSeconds);
             this.grpBehavior.Controls.Add(this.numSeconds);
             this.grpBehavior.Controls.Add(this.lblPollEvery);
@@ -157,7 +165,7 @@
             this.grpBehavior.ForeColor = System.Drawing.Color.Black;
             this.grpBehavior.Location = new System.Drawing.Point(12, 118);
             this.grpBehavior.Name = "grpBehavior";
-            this.grpBehavior.Size = new System.Drawing.Size(348, 57);
+            this.grpBehavior.Size = new System.Drawing.Size(407, 57);
             this.grpBehavior.TabIndex = 5;
             this.grpBehavior.TabStop = false;
             this.grpBehavior.Text = "Behavior";
@@ -214,7 +222,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(373, 211);
+            this.ClientSize = new System.Drawing.Size(432, 211);
             this.Controls.Add(this.grpBehavior);
             this.Controls.Add(this.grpAppearance);
             this.Controls.Add(this.btnCancel);
