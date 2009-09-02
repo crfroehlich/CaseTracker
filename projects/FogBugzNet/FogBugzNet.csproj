@@ -45,12 +45,6 @@
   <ItemGroup>
     <Compile Include="Case.cs" />
     <Compile Include="Credentials.cs" />
-    <Compile Include="EstimateDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EstimateDialog.Designer.cs">
-      <DependentUpon>EstimateDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Exporter.cs" />
     <Compile Include="FogBugz.cs" />
     <Compile Include="FogBugzTest.cs" />
@@ -61,11 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="Utils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="EstimateDialog.resx">
-      <DependentUpon>EstimateDialog.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

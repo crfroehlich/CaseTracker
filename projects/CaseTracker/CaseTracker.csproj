@@ -65,6 +65,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AutoUpdater.cs" />
+    <Compile Include="EstimateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EstimateDialog.Designer.cs">
+      <DependentUpon>EstimateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="HoverWindow\CaseList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EstimateDialog.resx">
+      <DependentUpon>EstimateDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImportConfirmationDlg.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ImportConfirmationDlg.cs</DependentUpon>
