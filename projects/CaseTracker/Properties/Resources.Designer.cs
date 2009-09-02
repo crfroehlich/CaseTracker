@@ -221,6 +221,20 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap outline {
+            get {
+                object obj = ResourceManager.GetObject("outline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap outline_disabled {
+            get {
+                object obj = ResourceManager.GetObject("outline_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap pause {
             get {
                 object obj = ResourceManager.GetObject("pause", resourceCulture);

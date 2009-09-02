@@ -254,5 +254,10 @@ namespace FogBugzCaseTracker
             Process.Start(_fb.NewSubCaseURL(_trackedCase.ID));
         }
 
+        private void btnViewCaseOutline_Click(object sender, EventArgs e)
+        {
+            Process.Start(_fb.ViewOutlineURL(_trackedCase.ID));
+        }
+
     } // Class HoverWindow
 }

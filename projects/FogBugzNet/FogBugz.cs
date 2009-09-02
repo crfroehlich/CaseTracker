@@ -278,10 +278,18 @@ namespace FogBugzNet
             }
         }
 
+
+
         public string NewSubCaseURL(int parentID)
         {
             return NewCaseURL + "&ixBugParent=" + parentID.ToString();
         }
+
+        public string ViewOutlineURL(int caseid)
+        {
+            return BaseURL + "/default.asp?search=2&searchFor=outline:" + caseid.ToString();
+        }
+
 
         public bool SetEstimate(int caseid, string estimate)
         {

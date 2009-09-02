@@ -90,9 +90,8 @@ namespace FogBugzCaseTracker
             {
                 Process.Start(_fb.CaseEditURL(caseid));
                 _trackedCase = null;
-
                 // TODO: why is this tip not showing?
-                trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a valid time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
+//                trayIcon.ShowBalloonTip(3000, "FogBugz", "Sorry, I need a valid time estimate on that case.\nMeanwhile, you're working on \"nothing\"", ToolTipIcon.Info);
                 return false;
             }
         }

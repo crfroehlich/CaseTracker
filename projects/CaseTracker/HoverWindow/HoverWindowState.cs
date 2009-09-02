@@ -27,6 +27,7 @@ namespace FogBugzCaseTracker
                 frm.btnNewCase.Enable(false);
                 frm.btnNewSubcase.Enable(false);
                 frm.btnResolve.Enable(false);
+                frm.btnViewCaseOutline.Enable(false);
                 frm.btnViewCase.Enable(false);
                 frm.btnResolveClose.Enable(false);
                 frm.timerUpdateCases.Enabled = false;
@@ -105,6 +106,7 @@ namespace FogBugzCaseTracker
             {
                 frm.btnResolve.Enable(true);
 
+                frm.btnViewCaseOutline.Enable(true);
                 frm.btnViewCase.Enable(true);
                 frm.btnResolveClose.Enable(true);
 
@@ -125,6 +127,7 @@ namespace FogBugzCaseTracker
             {
                 frm.btnResolve.Enable(false);
 
+                frm.btnViewCaseOutline.Enable(false);
                 frm.btnViewCase.Enable(false);
                 frm.btnResolveClose.Enable(false);
                 frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList,
