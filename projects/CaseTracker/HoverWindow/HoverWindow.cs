@@ -259,5 +259,10 @@ namespace FogBugzCaseTracker
             Process.Start(_fb.ViewOutlineURL(_trackedCase.ID));
         }
 
+        private void btnNewEstimate_Click(object sender, EventArgs e)
+        {
+            ObtainUserEstimate(_trackedCase.ID);
+        }
+
     } // Class HoverWindow
 }

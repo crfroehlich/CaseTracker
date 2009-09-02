@@ -81,6 +81,20 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap check {
+            get {
+                object obj = ResourceManager.GetObject("check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap check_disabled {
+            get {
+                object obj = ResourceManager.GetObject("check_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap check_icon {
             get {
                 object obj = ResourceManager.GetObject("check_icon", resourceCulture);
@@ -91,6 +105,20 @@ namespace FogBugzCaseTracker.Properties {
         internal static System.Drawing.Bitmap check_icon_disabled {
             get {
                 object obj = ResourceManager.GetObject("check_icon_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap clock {
+            get {
+                object obj = ResourceManager.GetObject("clock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap clock_disabled {
+            get {
+                object obj = ResourceManager.GetObject("clock_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
