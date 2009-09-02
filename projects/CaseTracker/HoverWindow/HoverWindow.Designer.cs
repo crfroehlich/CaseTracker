@@ -64,6 +64,8 @@ namespace FogBugzCaseTracker
             this.btnConfigure = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnShowHide = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnRefresh = new FogBugzCaseTracker.MultiImageButton();
+            this.sepToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.pnlPaused.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.busyPicture)).BeginInit();
@@ -97,10 +99,12 @@ namespace FogBugzCaseTracker
             this.menuCurrentFilter,
             this.btnConfigure,
             this.toolStripSeparator1,
+            this.aboutToolStripMenuItem,
+            this.sepToolStripMenuItem,
             this.btnShowHide,
             this.btnExit});
             this.menuMain.Name = "contextMenuStrip1";
-            this.menuMain.Size = new System.Drawing.Size(153, 164);
+            this.menuMain.Size = new System.Drawing.Size(153, 192);
             this.menuMain.Opened += new System.EventHandler(this.contextMenuStrip1_Opened);
             this.menuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStrip1_Closed);
             // 
@@ -474,6 +478,18 @@ namespace FogBugzCaseTracker
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // sepToolStripMenuItem
+            // 
+            this.sepToolStripMenuItem.Name = "sepToolStripMenuItem";
+            this.sepToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // HoverWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -555,5 +571,7 @@ namespace FogBugzCaseTracker
         private MultiImageToolStripMenuItem btnExportExcel;
         private MultiImageToolStripMenuItem btnViewCase;
         private MultiImageToolStripMenuItem btnNewEstimate;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator sepToolStripMenuItem;
     }
 }

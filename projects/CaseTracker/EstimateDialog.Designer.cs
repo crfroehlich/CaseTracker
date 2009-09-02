@@ -30,9 +30,9 @@
         {
             this.txtUserEstimate = new System.Windows.Forms.TextBox();
             this.grpExamples = new System.Windows.Forms.GroupBox();
+            this.lblExamples = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.lblExamples = new System.Windows.Forms.Label();
             this.grpExamples.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,7 +40,7 @@
             // 
             this.txtUserEstimate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUserEstimate.Location = new System.Drawing.Point(15, 6);
+            this.txtUserEstimate.Location = new System.Drawing.Point(15, 12);
             this.txtUserEstimate.Name = "txtUserEstimate";
             this.txtUserEstimate.Size = new System.Drawing.Size(205, 20);
             this.txtUserEstimate.TabIndex = 0;
@@ -53,19 +53,30 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.grpExamples.Controls.Add(this.lblExamples);
             this.grpExamples.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.grpExamples.Location = new System.Drawing.Point(15, 32);
+            this.grpExamples.Location = new System.Drawing.Point(15, 38);
             this.grpExamples.Name = "grpExamples";
-            this.grpExamples.Size = new System.Drawing.Size(205, 164);
+            this.grpExamples.Size = new System.Drawing.Size(205, 168);
             this.grpExamples.TabIndex = 2;
             this.grpExamples.TabStop = false;
             this.grpExamples.Text = "Examples";
+            // 
+            // lblExamples
+            // 
+            this.lblExamples.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblExamples.Location = new System.Drawing.Point(17, 26);
+            this.lblExamples.Name = "lblExamples";
+            this.lblExamples.Size = new System.Drawing.Size(169, 139);
+            this.lblExamples.TabIndex = 0;
+            this.lblExamples.Text = "1 week\r\n2 days\r\n1 day 4 hours\r\n15 minutes\r\n1w\r\n2d\r\n1d4h\r\n15m";
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOk.Location = new System.Drawing.Point(145, 202);
+            this.btnOk.Location = new System.Drawing.Point(145, 212);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 1;
@@ -77,30 +88,19 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(64, 202);
+            this.button1.Location = new System.Drawing.Point(64, 212);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // lblExamples
-            // 
-            this.lblExamples.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblExamples.Location = new System.Drawing.Point(17, 26);
-            this.lblExamples.Name = "lblExamples";
-            this.lblExamples.Size = new System.Drawing.Size(169, 135);
-            this.lblExamples.TabIndex = 0;
-            this.lblExamples.Text = "1 week\r\n2 days\r\n1 day 4 hours\r\n15 minutes\r\n1w\r\n2d\r\n1d4h\r\n15m";
-            // 
             // EstimateDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(232, 237);
+            this.ClientSize = new System.Drawing.Size(232, 247);
             this.ControlBox = false;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnOk);

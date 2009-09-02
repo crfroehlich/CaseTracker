@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CaseTracker")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Case Tracker lets you keep track of your FogBugz cases.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("VisionMap")]
-[assembly: AssemblyProduct("CaseTracker")]
-[assembly: AssemblyCopyright("Copyright © VisionMap 2007")]
+[assembly: AssemblyCompany("A VisionMap Open Source Project")]
+[assembly: AssemblyProduct("Case Tracker")]
+[assembly: AssemblyCopyright("Copyright © VisionMap 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

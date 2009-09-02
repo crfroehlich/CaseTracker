@@ -264,5 +264,11 @@ namespace FogBugzCaseTracker
             ObtainUserEstimate(_trackedCase.ID);
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutDlg dlg = new AboutDlg();
+            dlg.ShowDialog();
+        }
+
     } // Class HoverWindow
 }
