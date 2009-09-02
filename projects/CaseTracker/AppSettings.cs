@@ -19,6 +19,7 @@ namespace FogBugzCaseTracker
             _key.SetValue("server", _server);
             _key.SetValue("LastX", Location.X);
             _key.SetValue("LastY", Location.Y);
+            _key.SetValue("Opacity", Opacity * 100, RegistryValueKind.DWord);
             _key.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
             _key.SetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0);
             _key.SetValue("LastWidth", Width);
@@ -55,6 +56,9 @@ namespace FogBugzCaseTracker
 
                 newLoc.X = (int)_key.GetValue("LastX", Location.X);
                 newLoc.Y = (int)_key.GetValue("LastY", Location.Y);
+                int opac = (int)_key.GetValue("Opacity", (int)(Opacity * 100));
+                Opacity = (double)opac / 100.0;
+                
                 Location = newLoc;
 
                 Width = (int)_key.GetValue("LastWidth", Width);

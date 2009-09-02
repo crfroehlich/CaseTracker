@@ -61,7 +61,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Location = new System.Drawing.Point(189, 181);
             this.btnCancel.Name = "btnCancel";
@@ -107,6 +107,7 @@
             0,
             0,
             0});
+            this.numOpacity.ValueChanged += new System.EventHandler(this.numOpacity_ValueChanged);
             // 
             // lblOpacity
             // 

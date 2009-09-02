@@ -273,17 +273,22 @@ namespace FogBugzCaseTracker
         private void btnSettings_Click(object sender, EventArgs e)
         {
             SettingsDlg dlg = new SettingsDlg();
+            dlg.Owner = this;
             LocateDialogBelowOrAboveWindow(dlg);
+            dlg.UserOpacity = Opacity;
 
+            double oldOpacity = Opacity;
             // TODO: keep previous settings
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                Opacity = dlg.UserOpacity;
                 // TODO: apply new settings
                 // TODO: Save settings
 
             }
             else
             {
+                Opacity = oldOpacity;
                 // TODO: restore previous settings
 
 
