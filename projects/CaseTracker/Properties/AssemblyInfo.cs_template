@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CaseTracker")]
-[assembly: AssemblyDescription("Case Tracker lets you keep track of your FogBugz cases.")]
+[assembly: AssemblyDescription("Case Tracker lets you keep track of your FogBugz cases. Image on this page by Aaron Gelle.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("A VisionMap Open Source Project")]
 [assembly: AssemblyProduct("Case Tracker")]
