@@ -29,6 +29,7 @@ namespace FogBugzCaseTracker
                 frm.btnResolve.Enable(false);
                 frm.btnViewCaseOutline.Enable(false);
                 frm.btnViewCase.Enable(false);
+                frm.btnNewEstimate.Enable(false);
                 frm.btnResolveClose.Enable(false);
                 frm.timerUpdateCases.Enabled = false;
                 frm.btnExportFreeMind.Enable(false);
@@ -108,6 +109,7 @@ namespace FogBugzCaseTracker
 
                 frm.btnViewCaseOutline.Enable(true);
                 frm.btnViewCase.Enable(true);
+                frm.btnNewEstimate.Enable(true);
                 frm.btnResolveClose.Enable(true);
 
                 frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList,
@@ -129,6 +131,7 @@ namespace FogBugzCaseTracker
 
                 frm.btnViewCaseOutline.Enable(false);
                 frm.btnViewCase.Enable(false);
+                frm.btnNewEstimate.Enable(false);
                 frm.btnResolveClose.Enable(false);
                 frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList,
                     String.Format("[PAUSED] Working on: {0} (elapsed time: {1})", frm.dropCaseList.Text, ((Case)frm.dropCaseList.SelectedItem).ElapsedTime_h_m));
