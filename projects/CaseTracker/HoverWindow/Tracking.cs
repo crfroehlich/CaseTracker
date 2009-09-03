@@ -13,7 +13,7 @@ namespace FogBugzCaseTracker
         private bool _switchToNothinUponClosing = false;
         private object _currentState;
         private Case _trackedCase = null;
-
+        private int _minutesBeforeConsideredAway;
 
         public bool ClientTrackingCase
         {
@@ -163,6 +163,19 @@ namespace FogBugzCaseTracker
         private bool SelectedItemIsCase()
         {
             return dropCaseList.SelectedItem.GetType() == typeof(Case);
+        }
+
+        private void PauseWork()
+        {
+            _caseBeforePause = TrackedCase;
+            TrackedCase = null;
+            SetState(new StatePaused(this));
+        }
+
+        private void ResumeWork()
+        {
+            TrackedCase = _caseBeforePause;
+            SetState(new StateTrackingCase(this));
         }
 
     }

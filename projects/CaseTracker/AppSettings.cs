@@ -27,6 +27,7 @@ namespace FogBugzCaseTracker
             _key.SetValue("FontSize", dropCaseList.Font.SizeInPoints * 100, RegistryValueKind.DWord);
             _key.SetValue("PollingInterval", timerUpdateCases.Interval);
             _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
+            _key.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
             _key.Close();
             _history.Save();
         }
@@ -73,6 +74,7 @@ namespace FogBugzCaseTracker
                 _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
                 _ignoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
                 _includeNoEstimate = (int)_key.GetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0) != 0;
+                _minutesBeforeConsideredAway = (int)_key.GetValue("MinutesBeforeAway", _minutesBeforeConsideredAway);
 
                 _key.Close();
             }

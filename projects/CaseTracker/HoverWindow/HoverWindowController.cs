@@ -2,6 +2,7 @@
 using FogBugzNet;
 using System.Windows.Forms;
 using System.Drawing;
+using Microsoft.Win32;
 using System.Configuration;
 
 namespace FogBugzCaseTracker
@@ -33,6 +34,8 @@ namespace FogBugzCaseTracker
             _ignoreBaseSearch = bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]);
             _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
                                             new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
+
+            _minutesBeforeConsideredAway = int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]);
 
             loadSettings();
 

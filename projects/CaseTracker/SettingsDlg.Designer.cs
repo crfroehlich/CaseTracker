@@ -32,20 +32,24 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpAppearance = new System.Windows.Forms.GroupBox();
+            this.btnChooseFont = new System.Windows.Forms.Button();
+            this.lblChosenFont = new System.Windows.Forms.Label();
+            this.lblFont = new System.Windows.Forms.Label();
             this.numOpacity = new System.Windows.Forms.NumericUpDown();
             this.lblOpacity = new System.Windows.Forms.Label();
-            this.lblFont = new System.Windows.Forms.Label();
-            this.lblChosenFont = new System.Windows.Forms.Label();
-            this.btnChooseFont = new System.Windows.Forms.Button();
             this.grpBehavior = new System.Windows.Forms.GroupBox();
-            this.lblPollEvery = new System.Windows.Forms.Label();
-            this.numSeconds = new System.Windows.Forms.NumericUpDown();
             this.lblSeconds = new System.Windows.Forms.Label();
+            this.numSeconds = new System.Windows.Forms.NumericUpDown();
+            this.lblPollEvery = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.lblMinutes = new System.Windows.Forms.Label();
+            this.numPauseMinutes = new System.Windows.Forms.NumericUpDown();
+            this.chkAutoPause = new System.Windows.Forms.CheckBox();
             this.grpAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOpacity)).BeginInit();
             this.grpBehavior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPauseMinutes)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOk
@@ -53,7 +57,7 @@
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOk.Location = new System.Drawing.Point(329, 181);
+            this.btnOk.Location = new System.Drawing.Point(329, 210);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -65,7 +69,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(248, 181);
+            this.btnCancel.Location = new System.Drawing.Point(248, 210);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -89,6 +93,37 @@
             this.grpAppearance.TabIndex = 4;
             this.grpAppearance.TabStop = false;
             this.grpAppearance.Text = "Appearance";
+            // 
+            // btnChooseFont
+            // 
+            this.btnChooseFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnChooseFont.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChooseFont.Location = new System.Drawing.Point(317, 59);
+            this.btnChooseFont.Name = "btnChooseFont";
+            this.btnChooseFont.Size = new System.Drawing.Size(75, 23);
+            this.btnChooseFont.TabIndex = 5;
+            this.btnChooseFont.Text = "Change";
+            this.btnChooseFont.UseVisualStyleBackColor = true;
+            this.btnChooseFont.Click += new System.EventHandler(this.btnChooseFont_Click);
+            // 
+            // lblChosenFont
+            // 
+            this.lblChosenFont.AutoSize = true;
+            this.lblChosenFont.Location = new System.Drawing.Point(115, 64);
+            this.lblChosenFont.Name = "lblChosenFont";
+            this.lblChosenFont.Size = new System.Drawing.Size(137, 13);
+            this.lblChosenFont.TabIndex = 5;
+            this.lblChosenFont.Text = "Microsoft Sans Serif, 8.25pt";
+            // 
+            // lblFont
+            // 
+            this.lblFont.AutoSize = true;
+            this.lblFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFont.Location = new System.Drawing.Point(16, 64);
+            this.lblFont.Name = "lblFont";
+            this.lblFont.Size = new System.Drawing.Size(31, 13);
+            this.lblFont.TabIndex = 4;
+            this.lblFont.Text = "Font:";
             // 
             // numOpacity
             // 
@@ -123,41 +158,13 @@
             this.lblOpacity.TabIndex = 2;
             this.lblOpacity.Text = "Window Opacity:";
             // 
-            // lblFont
-            // 
-            this.lblFont.AutoSize = true;
-            this.lblFont.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFont.Location = new System.Drawing.Point(16, 64);
-            this.lblFont.Name = "lblFont";
-            this.lblFont.Size = new System.Drawing.Size(31, 13);
-            this.lblFont.TabIndex = 4;
-            this.lblFont.Text = "Font:";
-            // 
-            // lblChosenFont
-            // 
-            this.lblChosenFont.AutoSize = true;
-            this.lblChosenFont.Location = new System.Drawing.Point(115, 64);
-            this.lblChosenFont.Name = "lblChosenFont";
-            this.lblChosenFont.Size = new System.Drawing.Size(137, 13);
-            this.lblChosenFont.TabIndex = 5;
-            this.lblChosenFont.Text = "Microsoft Sans Serif, 8.25pt";
-            // 
-            // btnChooseFont
-            // 
-            this.btnChooseFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChooseFont.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnChooseFont.Location = new System.Drawing.Point(317, 59);
-            this.btnChooseFont.Name = "btnChooseFont";
-            this.btnChooseFont.Size = new System.Drawing.Size(75, 23);
-            this.btnChooseFont.TabIndex = 5;
-            this.btnChooseFont.Text = "Change";
-            this.btnChooseFont.UseVisualStyleBackColor = true;
-            this.btnChooseFont.Click += new System.EventHandler(this.btnChooseFont_Click);
-            // 
             // grpBehavior
             // 
             this.grpBehavior.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpBehavior.Controls.Add(this.chkAutoPause);
+            this.grpBehavior.Controls.Add(this.lblMinutes);
+            this.grpBehavior.Controls.Add(this.numPauseMinutes);
             this.grpBehavior.Controls.Add(this.lblSeconds);
             this.grpBehavior.Controls.Add(this.numSeconds);
             this.grpBehavior.Controls.Add(this.lblPollEvery);
@@ -165,20 +172,20 @@
             this.grpBehavior.ForeColor = System.Drawing.Color.Black;
             this.grpBehavior.Location = new System.Drawing.Point(12, 118);
             this.grpBehavior.Name = "grpBehavior";
-            this.grpBehavior.Size = new System.Drawing.Size(407, 57);
+            this.grpBehavior.Size = new System.Drawing.Size(407, 83);
             this.grpBehavior.TabIndex = 5;
             this.grpBehavior.TabStop = false;
             this.grpBehavior.Text = "Behavior";
             // 
-            // lblPollEvery
+            // lblSeconds
             // 
-            this.lblPollEvery.AutoSize = true;
-            this.lblPollEvery.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPollEvery.Location = new System.Drawing.Point(16, 25);
-            this.lblPollEvery.Name = "lblPollEvery";
-            this.lblPollEvery.Size = new System.Drawing.Size(134, 13);
-            this.lblPollEvery.TabIndex = 2;
-            this.lblPollEvery.Text = "Refresh list of cases every ";
+            this.lblSeconds.AutoSize = true;
+            this.lblSeconds.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeconds.Location = new System.Drawing.Point(215, 25);
+            this.lblSeconds.Name = "lblSeconds";
+            this.lblSeconds.Size = new System.Drawing.Size(47, 13);
+            this.lblSeconds.TabIndex = 5;
+            this.lblSeconds.Text = "seconds";
             // 
             // numSeconds
             // 
@@ -207,22 +214,66 @@
             0,
             0});
             // 
-            // lblSeconds
+            // lblPollEvery
             // 
-            this.lblSeconds.AutoSize = true;
-            this.lblSeconds.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSeconds.Location = new System.Drawing.Point(215, 25);
-            this.lblSeconds.Name = "lblSeconds";
-            this.lblSeconds.Size = new System.Drawing.Size(47, 13);
-            this.lblSeconds.TabIndex = 5;
-            this.lblSeconds.Text = "seconds";
+            this.lblPollEvery.AutoSize = true;
+            this.lblPollEvery.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPollEvery.Location = new System.Drawing.Point(16, 25);
+            this.lblPollEvery.Name = "lblPollEvery";
+            this.lblPollEvery.Size = new System.Drawing.Size(134, 13);
+            this.lblPollEvery.TabIndex = 2;
+            this.lblPollEvery.Text = "Refresh list of cases every ";
+            // 
+            // lblMinutes
+            // 
+            this.lblMinutes.AutoSize = true;
+            this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMinutes.Location = new System.Drawing.Point(295, 55);
+            this.lblMinutes.Name = "lblMinutes";
+            this.lblMinutes.Size = new System.Drawing.Size(43, 13);
+            this.lblMinutes.TabIndex = 8;
+            this.lblMinutes.Text = "minutes";
+            // 
+            // numPauseMinutes
+            // 
+            this.numPauseMinutes.Location = new System.Drawing.Point(236, 53);
+            this.numPauseMinutes.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numPauseMinutes.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPauseMinutes.Name = "numPauseMinutes";
+            this.numPauseMinutes.Size = new System.Drawing.Size(53, 20);
+            this.numPauseMinutes.TabIndex = 7;
+            this.numPauseMinutes.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
+            // chkAutoPause
+            // 
+            this.chkAutoPause.AutoSize = true;
+            this.chkAutoPause.Checked = true;
+            this.chkAutoPause.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutoPause.Location = new System.Drawing.Point(19, 54);
+            this.chkAutoPause.Name = "chkAutoPause";
+            this.chkAutoPause.Size = new System.Drawing.Size(213, 17);
+            this.chkAutoPause.TabIndex = 9;
+            this.chkAutoPause.Text = "Automatically pause work after away for";
+            this.chkAutoPause.UseVisualStyleBackColor = true;
             // 
             // SettingsDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(432, 211);
+            this.ClientSize = new System.Drawing.Size(432, 240);
             this.Controls.Add(this.grpBehavior);
             this.Controls.Add(this.grpAppearance);
             this.Controls.Add(this.btnCancel);
@@ -242,6 +293,7 @@
             this.grpBehavior.ResumeLayout(false);
             this.grpBehavior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPauseMinutes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -261,5 +313,8 @@
         private System.Windows.Forms.NumericUpDown numSeconds;
         private System.Windows.Forms.Label lblPollEvery;
         private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.CheckBox chkAutoPause;
+        private System.Windows.Forms.Label lblMinutes;
+        private System.Windows.Forms.NumericUpDown numPauseMinutes;
     }
 }

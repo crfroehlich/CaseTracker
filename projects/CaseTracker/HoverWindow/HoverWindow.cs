@@ -238,15 +238,12 @@ namespace FogBugzCaseTracker
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            _caseBeforePause = TrackedCase;
-            TrackedCase = null;
-            SetState(new StatePaused(this));
+            PauseWork();
         }
 
         private void lblImBack_Click(object sender, EventArgs e)
         {
-            TrackedCase = _caseBeforePause;
-            SetState(new StateTrackingCase(this));
+            ResumeWork();
         }
 
         private void btnNewSubcase_Click(object sender, EventArgs e)
@@ -291,6 +288,17 @@ namespace FogBugzCaseTracker
                 Opacity = oldOpacity;
                 dropCaseList.Font = oldFont;
             }
+        }
+
+        private bool UserIsAway()
+        {
+            return Interop.GetTimeSinceLastInput().TotalMinutes > _minutesBeforeConsideredAway;
+        }
+
+        private void timerAway_Tick(object sender, EventArgs e)
+        {
+            if ((_currentState.GetType() == typeof(StateTrackingCase)) && UserIsAway())
+                PauseWork();
         }
 
     } // Class HoverWindow
