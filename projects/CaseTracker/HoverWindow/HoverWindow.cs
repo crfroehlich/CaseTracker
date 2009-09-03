@@ -274,24 +274,30 @@ namespace FogBugzCaseTracker
             LocateDialogBelowOrAboveWindow(dlg);
             dlg.UserOpacity = Opacity;
             dlg.UserFont = dropCaseList.Font;
+            dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
 
             double oldOpacity = Opacity;
             Font oldFont = dropCaseList.Font;
+            int oldMinutes = _minutesBeforeConsideredAway;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Opacity = dlg.UserOpacity;
                 dropCaseList.Font = dlg.UserFont;
+                _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
                 saveSettings();
             }
             else
             {
                 Opacity = oldOpacity;
                 dropCaseList.Font = oldFont;
+                _minutesBeforeConsideredAway = oldMinutes;
             }
         }
 
         private bool UserIsAway()
         {
+            if (_minutesBeforeConsideredAway == 0)
+                return false;
             return Interop.GetTimeSinceLastInput().TotalMinutes > _minutesBeforeConsideredAway;
         }
 

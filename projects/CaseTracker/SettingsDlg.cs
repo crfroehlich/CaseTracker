@@ -36,6 +36,27 @@ namespace FogBugzCaseTracker
             }
         }
 
+        public int MinutesBeforeAway
+        {
+            set
+            {
+                if (value == 0)
+                    chkAutoPause.Checked = false;
+                else
+                    numPauseMinutes.Value = value;
+
+            }
+
+            get
+            {
+                if (!chkAutoPause.Checked)
+                    return 0;
+                else
+                    return (int)numPauseMinutes.Value;
+
+            }
+        }
+
         public SettingsDlg()
         {
             InitializeComponent();
@@ -50,6 +71,13 @@ namespace FogBugzCaseTracker
         {
             if (fontDialog1.ShowDialog() == DialogResult.OK)
                 UserFont = fontDialog1.Font;
+        }
+
+
+        private void chkAutoPause_CheckedChanged(object sender, EventArgs e)
+        {
+            lblMinutes.Enabled = chkAutoPause.Checked;
+            numPauseMinutes.Enabled = chkAutoPause.Checked;
         }
     }
 }

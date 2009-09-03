@@ -38,18 +38,18 @@
             this.numOpacity = new System.Windows.Forms.NumericUpDown();
             this.lblOpacity = new System.Windows.Forms.Label();
             this.grpBehavior = new System.Windows.Forms.GroupBox();
+            this.chkAutoPause = new System.Windows.Forms.CheckBox();
+            this.lblMinutes = new System.Windows.Forms.Label();
+            this.numPauseMinutes = new System.Windows.Forms.NumericUpDown();
             this.lblSeconds = new System.Windows.Forms.Label();
             this.numSeconds = new System.Windows.Forms.NumericUpDown();
             this.lblPollEvery = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.lblMinutes = new System.Windows.Forms.Label();
-            this.numPauseMinutes = new System.Windows.Forms.NumericUpDown();
-            this.chkAutoPause = new System.Windows.Forms.CheckBox();
             this.grpAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOpacity)).BeginInit();
             this.grpBehavior.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseMinutes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOk
@@ -177,6 +177,51 @@
             this.grpBehavior.TabStop = false;
             this.grpBehavior.Text = "Behavior";
             // 
+            // chkAutoPause
+            // 
+            this.chkAutoPause.AutoSize = true;
+            this.chkAutoPause.Checked = true;
+            this.chkAutoPause.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutoPause.Location = new System.Drawing.Point(19, 54);
+            this.chkAutoPause.Name = "chkAutoPause";
+            this.chkAutoPause.Size = new System.Drawing.Size(213, 17);
+            this.chkAutoPause.TabIndex = 9;
+            this.chkAutoPause.Text = "Automatically pause work after away for";
+            this.chkAutoPause.UseVisualStyleBackColor = true;
+            this.chkAutoPause.CheckedChanged += new System.EventHandler(this.chkAutoPause_CheckedChanged);
+            // 
+            // lblMinutes
+            // 
+            this.lblMinutes.AutoSize = true;
+            this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMinutes.Location = new System.Drawing.Point(292, 56);
+            this.lblMinutes.Name = "lblMinutes";
+            this.lblMinutes.Size = new System.Drawing.Size(43, 13);
+            this.lblMinutes.TabIndex = 8;
+            this.lblMinutes.Text = "minutes";
+            // 
+            // numPauseMinutes
+            // 
+            this.numPauseMinutes.Location = new System.Drawing.Point(234, 53);
+            this.numPauseMinutes.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numPauseMinutes.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPauseMinutes.Name = "numPauseMinutes";
+            this.numPauseMinutes.Size = new System.Drawing.Size(53, 20);
+            this.numPauseMinutes.TabIndex = 7;
+            this.numPauseMinutes.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
             // lblSeconds
             // 
             this.lblSeconds.AutoSize = true;
@@ -224,50 +269,6 @@
             this.lblPollEvery.TabIndex = 2;
             this.lblPollEvery.Text = "Refresh list of cases every ";
             // 
-            // lblMinutes
-            // 
-            this.lblMinutes.AutoSize = true;
-            this.lblMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinutes.Location = new System.Drawing.Point(295, 55);
-            this.lblMinutes.Name = "lblMinutes";
-            this.lblMinutes.Size = new System.Drawing.Size(43, 13);
-            this.lblMinutes.TabIndex = 8;
-            this.lblMinutes.Text = "minutes";
-            // 
-            // numPauseMinutes
-            // 
-            this.numPauseMinutes.Location = new System.Drawing.Point(236, 53);
-            this.numPauseMinutes.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numPauseMinutes.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numPauseMinutes.Name = "numPauseMinutes";
-            this.numPauseMinutes.Size = new System.Drawing.Size(53, 20);
-            this.numPauseMinutes.TabIndex = 7;
-            this.numPauseMinutes.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            // 
-            // chkAutoPause
-            // 
-            this.chkAutoPause.AutoSize = true;
-            this.chkAutoPause.Checked = true;
-            this.chkAutoPause.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoPause.Location = new System.Drawing.Point(19, 54);
-            this.chkAutoPause.Name = "chkAutoPause";
-            this.chkAutoPause.Size = new System.Drawing.Size(213, 17);
-            this.chkAutoPause.TabIndex = 9;
-            this.chkAutoPause.Text = "Automatically pause work after away for";
-            this.chkAutoPause.UseVisualStyleBackColor = true;
-            // 
             // SettingsDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,8 +293,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numOpacity)).EndInit();
             this.grpBehavior.ResumeLayout(false);
             this.grpBehavior.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseMinutes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSeconds)).EndInit();
             this.ResumeLayout(false);
 
         }
