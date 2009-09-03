@@ -110,9 +110,9 @@ namespace FogBugzCaseTracker
             // 
             // lblBaseSearch
             // 
-            this.lblBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblBaseSearch.AutoSize = true;
-            this.lblBaseSearch.Location = new System.Drawing.Point(63, 229);
+            this.lblBaseSearch.Location = new System.Drawing.Point(17, 229);
             this.lblBaseSearch.Name = "lblBaseSearch";
             this.lblBaseSearch.Size = new System.Drawing.Size(147, 13);
             this.lblBaseSearch.TabIndex = 11;
@@ -131,11 +131,12 @@ namespace FogBugzCaseTracker
             // 
             // txtBaseSearch
             // 
-            this.txtBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBaseSearch.Location = new System.Drawing.Point(216, 226);
+            this.txtBaseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBaseSearch.Location = new System.Drawing.Point(170, 226);
             this.txtBaseSearch.Name = "txtBaseSearch";
             this.txtBaseSearch.ReadOnly = true;
-            this.txtBaseSearch.Size = new System.Drawing.Size(247, 20);
+            this.txtBaseSearch.Size = new System.Drawing.Size(293, 20);
             this.txtBaseSearch.TabIndex = 12;
             this.txtBaseSearch.TabStop = false;
             this.txtBaseSearch.Text = "AssignedTo:\"Me\"";

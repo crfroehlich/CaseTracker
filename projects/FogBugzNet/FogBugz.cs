@@ -323,6 +323,9 @@ namespace FogBugzNet
             fbCommand("edit", "ixBug=" + c.ID.ToString(), "ixBugParent=" + parentID.ToString());
         }
 
-
+        public void AddNote(int id, string note)
+        {
+            fbCommand("edit", "ixBug=" + id.ToString(), "sEvent=" + note);
+        }
     }
 }
