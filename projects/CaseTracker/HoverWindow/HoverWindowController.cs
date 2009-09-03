@@ -60,18 +60,21 @@ namespace FogBugzCaseTracker
         private void moveWindow(Point p)
         {
 
-            Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            if (Screen.AllScreens.Length == 1)
+            Rectangle screen = Screen.FromControl(this).WorkingArea;
+            int SnapSize = 10;
+            if (Screen.FromPoint(p) != null)
             {
-                if (p.X < 5)
-                    p.X = 0;
-                if (p.X + Width > screen.Width - 5)
-                    p.X = screen.Width - Width;
+                screen = Screen.FromPoint(p).WorkingArea;
             }
-            if (p.Y < 5)
-                p.Y = 0;
-            if (p.Y + Height > screen.Height - 5)
-                p.Y = screen.Height - Height;
+            if (p.X < screen.Left + SnapSize)
+                p.X = screen.Left;
+            if (p.X + Width > screen.Right - SnapSize)
+                p.X = screen.Right - Width;
+
+            if (p.Y < screen.Top + SnapSize)
+                p.Y = screen.Top;
+            if (p.Y + Height > screen.Bottom - SnapSize)
+                p.Y = screen.Bottom - Height;
 
             Location = p;
         }
