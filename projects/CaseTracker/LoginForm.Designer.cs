@@ -29,7 +29,7 @@ namespace FogBugzCaseTracker
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            this.lblEmail = new System.Windows.Forms.Label();
+            this.lblUserName = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -40,14 +40,14 @@ namespace FogBugzCaseTracker
             this.lblServer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // lblEmail
+            // lblUserName
             // 
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(12, 15);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(61, 13);
-            this.lblEmail.TabIndex = 0;
-            this.lblEmail.Text = "User name:";
+            this.lblUserName.AutoSize = true;
+            this.lblUserName.Location = new System.Drawing.Point(12, 15);
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(61, 13);
+            this.lblUserName.TabIndex = 0;
+            this.lblUserName.Text = "User name:";
             // 
             // lblPassword
             // 
@@ -139,7 +139,7 @@ namespace FogBugzCaseTracker
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.lblEmail);
+            this.Controls.Add(this.lblUserName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -154,7 +154,7 @@ namespace FogBugzCaseTracker
 
         #endregion
 
-        private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.TextBox txtPassword;

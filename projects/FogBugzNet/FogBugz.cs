@@ -61,12 +61,12 @@ namespace FogBugzNet
 
 
 
-        public bool Logon(string email, string password)
+        public bool Logon(string username, string password)
         {
             try
             {
-                email = HttpUtility.UrlEncode(email);
-                string ret = fbCommand("logon", "email=" + email, "password=" + password);
+                username = HttpUtility.UrlEncode(username);
+                string ret = fbCommand("logon", "email=" + username, "password=" + password);
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(ret);
                 token_ = doc.SelectSingleNode("//token").InnerText;

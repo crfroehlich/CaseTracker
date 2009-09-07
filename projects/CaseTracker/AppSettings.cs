@@ -46,7 +46,7 @@ namespace FogBugzCaseTracker
             }
             else
             {
-                _username = (String)_key.GetValue("email", "");
+                _username = (String)_key.GetValue("username", "");
                 _server = (String)_key.GetValue("server", "");
 
                 if (_server == "")

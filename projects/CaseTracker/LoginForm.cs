@@ -13,7 +13,7 @@ namespace FogBugzCaseTracker
 {
     public partial class LoginForm : Form
     {
-        public string Email {
+        public string UserName {
             get { return txtUserName.Text; }
             set { txtUserName.Text = value; } 
         }

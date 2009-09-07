@@ -67,6 +67,8 @@ namespace FogBugzCaseTracker
                 dropCaseList.Items.Add(c);
             }
         }
+
+
         public delegate void OnCasesFetched(Case[] cases, Exception error);
 
         public void GetCasesAsync(string search, OnCasesFetched OnDone)

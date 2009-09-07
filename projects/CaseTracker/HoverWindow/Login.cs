@@ -28,7 +28,7 @@ namespace FogBugzCaseTracker
 
             LoginForm f = new LoginForm();
             f.Password = initialPassword;
-            f.Email = initialUser;
+            f.UserName = initialUser;
             f.Server = initialServer;
 
 
@@ -37,7 +37,7 @@ namespace FogBugzCaseTracker
             else
             {
                 ret.UserChoice = DialogResult.OK;
-                ret.User = f.Email;
+                ret.User = f.UserName;
                 ret.Password = f.Password;
                 ret.Server = f.Server;
 
@@ -97,12 +97,12 @@ namespace FogBugzCaseTracker
         }
         public delegate void OnLogon(bool succeeded);
 
-        public void LogonAsync(string email, string password, OnLogon OnDone)
+        public void LogonAsync(string username, string password, OnLogon OnDone)
         {
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
-                args.Result = _fb.Logon(email, password);
+                args.Result = _fb.Logon(username, password);
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
             {
