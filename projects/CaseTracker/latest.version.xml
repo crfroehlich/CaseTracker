@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VersionInfo>
   <Release>
+    <Version>1.3.1.170</Version>
+    <Notes>Hotfix: Case Tracker "forgot" the user name when exiting.</Notes>
+    <URL>http://visionmap.googlecode.com/files/CaseTracker-1.3.1.170-setup.exe</URL>
+    <MD5>665D2326D65DDEBF7D94F9C164994277</MD5>
+  </Release>
+  <Release>
     <Version>1.3.0.164</Version>
     <Notes>* FEATURE: UI to provide estimates for cases
 * FEATURE: Settings dialog allows to control window opacity and font
