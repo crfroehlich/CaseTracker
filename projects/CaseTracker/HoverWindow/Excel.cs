@@ -12,6 +12,7 @@ namespace FogBugzCaseTracker
         {
             try
             {
+                Utils.Log.InfoFormat("Exporting case list to Excel ({0} cases)", dropCaseList.Items.Count);
 
                 String tempTabSep = System.IO.Path.GetTempPath() + "cases_" + (Guid.NewGuid()).ToString() + ".txt";
                 // create a writer and open the file
@@ -29,7 +30,7 @@ namespace FogBugzCaseTracker
             catch (System.Exception x)
             {
                 MessageBox.Show("Sorry, couldn't launch Excel");
-                Utils.LogError(x.ToString());
+                Utils.Log.Error(x.ToString());
             }
         }
 

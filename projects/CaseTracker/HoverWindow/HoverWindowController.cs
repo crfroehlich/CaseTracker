@@ -123,16 +123,18 @@ namespace FogBugzCaseTracker
 
         private void CloseApplication()
         {
+            Utils.Log.Info("Shutting down...");
             try
             {
                 if (_switchToNothinUponClosing)
                     _fb.StopWorking();
+                else
+                    Utils.Log.Debug("User continues to work on case after closing.");
                 saveSettings();
             }
             catch (System.Exception x)
             {
-                Utils.LogError(x.ToString());
-
+                Utils.Log.Error(x.ToString());
             }
         }
         

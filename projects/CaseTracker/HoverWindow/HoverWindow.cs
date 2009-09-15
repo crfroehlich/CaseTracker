@@ -19,7 +19,6 @@ namespace FogBugzCaseTracker
 
         private void HoverWindow_Load(object sender, EventArgs e)
         {
-
             SetState(new StateLoggedOff(this));
 
             trayIcon.ShowBalloonTip(2000);

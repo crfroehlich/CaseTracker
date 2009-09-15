@@ -38,12 +38,12 @@ namespace FogBugzNet
             }
             catch (System.Net.WebException x)
             {
-                Utils.LogError(x.ToString() + ". Connection status: " + x.Status.ToString());
+                Utils.Log.Error(x.ToString() + ". Connection status: " + x.Status.ToString());
                 throw new EServerError("Unable to find FogBugz server at location: " + url);
             }
             catch (System.UriFormatException x)
             {
-                Utils.LogError(x.ToString());
+                Utils.Log.Error(x.ToString());
                 throw new EURLError("The server URL you provided appears to be malformed: " + url);
             }
         }
@@ -72,16 +72,17 @@ namespace FogBugzNet
             {
                 WebRequest req = WebRequest.Create(url);
                 WebResponse res = req.GetResponse();
+                Utils.Log.DebugFormat("Writing response to binary file {0}", targetFile);
                 ReadStreamToFile(res.GetResponseStream(), targetFile);
             }
             catch (System.Net.WebException x)
             {
-                Utils.LogError(x.ToString() + ". Connection status: " + x.Status.ToString());
+                Utils.Log.Error(x.ToString() + ". Connection status: " + x.Status.ToString());
                 throw new EServerError("Unable to find FogBugz server at location: " + url);
             }
             catch (System.UriFormatException x)
             {
-                Utils.LogError(x.ToString());
+                Utils.Log.Error(x.ToString());
                 throw new EURLError("The server URL you provided appears to be malformed: " + url);
             }
         }

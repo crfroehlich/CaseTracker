@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
+using FogBugzNet;
 
 namespace FogBugzCaseTracker
 {
@@ -40,6 +41,7 @@ namespace FogBugzCaseTracker
 
         private void ShowFilterDialog()
         {
+            Utils.Log.Debug("Showing filter dialog");
             FilterDialog f = new FilterDialog(_history);
             f.fb = _fb;
             f.dad = this;
@@ -58,6 +60,7 @@ namespace FogBugzCaseTracker
                     updateCases();
                 _history.Save();
             }
+            Utils.Log.Debug("Closing filter dialog");
         }
 
     }

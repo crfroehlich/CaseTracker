@@ -42,6 +42,7 @@ namespace FogBugzNet
 
         public XmlDocument CasesToMindMap()
         {
+            Utils.Log.Debug("Exporting cases to FreeMind...");
             GenerateDocumentSkeleton();
 
             CreateFlatElements();

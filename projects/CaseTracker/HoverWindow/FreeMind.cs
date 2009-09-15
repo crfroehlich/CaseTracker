@@ -25,7 +25,7 @@ namespace FogBugzCaseTracker
             catch (System.Exception x)
             {
                 MessageBox.Show("Sorry, couldn't launch Excel");
-                Utils.LogError(x.ToString());
+                Utils.Log.Error(x.ToString());
             }
         }
         private void DoImport()
@@ -54,7 +54,7 @@ namespace FogBugzCaseTracker
                     }
                     catch (Exception x)
                     {
-                        Utils.LogError(x.ToString());
+                        Utils.Log.Error(x.ToString());
                     }
                 }
             }
@@ -79,7 +79,7 @@ namespace FogBugzCaseTracker
                 }
                 catch (Exception x)
                 {
-                    Utils.LogError(x.ToString());
+                    Utils.Log.Error(x.ToString());
                 }
             }
 

@@ -24,6 +24,7 @@ namespace FogBugzCaseTracker
 
         LogonResultInfo DoLogonScreen(string initialUser, string initialPassword, string initialServer)
         {
+            Utils.Log.Debug("Logon screen showing...");
             LogonResultInfo ret = new LogonResultInfo();
 
             LoginForm f = new LoginForm();
@@ -42,6 +43,7 @@ namespace FogBugzCaseTracker
                 ret.Server = f.Server;
 
             }
+            Utils.Log.Debug("Logon screen done.");
             return ret;
         }
 
@@ -52,6 +54,7 @@ namespace FogBugzCaseTracker
 
         private void loginWithPrompt(bool forceNewCreds)
         {
+            Utils.Log.DebugFormat("Logging in to FogBugz (with prompt: {0}", forceNewCreds);
             try
             {
                 SetState(new StateLoggingIn(this));
@@ -71,6 +74,8 @@ namespace FogBugzCaseTracker
                         _server = info.Server;
                     }
                 }
+
+                Utils.Log.DebugFormat("Server is at {0}", _server);
 
                 _fb = new FogBugz(_server);
 
@@ -99,6 +104,7 @@ namespace FogBugzCaseTracker
 
         public void LogonAsync(string username, string password, OnLogon OnDone)
         {
+            Utils.Log.DebugFormat("Logging in as {0}", username);
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
@@ -108,7 +114,7 @@ namespace FogBugzCaseTracker
             {
                 if (args.Error != null)
                 {
-                    Utils.LogError("Error during login: {0}", args.Error.ToString());
+                    Utils.Log.ErrorFormat("Error during login: {0}", args.Error.ToString());
                     OnDone(false);
                 }
                 else
@@ -118,7 +124,7 @@ namespace FogBugzCaseTracker
         }
         private void RetryLogin()
         {
-            Utils.Trace("Retrying login...");
+            Utils.Log.Debug("Retrying login...");
             LogonAsync(_username, _password, delegate(bool success)
             {
                 if (success)

@@ -26,6 +26,7 @@ namespace FogBugzCaseTracker
 
         private void updateCases(bool failSilently)
         {
+            Utils.Log.DebugFormat("Updating case list (fail silently: {0})", failSilently);
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
 

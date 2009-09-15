@@ -19,18 +19,22 @@ namespace FogBugzCaseTracker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Utils.InitializeLog();
+
             bool firstInstance;
             mutexSingleton = new Mutex(false, "Local\\VisionMapCaseTrackerSingletonMutex", out firstInstance);
             // If firstInstance is now true, we're the first instance of the application;
             // otherwise another instance is running.
             Application.ThreadException += delegate(object sender, ThreadExceptionEventArgs args)
             {
-                Utils.LogError(args.Exception.ToString());
+                Utils.Log.Error(args.Exception.ToString());
                 Utils.ShowErrorMessage(args.Exception.Message);
             };
 
             if (firstInstance)
                 Application.Run(new HoverWindow());
+
+            Utils.Log.Info("Shutting down");
         }
     }
 }

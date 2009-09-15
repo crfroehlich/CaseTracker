@@ -84,6 +84,7 @@ namespace FogBugzCaseTracker
 
         private bool ObtainUserEstimate(int caseid)
         {
+            Utils.Log.Debug("Obtaining user estimate...");
             EstimateDialog dlg = new EstimateDialog();
             LocateDialogBelowOrAboveWindow(dlg);
 
@@ -108,6 +109,7 @@ namespace FogBugzCaseTracker
             {
                 if (!SelectWorkedOnCase())
                 {
+                    Utils.Log.Debug("Worked-on case not found in case list");
                     TrackedCase = null;
                     SetState(new StateLoggedIn(this));
                 }
@@ -117,6 +119,7 @@ namespace FogBugzCaseTracker
             else
                 SetState(new StateLoggedIn(this));
         }
+
         private int FindWorkedOnCaseIndexInDropDown()
         {
             for (int i = 1; i < dropCaseList.Items.Count; ++i)
@@ -128,6 +131,7 @@ namespace FogBugzCaseTracker
             }
             return -1;
         }
+
         private void SelectCase(int i)
         {
             dropCaseList.SelectedIndex = i;
@@ -155,7 +159,7 @@ namespace FogBugzCaseTracker
             }
             catch (System.InvalidCastException x)
             {
-                Utils.LogError(x.ToString() + "Selected item (index:{0}) is not a Case!", dropCaseList.SelectedIndex);
+                Utils.Log.ErrorFormat(x.ToString() + "Selected item (index:{0}) is not a Case!", dropCaseList.SelectedIndex);
             }
         }
 
@@ -167,6 +171,7 @@ namespace FogBugzCaseTracker
 
         private void PauseWork()
         {
+            Utils.Log.Debug("Pausing work...");
             _caseBeforePause = TrackedCase;
             TrackedCase = null;
             SetState(new StatePaused(this));
@@ -174,6 +179,7 @@ namespace FogBugzCaseTracker
 
         private void ResumeWork()
         {
+            Utils.Log.Debug("Resuming work...");
             TrackedCase = _caseBeforePause;
             SetState(new StateTrackingCase(this));
         }

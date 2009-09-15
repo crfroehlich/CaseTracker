@@ -9,11 +9,10 @@ namespace FogBugzCaseTracker
     {
         private void SetState(object state)
         {
-            Utils.Trace("Entering state: " + state.GetType().ToString());
+            Utils.Log.Debug("Entering state: " + state.GetType().ToString());
             _currentState = state;
             Refresh();
         }
-
 
         private class StateLoggedOff
         {

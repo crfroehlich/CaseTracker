@@ -13,6 +13,8 @@ namespace FogBugzCaseTracker
         private RegistryKey _key;
         private void saveSettings()
         {
+            Utils.Log.Debug("Saving settings to registry");
+
             _key = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
             _key.SetValue("username", _username);
             _key.SetValue("password", Convert.ToBase64String(Utils.EncryptCurrentUser(_password)));
@@ -34,6 +36,8 @@ namespace FogBugzCaseTracker
 
         private void loadSettings()
         {
+            Utils.Log.Debug("Loading settings from registry");
+
             _history = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
             _history.Load();
 
@@ -89,12 +93,12 @@ namespace FogBugzCaseTracker
             catch (System.FormatException x)
             {
                 _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
-                Utils.LogError("Base 64 of pwd is bad: " + x.ToString());
+                Utils.Log.Error("Base 64 of pwd is bad: " + x.ToString());
             }
             catch (System.Security.Cryptography.CryptographicException x)
             {
                 _password = ""; // Don't bother the user about the malformed pwd in the registry, but do log this
-                Utils.LogError("Unable to decode password: " + x.ToString());
+                Utils.Log.Error("Unable to decode password: " + x.ToString());
             }
 
         }

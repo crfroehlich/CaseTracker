@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
+using log4net;
 
 namespace FogBugzNet
 {
@@ -13,6 +14,7 @@ namespace FogBugzNet
     {
         public static void ShowErrorMessage(string error, string title)
         {
+            Utils.Log.WarnFormat("User error shown: {0}, {1}", title, error);
             MessageBox.Show(error, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -42,28 +44,13 @@ namespace FogBugzNet
             return ASCIIEncoding.ASCII.GetString(unprotectedBytes);
         }
 
-        public static void LogError(string msg, params object[] args)
-        {
-            string l = String.Format(msg, args);
-            try
-            {
-                Trace(l);
-                if (!EventLog.SourceExists("CaseTracker"))
-                    EventLog.CreateEventSource("CaseTracker", "Application");
-                EventLog log = new EventLog("Application");
-                log.Source = "CaseTracker";
-                log.WriteEntry(l, EventLogEntryType.Error);
-            }
-            catch (Exception)
-            {
-                // Not much we can do in this case... 
-            }
-        }
+        public static ILog Log = log4net.LogManager.GetLogger("CaseTracker");
 
-        public static void Trace(string msg, params object[] args)
+        public static void InitializeLog()
         {
-            string l = String.Format(msg, args);
-            System.Diagnostics.Trace.WriteLine(l);
+            log4net.Config.XmlConfigurator.Configure();
+            Log.Info("Initializing Logs");
+
         }
 
     }

@@ -97,7 +97,7 @@ namespace FogBugzCaseTracker
             }
             catch (ECommandFailed x)
             {
-                Utils.LogError(x.Message);
+                Utils.Log.Error(x.Message);
                 Utils.ShowErrorMessage(x.Message, "Error in search syntax");
             }
         }

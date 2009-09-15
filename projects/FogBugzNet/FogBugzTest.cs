@@ -8,7 +8,6 @@ using System.Threading;
 using System.Web;
 using NUnit.Framework;
 
-
 namespace FogBugzNet
 {
     using NUnit.Framework;

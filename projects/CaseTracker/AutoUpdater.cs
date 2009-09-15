@@ -31,8 +31,12 @@ namespace FogBugzCaseTracker
 
         private bool IsLatestNewerThanMe()
         {
-            String[] partsTheir = _latest.SelectSingleNode("Version").InnerText.Split(new char[] { '.' });
-            String[] partsMine = _versionInfo.ProductVersion.Split(new char[] { '.' });
+            string theirVer = _latest.SelectSingleNode("Version").InnerText;
+            String[] partsTheir = theirVer.Split(new char[] { '.' });
+            string myVer = _versionInfo.ProductVersion;
+            String[] partsMine = myVer.Split(new char[] { '.' });
+
+            Utils.Log.DebugFormat("Their version {0}, My version {1}", theirVer, myVer);
 
             for (int i = 0; i < 4; ++i)
             {
@@ -53,13 +57,14 @@ namespace FogBugzCaseTracker
                 {
                     while (true)
                     {
+                        Utils.Log.Debug("Looking for newer version...");
                         FindNewerReleases(GetLatestVersionXml());
                         Thread.Sleep(_interval);
                     }
                 }
                 catch (Exception e)
                 {
-                    Utils.LogError("Error while checking for updates: {0}", e.ToString());
+                    Utils.Log.ErrorFormat("Error while checking for updates: {0}", e.ToString());
                 }
             });
             bw.RunWorkerAsync();
@@ -83,6 +88,7 @@ namespace FogBugzCaseTracker
 
         private void VerifyMd5(string filename, string expectedHash)
         {
+            Utils.Log.InfoFormat("Verifying downloaded setup MD5 {0}, {1}", filename, expectedHash);
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
 
             StringBuilder sb = new StringBuilder();
@@ -92,6 +98,7 @@ namespace FogBugzCaseTracker
             string actualHashStr = sb.ToString();
             if (actualHashStr != expectedHash)
             {
+                Utils.Log.WarnFormat("Actual MD5 was: ", actualHashStr);
                 File.Delete(filename);
                 throw new Exception(String.Format("Bad hash of downloaded version.\nExpected: {0}\n  Actual: {1}", expectedHash, actualHashStr));
             }
@@ -99,6 +106,7 @@ namespace FogBugzCaseTracker
 
         private string DownloadLatestVersion()
         {
+            Utils.Log.Info("Downloading latest version...");
             String remoteURL = _latest.SelectSingleNode("URL").InnerText;
 
             string remoteFileName = Path.GetFileName(remoteURL);
@@ -110,16 +118,18 @@ namespace FogBugzCaseTracker
 
             if (!File.Exists(localFilePath))
             {
-                Utils.Trace("Downloading latest version from {0} to {1}", remoteURL, localFilePath);
+                Utils.Log.DebugFormat("Downloading latest version from {0} to {1}", remoteURL, localFilePath);
                 HttpUtils.httpGetBinary(remoteURL, localFilePath);
                 VerifyMd5(localFilePath, _latest.SelectSingleNode("MD5").InnerText);
-            }
+            } else
+                Utils.Log.DebugFormat("Latest version already downloaded to: {0}", localFilePath);
                 
             return localFilePath;
         }
 
         private void SuggestUpdate()
         {
+            Utils.Log.Debug("Suggesting Update to user...");
             VersionUpdatePrompt dlg = new VersionUpdatePrompt();
 
             dlg.WhatsNew = _latest.SelectSingleNode("Notes").InnerText;
@@ -128,12 +138,14 @@ namespace FogBugzCaseTracker
             
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Yes)
                 DoUpdate();
+            else
+                Utils.Log.Debug("User declined update");
         }
 
         private void DoUpdate()
         {
+            Utils.Log.InfoFormat("Running update: {0} {1}", _setup, "/SILENT");
             System.Diagnostics.Process.Start(_setup, "/SILENT");
-
         }
 
         private void FindNewerReleases(XmlDocument doc)
@@ -142,6 +154,8 @@ namespace FogBugzCaseTracker
 
             if (IsLatestNewerThanMe())
             {
+                Utils.Log.Debug("Found newer version");
+
                 _setup = DownloadLatestVersion();
                 SuggestUpdate();
             }

@@ -74,11 +74,11 @@ namespace FogBugzNet
             }
             catch (ECommandFailed e)
             {
-                Utils.LogError("Error while logging on: {0}, code: {1}", e.Message, e.ErrorCode);
+                Utils.Log.ErrorFormat("Error while logging on: {0}, code: {1}", e.Message, e.ErrorCode);
             }
             catch (EServerError e)
             {
-                Utils.LogError("Error during logon: " + e.ToString());
+                Utils.Log.Error("Error during logon: " + e.ToString());
             }
             return false;
         }
@@ -107,6 +107,7 @@ namespace FogBugzNet
             {
                 string err = xmlDoc(resXML).SelectSingleNode("//error").InnerText;
                 int code = int.Parse(xmlDoc(resXML).SelectSingleNode("//error").Attributes["code"].Value);
+                Utils.Log.WarnFormat("Server returned error: {0}", err);
                 throw new ECommandFailed(err, code);
             }
         }
@@ -114,9 +115,11 @@ namespace FogBugzNet
         private string fbCommand(string command, params string[] args)
         {
             string httpGetRequest = FormatHttpGetRequest(command, args);
+            if (command != "logon")
+                Utils.Log.DebugFormat("Executing web service command: {0}", httpGetRequest);
 
             string resXML = HttpUtils.httpGet(httpGetRequest);
-
+            Utils.Log.DebugFormat("Size of response: {0}", resXML.Length);
             CheckForFbError(resXML);
 
             return resXML;
@@ -143,6 +146,7 @@ namespace FogBugzNet
 
         public Filter[] GetFilters()
         {
+            Utils.Log.Debug("Querying filters");
             string res = fbCommand("listFilters", null);
 
             XmlNodeList filters = xmlDoc(res).SelectNodes("//filter");
@@ -173,6 +177,8 @@ namespace FogBugzNet
         // Return all cases that match search (as in the web page search box)
         public Case[] GetCases(string search)
         {
+            Utils.Log.DebugFormat("Querying for all cases that match '{0}'", search);
+
             string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,ixProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst,ixBugParent,ixFixFor,sFixFor,sCategory");
             XmlDocument doc = xmlDoc(res);
             XmlNodeList nodes = doc.SelectNodes("//case");
@@ -207,14 +213,21 @@ namespace FogBugzNet
             return (Case[])ret.ToArray(typeof(Case));
         }
 
+        private XmlDocument ListIntervals()
+        {
+            Utils.Log.Debug("Querying server for user's work intervals");
+            // Get list of all recorded time intervals
+            string res = fbCommand("listIntervals", null);
+            return xmlDoc(res);
+
+        }
+
         // The id of the case the user is working on right now
         public int CaseWorkedOnNow
         {
             get
             {
-                // Get list of all recorded time intervals
-                string res = fbCommand("listIntervals", null);
-                XmlDocument doc = xmlDoc(res);
+                XmlDocument doc = ListIntervals();
 
                 // If the last time interval has no "End" value, then it's still 
                 // active -> this is the case we're working on.
@@ -232,12 +245,14 @@ namespace FogBugzNet
 
         public void StopWorking()
         {
+            Utils.Log.Debug("Stopping work...");
             fbCommand("stopWork", null);
         }
 
         // returns false if case has no estimate (or cannot work on it for any other reason)
         public bool StartWorking(int id)
         {
+            Utils.Log.DebugFormat("Starting work on {0}", id);
             try
             {
                 string ret = fbCommand("startWork", "ixBug=" + id.ToString());
@@ -254,14 +269,16 @@ namespace FogBugzNet
 
         public void ResolveCase(int id)
         {
+            Utils.Log.InfoFormat("Resolving case {0}", id);
             string ret = fbCommand("resolve", "ixBug=" + id.ToString(), "ixStatus=2");
-            Utils.Trace(ret);
+            Utils.Log.Debug(ret);
         }
 
         public void ResolveAndCloseCase(int id)
         {
+            Utils.Log.InfoFormat("Resolving and closing case {0}", id);
             string ret = fbCommand("close", "ixBug=" + id.ToString());
-            Utils.Trace(ret);
+            Utils.Log.Debug(ret);
         }
 
         // Returns the URL to edit this case (by id)
@@ -293,6 +310,8 @@ namespace FogBugzNet
 
         public bool SetEstimate(int caseid, string estimate)
         {
+            Utils.Log.InfoFormat("Estimating case {0} at {1} hours", caseid, estimate);
+
             fbCommand("edit", "ixBug=" + caseid.ToString(), "hrsCurrEst=" + estimate);
             TimeSpan newEstimate = GetCases(caseid.ToString())[0].Estimate;
             return newEstimate.TotalHours != 0;
@@ -300,6 +319,7 @@ namespace FogBugzNet
 
         public Project[] ListProjects()
         {
+            Utils.Log.Debug("Query list of projects");
             ArrayList ret = new ArrayList();
 
             string res = fbCommand("listProjects");
@@ -320,11 +340,14 @@ namespace FogBugzNet
 
         public void SetParent(Case c, int parentID)
         {
+            Utils.Log.InfoFormat("Setting paret of case {0} to be {1}", c.ID, parentID);
             fbCommand("edit", "ixBug=" + c.ID.ToString(), "ixBugParent=" + parentID.ToString());
         }
 
         public void AddNote(int id, string note)
         {
+            Utils.Log.InfoFormat("Adding a note to case {0}: {1}", id, note);
+
             fbCommand("edit", "ixBug=" + id.ToString(), "sEvent=" + note);
         }
     }
