@@ -58,5 +58,13 @@ namespace FogBugzNet
             return dt.ToString("yyyy-MM-ddTHH:mm:ssZ");
         }
 
+        public static void OverrideConfiguredLogLevel(log4net.Core.Level l)
+        {
+            log4net.Repository.Hierarchy.Hierarchy h = (log4net.Repository.Hierarchy.Hierarchy)log4net.LogManager.GetRepository();
+            log4net.Repository.Hierarchy.Logger rootLogger = h.Root;
+            rootLogger.Level = l;
+        }
+
+
     }
 }

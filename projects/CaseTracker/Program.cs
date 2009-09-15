@@ -14,12 +14,17 @@ namespace FogBugzCaseTracker
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] argv)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             Utils.InitializeLog();
+
+            if ((argv.Length > 0) && (argv[0] == "DEBUG"))
+                Utils.OverrideConfiguredLogLevel(log4net.Core.Level.Debug);
+
+
 
             bool firstInstance;
             mutexSingleton = new Mutex(false, "Local\\VisionMapCaseTrackerSingletonMutex", out firstInstance);
