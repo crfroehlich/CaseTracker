@@ -34,12 +34,26 @@ begin
 
 end;
 
+procedure CreateDebugLink();
+begin
+  CreateShellLink(
+    ExpandConstant('{app}\Debug-Mode Case Tracker.lnk'),
+    'Run CaseTracker in debug mode (for troubleshooting)',
+    ExpandConstant('{app}\CaseTracker.exe'),
+    ExpandConstant('DEBUG'),
+    ExpandConstant('{app}'),
+    '',
+    0,
+    SW_SHOWNORMAL);
+end;
+
+
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "{#SrcApp}"; DestDir: "{app}"; Flags: ignoreversion ; BeforeInstall: ClosePreviousVersion
+Source: "{#SrcApp}"; DestDir: "{app}"; Flags: ignoreversion ; BeforeInstall: ClosePreviousVersion  ; AfterInstall: CreateDebugLink
 Source: "{#SrcApp}.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\FogBugzNet\bin\release\FogBugzNet.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Log4Net\release\log4net.dll"; DestDir: "{app}"; Flags: ignoreversion
