@@ -5,6 +5,7 @@ using System.Xml;
 using System.Web;
 using System.Collections;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace FogBugzNet
 {
@@ -213,12 +214,24 @@ namespace FogBugzNet
             return (Case[])ret.ToArray(typeof(Case));
         }
 
+        private string OneWeekAgoIsoDate()
+        {
+            DateTime oneWeekAgo = DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0));
+
+            return Utils.ToIsoTimeString(oneWeekAgo);
+        }
+
         private XmlDocument ListIntervals()
         {
+            // Get list of all recorded time intervals from the last week
             Utils.Log.Debug("Querying server for user's work intervals");
-            // Get list of all recorded time intervals
-            string res = fbCommand("listIntervals", null);
-            return xmlDoc(res);
+            XmlDocument doc = xmlDoc(fbCommand("listIntervals", "dtStart=" + OneWeekAgoIsoDate()));
+
+            // If none found during last week, query for all-time.
+            if (null == doc.SelectSingleNode("//interval[last()]"))
+                doc = xmlDoc(fbCommand("listIntervals"));
+
+            return doc;
 
         }
 

@@ -53,5 +53,10 @@ namespace FogBugzNet
 
         }
 
+        public static string ToIsoTimeString(DateTime dt)
+        {
+            return dt.ToString("yyyy-MM-ddTHH:mm:ssZ");
+        }
+
     }
 }
