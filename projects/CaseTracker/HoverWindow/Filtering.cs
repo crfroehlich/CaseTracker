@@ -31,10 +31,10 @@ namespace FogBugzCaseTracker
         {
             string search = _narrowSearch;
             if (!_ignoreBaseSearch)
-                return search = search + " " + _baseSearch;
+                search = search + " " + _baseSearch;
 
             if (!_includeNoEstimate)
-                return search = search + " -CurrentEstimate:\"0\"";
+                search = search + " -CurrentEstimate:\"0\"";
 
             return search;
         }
