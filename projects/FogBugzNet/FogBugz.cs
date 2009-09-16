@@ -104,11 +104,12 @@ namespace FogBugzNet
 
         private void CheckForFbError(string resXML)
         {
+            Utils.Log.Debug("Parsing XML response for errors...");
             if (xmlDoc(resXML).SelectNodes("//error").Count > 0)
             {
                 string err = xmlDoc(resXML).SelectSingleNode("//error").InnerText;
-                int code = int.Parse(xmlDoc(resXML).SelectSingleNode("//error").Attributes["code"].Value);
                 Utils.Log.WarnFormat("Server returned error: {0}", err);
+                int code = int.Parse(xmlDoc(resXML).SelectSingleNode("//error").Attributes["code"].Value);
                 throw new ECommandFailed(err, code);
             }
         }
@@ -175,43 +176,54 @@ namespace FogBugzNet
             fbCommand("saveFilter", "sFilter=" + f.ID.ToString());
         }
 
+        private Case ParseCaseNode(XmlNode node)
+        {
+            Case c = new Case();
+            c.Name = node.SelectSingleNode("sTitle").InnerText;
+            c.ParentProject.Name = node.SelectSingleNode("sProject").InnerText;
+            c.ParentProject.ID = int.Parse(node.SelectSingleNode("ixProject").InnerText);
+
+            c.AssignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
+            c.Area = node.SelectSingleNode("sArea").InnerText;
+            c.ID = int.Parse(node.SelectSingleNode("@ixBug").Value);
+            c.ParentCaseID = 0;
+            if (node.SelectSingleNode("ixBugParent").InnerText != "")
+                c.ParentCaseID = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
+
+            double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
+            c.Elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));
+
+            double hrsEstimate = double.Parse(node.SelectSingleNode("hrsCurrEst").InnerText);
+            c.Estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
+            c.ParentMileStone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
+            c.ParentMileStone.Name = node.SelectSingleNode("sFixFor").InnerText;
+            c.Category = node.SelectSingleNode("sCategory").InnerText;
+            return c;
+
+
+        }
+
+        public Case[] ParseCasesXML(XmlDocument doc)
+        {
+            Utils.Log.Debug("Parsing response XML as DOM");
+            XmlNodeList nodes = doc.SelectNodes("//case");
+
+            ArrayList ret = new ArrayList();
+
+            Utils.Log.DebugFormat("Got {0} cases", nodes.Count);
+            foreach (XmlNode node in nodes)
+                ret.Add(ParseCaseNode(node));
+            return (Case[])ret.ToArray(typeof(Case));
+        }
+
         // Return all cases that match search (as in the web page search box)
         public Case[] GetCases(string search)
         {
             Utils.Log.DebugFormat("Querying for all cases that match '{0}'", search);
 
             string res = fbCommand("search", "q=" + search, "cols=sTitle,sProject,ixProject,sPersonAssignedTo,sArea,hrsElapsed,hrsCurrEst,ixBugParent,ixFixFor,sFixFor,sCategory");
-            XmlDocument doc = xmlDoc(res);
-            XmlNodeList nodes = doc.SelectNodes("//case");
 
-            ArrayList ret = new ArrayList();
-
-            foreach (XmlNode node in nodes)
-            {
-                Case c = new Case();
-                c.Name = node.SelectSingleNode("sTitle").InnerText;
-                c.ParentProject.Name = node.SelectSingleNode("sProject").InnerText;
-                c.ParentProject.ID = int.Parse(node.SelectSingleNode("ixProject").InnerText);
-
-                c.AssignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
-                c.Area = node.SelectSingleNode("sArea").InnerText;
-                c.ID = int.Parse(node.SelectSingleNode("@ixBug").Value);
-                c.ParentCaseID = 0;
-                if (node.SelectSingleNode("ixBugParent").InnerText != "")
-                    c.ParentCaseID = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
-
-                double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
-                c.Elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));
-
-                double hrsEstimate = double.Parse(node.SelectSingleNode("hrsCurrEst").InnerText);
-                c.Estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
-                c.ParentMileStone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
-                c.ParentMileStone.Name = node.SelectSingleNode("sFixFor").InnerText;
-                c.Category = node.SelectSingleNode("sCategory").InnerText;
-
-                ret.Add(c);
-            }
-            return (Case[])ret.ToArray(typeof(Case));
+            return ParseCasesXML(xmlDoc(res));
         }
 
         private string OneWeekAgoIsoDate()
