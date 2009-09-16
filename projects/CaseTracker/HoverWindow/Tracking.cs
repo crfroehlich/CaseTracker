@@ -104,6 +104,7 @@ namespace FogBugzCaseTracker
 
         private void UpdateStateAccordingToTracking()
         {
+            Utils.Log.Debug("Updating tracking state after update...");
             // Handle also case where a case is being tracked on the server side, but not on the client
             if (ClientTrackingCase || _fb.CaseWorkedOnNow != 0)
             {
@@ -122,13 +123,12 @@ namespace FogBugzCaseTracker
 
         private int FindWorkedOnCaseIndexInDropDown()
         {
+            int current = _fb.CaseWorkedOnNow;
             for (int i = 1; i < dropCaseList.Items.Count; ++i)
-            {
-                if (((Case)dropCaseList.Items[i]).ID == _fb.CaseWorkedOnNow)
-                {
+                if (((Case)dropCaseList.Items[i]).ID == current)
                     return i;
-                }
-            }
+
+            Utils.Log.DebugFormat("Worked-on case {0} not found in current search", current);
             return -1;
         }
 

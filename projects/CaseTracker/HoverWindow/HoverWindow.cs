@@ -97,7 +97,7 @@ namespace FogBugzCaseTracker
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
-            _fb.ResolveCase(_fb.CaseWorkedOnNow);
+            _fb.ResolveCase(TrackedCase.ID);
             updateCases();
         }
 
@@ -168,9 +168,8 @@ namespace FogBugzCaseTracker
 
         private void btnResolveClose_Click(object sender, EventArgs e)
         {
-            _fb.ResolveCase(_fb.CaseWorkedOnNow);
+            _fb.ResolveCase(TrackedCase.ID);
             updateCases();
-
         }
 
         private void HoverWindow_MouseUp(object sender, MouseEventArgs e)

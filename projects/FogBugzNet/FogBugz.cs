@@ -179,38 +179,43 @@ namespace FogBugzNet
         private Case ParseCaseNode(XmlNode node)
         {
             Case c = new Case();
-            c.Name = node.SelectSingleNode("sTitle").InnerText;
-            c.ParentProject.Name = node.SelectSingleNode("sProject").InnerText;
-            c.ParentProject.ID = int.Parse(node.SelectSingleNode("ixProject").InnerText);
+            try
+            {
+                c.Name = node.SelectSingleNode("sTitle").InnerText;
+                c.ParentProject.Name = node.SelectSingleNode("sProject").InnerText;
+                c.ParentProject.ID = int.Parse(node.SelectSingleNode("ixProject").InnerText);
 
-            c.AssignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
-            c.Area = node.SelectSingleNode("sArea").InnerText;
-            c.ID = int.Parse(node.SelectSingleNode("@ixBug").Value);
-            c.ParentCaseID = 0;
-            if (node.SelectSingleNode("ixBugParent").InnerText != "")
-                c.ParentCaseID = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
+                c.AssignedTo = node.SelectSingleNode("sPersonAssignedTo").InnerText;
+                c.Area = node.SelectSingleNode("sArea").InnerText;
+                c.ID = int.Parse(node.SelectSingleNode("@ixBug").Value);
+                c.ParentCaseID = 0;
+                if (node.SelectSingleNode("ixBugParent").InnerText != "")
+                    c.ParentCaseID = int.Parse(node.SelectSingleNode("ixBugParent").InnerText);
 
-            double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
-            c.Elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));
+                double hrsElapsed = double.Parse(node.SelectSingleNode("hrsElapsed").InnerText);
+                c.Elapsed = new TimeSpan((long)(hrsElapsed * 36000000000.0));
 
-            double hrsEstimate = double.Parse(node.SelectSingleNode("hrsCurrEst").InnerText);
-            c.Estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
-            c.ParentMileStone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
-            c.ParentMileStone.Name = node.SelectSingleNode("sFixFor").InnerText;
-            c.Category = node.SelectSingleNode("sCategory").InnerText;
+                double hrsEstimate = double.Parse(node.SelectSingleNode("hrsCurrEst").InnerText);
+                c.Estimate = new TimeSpan((long)(hrsEstimate * 36000000000.0));
+                c.ParentMileStone.ID = int.Parse(node.SelectSingleNode("ixFixFor").InnerText);
+                c.ParentMileStone.Name = node.SelectSingleNode("sFixFor").InnerText;
+                c.Category = node.SelectSingleNode("sCategory").InnerText;
+            }
+            catch (System.Exception e)
+            {
+                Utils.Log.ErrorFormat("Error parsing case XML: {0}\nError: {1}", node.InnerXml, e.ToString());
+                throw;
+            }
             return c;
-
-
         }
 
         public Case[] ParseCasesXML(XmlDocument doc)
         {
-            Utils.Log.Debug("Parsing response XML as DOM");
+            Utils.Log.Debug("Parsing response XML as DOM...");
             XmlNodeList nodes = doc.SelectNodes("//case");
+            Utils.Log.DebugFormat("Got {0} cases", nodes.Count);
 
             ArrayList ret = new ArrayList();
-
-            Utils.Log.DebugFormat("Got {0} cases", nodes.Count);
             foreach (XmlNode node in nodes)
                 ret.Add(ParseCaseNode(node));
             return (Case[])ret.ToArray(typeof(Case));

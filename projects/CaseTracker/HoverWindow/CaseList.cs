@@ -30,7 +30,9 @@ namespace FogBugzCaseTracker
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
 
-            GetCasesAsync(FormatSearch(), delegate(Case[] cases, Exception error)
+            string search = FormatSearch();
+
+            GetCasesAsync(search, delegate(Case[] cases, Exception error)
             {
                 try
                 {
@@ -43,10 +45,11 @@ namespace FogBugzCaseTracker
                     if (e.ErrorCode == (int)ECommandFailed.Code.InvalidSearch)
                     {
                         _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
+                        Utils.Log.WarnFormat("Invalid search failed: {0}, reverting to default search: {1}", search, _narrowSearch);
                         updateCases(failSilently);
-                        if (!failSilently)
-                            throw;
                     }
+                    if (!failSilently)
+                        throw;
                 }
                 catch (Exception)
                 {
@@ -60,6 +63,7 @@ namespace FogBugzCaseTracker
 
         private void RepopulateCaseDropdown()
         {
+            Utils.Log.Debug("Repopulating case drop-down...");
             dropCaseList.Items.Add("(nothing)");
             dropCaseList.Text = "(nothing)";
             foreach (Case c in _cases)
