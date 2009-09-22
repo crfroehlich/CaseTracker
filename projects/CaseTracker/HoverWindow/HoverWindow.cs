@@ -237,11 +237,13 @@ namespace FogBugzCaseTracker
         private void btnPause_Click(object sender, EventArgs e)
         {
             PauseWork();
+            backgroundPic.Focus();
         }
 
         private void lblImBack_Click(object sender, EventArgs e)
         {
             ResumeWork();
+            backgroundPic.Focus();
         }
 
         private void btnNewSubcase_Click(object sender, EventArgs e)
@@ -303,6 +305,13 @@ namespace FogBugzCaseTracker
         {
             if ((_currentState.GetType() == typeof(StateTrackingCase)) && UserIsAway())
                 PauseWork();
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            StopWork();
+            backgroundPic.Focus();
+
         }
 
     } // Class HoverWindow

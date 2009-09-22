@@ -184,5 +184,15 @@ namespace FogBugzCaseTracker
             SetState(new StateTrackingCase(this));
         }
 
+        private void StopWork()
+        {
+            Utils.Log.Debug("Stopping work...");
+            TrackedCase = null;
+            SelectNothing();
+
+            SetState(new StateLoggedIn(this));
+        }
+
+
     }
 }

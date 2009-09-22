@@ -44,12 +44,14 @@ namespace FogBugzCaseTracker
             this.lblWorkingOn = new System.Windows.Forms.Label();
             this.timerRetryLogin = new System.Windows.Forms.Timer(this.components);
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.pnlPaused = new System.Windows.Forms.Panel();
-            this.lblImBack = new System.Windows.Forms.Label();
+            this.timerAway = new System.Windows.Forms.Timer(this.components);
             this.busyPicture = new System.Windows.Forms.PictureBox();
             this.extensionGrip = new System.Windows.Forms.PictureBox();
             this.btnMain = new System.Windows.Forms.Button();
             this.backgroundPic = new System.Windows.Forms.PictureBox();
+            this.pnlPaused = new System.Windows.Forms.Panel();
+            this.lblImBack = new System.Windows.Forms.Label();
+            this.btnStop = new FogBugzCaseTracker.MultiImageButton();
             this.btnPause = new FogBugzCaseTracker.MultiImageButton();
             this.btnFilter = new FogBugzCaseTracker.MultiImageButton();
             this.menuNew = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
@@ -67,12 +69,11 @@ namespace FogBugzCaseTracker
             this.btnConfigure = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnShowHide = new FogBugzCaseTracker.MultiImageToolStripMenuItem();
             this.btnRefresh = new FogBugzCaseTracker.MultiImageButton();
-            this.timerAway = new System.Windows.Forms.Timer(this.components);
             this.menuMain.SuspendLayout();
-            this.pnlPaused.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.busyPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).BeginInit();
+            this.pnlPaused.SuspendLayout();
             this.SuspendLayout();
             // 
             // timerUpdateCases
@@ -172,7 +173,7 @@ namespace FogBugzCaseTracker
             this.dropCaseList.Location = new System.Drawing.Point(62, 3);
             this.dropCaseList.MaxDropDownItems = 100;
             this.dropCaseList.Name = "dropCaseList";
-            this.dropCaseList.Size = new System.Drawing.Size(343, 21);
+            this.dropCaseList.Size = new System.Drawing.Size(316, 21);
             this.dropCaseList.Sorted = true;
             this.dropCaseList.TabIndex = 11;
             this.dropCaseList.ValueMember = "id";
@@ -223,30 +224,11 @@ namespace FogBugzCaseTracker
             this.imageList.Images.SetKeyName(20, "fat_check.png");
             this.imageList.Images.SetKeyName(21, "fat_check_disabled.png");
             // 
-            // pnlPaused
+            // timerAway
             // 
-            this.pnlPaused.Controls.Add(this.lblImBack);
-            this.pnlPaused.Location = new System.Drawing.Point(106, 6);
-            this.pnlPaused.Name = "pnlPaused";
-            this.pnlPaused.Size = new System.Drawing.Size(203, 17);
-            this.pnlPaused.TabIndex = 19;
-            this.pnlPaused.Visible = false;
-            // 
-            // lblImBack
-            // 
-            this.lblImBack.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblImBack.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblImBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblImBack.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblImBack.Location = new System.Drawing.Point(3, 1);
-            this.lblImBack.Name = "lblImBack";
-            this.lblImBack.Size = new System.Drawing.Size(197, 16);
-            this.lblImBack.TabIndex = 0;
-            this.lblImBack.Text = "I\'m Back";
-            this.lblImBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblImBack.Click += new System.EventHandler(this.lblImBack_Click);
+            this.timerAway.Enabled = true;
+            this.timerAway.Interval = 10000;
+            this.timerAway.Tick += new System.EventHandler(this.timerAway_Tick);
             // 
             // busyPicture
             // 
@@ -303,6 +285,50 @@ namespace FogBugzCaseTracker
             this.backgroundPic.Click += new System.EventHandler(this.backgroundPic_Click);
             this.backgroundPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseDown);
             this.backgroundPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.backgroundPic_MouseUp);
+            // 
+            // pnlPaused
+            // 
+            this.pnlPaused.Controls.Add(this.lblImBack);
+            this.pnlPaused.Location = new System.Drawing.Point(87, 4);
+            this.pnlPaused.Name = "pnlPaused";
+            this.pnlPaused.Size = new System.Drawing.Size(249, 18);
+            this.pnlPaused.TabIndex = 21;
+            this.pnlPaused.Visible = false;
+            // 
+            // lblImBack
+            // 
+            this.lblImBack.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblImBack.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblImBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImBack.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblImBack.Location = new System.Drawing.Point(3, 0);
+            this.lblImBack.Name = "lblImBack";
+            this.lblImBack.Size = new System.Drawing.Size(243, 18);
+            this.lblImBack.TabIndex = 0;
+            this.lblImBack.Text = "I\'m Back";
+            this.lblImBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblImBack.Click += new System.EventHandler(this.lblImBack_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnStop.BackgroundImage = global::FogBugzCaseTracker.Properties.Resources.stop;
+            this.btnStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnStop.DisabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.stop_disabled;
+            this.btnStop.EnabledBackgroundImage = global::FogBugzCaseTracker.Properties.Resources.stop;
+            this.btnStop.FlatAppearance.BorderSize = 0;
+            this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStop.Location = new System.Drawing.Point(384, 3);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(22, 20);
+            this.btnStop.TabIndex = 20;
+            this.btnStop.TabStop = false;
+            this.btnStop.UseVisualStyleBackColor = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // btnPause
             // 
@@ -503,12 +529,6 @@ namespace FogBugzCaseTracker
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // timerAway
-            // 
-            this.timerAway.Enabled = true;
-            this.timerAway.Interval = 10000;
-            this.timerAway.Tick += new System.EventHandler(this.timerAway_Tick);
-            // 
             // HoverWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -517,6 +537,7 @@ namespace FogBugzCaseTracker
             this.ClientSize = new System.Drawing.Size(500, 26);
             this.ControlBox = false;
             this.Controls.Add(this.pnlPaused);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.busyPicture);
             this.Controls.Add(this.extensionGrip);
@@ -544,10 +565,10 @@ namespace FogBugzCaseTracker
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HoverWindow_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HoverWindow_MouseMove);
             this.menuMain.ResumeLayout(false);
-            this.pnlPaused.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.busyPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.extensionGrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backgroundPic)).EndInit();
+            this.pnlPaused.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -575,8 +596,6 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.PictureBox busyPicture;
         private MultiImageButton btnPause;
         private System.Windows.Forms.ImageList imageList;
-        private System.Windows.Forms.Panel pnlPaused;
-        private System.Windows.Forms.Label lblImBack;
         private MultiImageToolStripMenuItem menuNew;
         private MultiImageToolStripMenuItem btnNewCase;
         private MultiImageToolStripMenuItem btnNewSubcase;
@@ -594,5 +613,8 @@ namespace FogBugzCaseTracker
         private System.Windows.Forms.ToolStripSeparator sepToolStripMenuItem;
         private MultiImageToolStripMenuItem btnSettings;
         private System.Windows.Forms.Timer timerAway;
+        private MultiImageButton btnStop;
+        private System.Windows.Forms.Panel pnlPaused;
+        private System.Windows.Forms.Label lblImBack;
     }
 }

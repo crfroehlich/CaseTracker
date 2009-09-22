@@ -35,6 +35,7 @@ namespace FogBugzCaseTracker
                 frm.btnExportExcel.Enable(false);
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(false);
+                frm.btnStop.Enable(false);
                 frm.pnlPaused.Visible = false;
 
 
@@ -116,6 +117,7 @@ namespace FogBugzCaseTracker
                 frm.timerUpdateCases.Enabled = true;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(true);
+                frm.btnStop.Enable(true);
                 frm.btnNewSubcase.Enable(true);
             }
         };
@@ -137,6 +139,7 @@ namespace FogBugzCaseTracker
                 frm.timerUpdateCases.Enabled = false;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(false);
+                frm.btnStop.Enable(false);
                 frm.pnlPaused.Visible = true;
                 frm.pnlPaused.Top = 1;
                 frm.pnlPaused.Left = 1;
