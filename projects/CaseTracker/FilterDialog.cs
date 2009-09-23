@@ -79,21 +79,35 @@ namespace FogBugzCaseTracker
                 return cmboNarrowSearch.Text;
         }
 
-        private void testSearch()
+        private void testSearchAsync()
         {
-            Cases = fb.GetCases(formatSearch());
-            listTestResults.Items.Clear();
-            foreach (Case c in Cases)
-                listTestResults.Items.Add(c);
+            CultureAwareBackgroundWorker bw = new CultureAwareBackgroundWorker();
 
-            
+            String search = formatSearch();
+            bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
+            {
+                args.Result = fb.GetCases(search);
+            });
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
+            {
+                if (args.Error == null)
+                {
+                    Cases = (Case[])args.Result;
+                    listTestResults.Items.Clear();
+                    foreach (Case c in Cases)
+                        listTestResults.Items.Add(c);
+                }
+                else
+                    Utils.ShowErrorMessage("Error while executing search.\n" + args.Error.ToString());
+            });
+            bw.RunWorkerAsync();
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private void DoSearch()
         {
             try
             {
-                testSearch();
+                testSearchAsync();
             }
             catch (ECommandFailed x)
             {
@@ -102,11 +116,15 @@ namespace FogBugzCaseTracker
             }
         }
 
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            DoSearch();
+        }
+
         private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
-                // enter as click on 'Test'
-                testSearch();
+                DoSearch();
             else if (e.KeyChar == (char)Keys.Escape)
                 Close();
         }
