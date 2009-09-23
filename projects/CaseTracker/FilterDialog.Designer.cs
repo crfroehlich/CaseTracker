@@ -55,6 +55,7 @@ namespace FogBugzCaseTracker
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // btnCancel
             // 
@@ -66,6 +67,7 @@ namespace FogBugzCaseTracker
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // SearchResultBox
             // 
@@ -95,6 +97,7 @@ namespace FogBugzCaseTracker
             this.chkIncludeNoEstimate.Text = "Include cases without estimate";
             this.chkIncludeNoEstimate.UseVisualStyleBackColor = true;
             this.chkIncludeNoEstimate.CheckedChanged += new System.EventHandler(this.chkIncludeNoEstimate_CheckedChanged);
+            this.chkIncludeNoEstimate.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // listTestResults
             // 
@@ -128,6 +131,7 @@ namespace FogBugzCaseTracker
             this.chkIgnoreBaseSearch.TabIndex = 15;
             this.chkIgnoreBaseSearch.Text = "Ignore base search";
             this.chkIgnoreBaseSearch.UseVisualStyleBackColor = true;
+            this.chkIgnoreBaseSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // txtBaseSearch
             // 
@@ -151,6 +155,7 @@ namespace FogBugzCaseTracker
             this.cmboNarrowSearch.Size = new System.Drawing.Size(524, 21);
             this.cmboNarrowSearch.TabIndex = 16;
             this.cmboNarrowSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
+            this.cmboNarrowSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // lnkSearchHelp
             // 
@@ -174,6 +179,7 @@ namespace FogBugzCaseTracker
             this.btnTest.Text = "Go";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.btnTest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // lblNarrowSearch
             // 
@@ -202,6 +208,7 @@ namespace FogBugzCaseTracker
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search Filter";
             this.Load += new System.EventHandler(this.SearchForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.SearchResultBox.ResumeLayout(false);
             this.SearchResultBox.PerformLayout();
             this.ResumeLayout(false);

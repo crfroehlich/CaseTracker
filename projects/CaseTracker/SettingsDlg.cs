@@ -79,5 +79,15 @@ namespace FogBugzCaseTracker
             lblMinutes.Enabled = chkAutoPause.Checked;
             numPauseMinutes.Enabled = chkAutoPause.Checked;
         }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+
+                DialogResult = DialogResult.Cancel;
+                Close();
+            }
+        }
     }
 }

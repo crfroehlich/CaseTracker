@@ -64,6 +64,7 @@ namespace FogBugzCaseTracker
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(176, 20);
             this.txtUserName.TabIndex = 0;
+            this.txtUserName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.txtUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anyTextBox_KeyPress);
             // 
             // txtPassword
@@ -73,6 +74,7 @@ namespace FogBugzCaseTracker
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(176, 20);
             this.txtPassword.TabIndex = 1;
+            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anyTextBox_KeyPress);
             // 
             // btnCancel
@@ -84,6 +86,7 @@ namespace FogBugzCaseTracker
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // btnLogin
             // 
@@ -95,6 +98,7 @@ namespace FogBugzCaseTracker
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.btnLogin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // lnkForgotPwd
             // 
@@ -114,6 +118,7 @@ namespace FogBugzCaseTracker
             this.txtServer.Size = new System.Drawing.Size(369, 20);
             this.txtServer.TabIndex = 2;
             this.txtServer.Text = "[e.g. http://www.YourCompany.com/FogBugz/]";
+            this.txtServer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.txtServer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anyTextBox_KeyPress);
             // 
             // lblServer
@@ -147,6 +152,7 @@ namespace FogBugzCaseTracker
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login to FogBugz";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

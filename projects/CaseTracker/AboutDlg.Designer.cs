@@ -148,6 +148,7 @@
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&OK";
+            this.okButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutDlg_KeyDown);
             // 
             // AboutDlg
             // 
@@ -165,6 +166,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AboutDlg";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AboutDlg_KeyPress);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutDlg_KeyDown);
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
