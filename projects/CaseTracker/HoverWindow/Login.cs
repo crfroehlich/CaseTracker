@@ -105,7 +105,7 @@ namespace FogBugzCaseTracker
         public void LogonAsync(string username, string password, OnLogon OnDone)
         {
             Utils.Log.DebugFormat("Logging in as {0}", username);
-            BackgroundWorker bw = new BackgroundWorker();
+            BackgroundWorker bw = new CultureAwareBackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
                 args.Result = _fb.Logon(username, password);

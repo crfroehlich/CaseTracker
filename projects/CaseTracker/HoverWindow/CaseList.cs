@@ -78,7 +78,7 @@ namespace FogBugzCaseTracker
 
         public void GetCasesAsync(string search, OnCasesFetched OnDone)
         {
-            BackgroundWorker bw = new BackgroundWorker();
+            BackgroundWorker bw = new CultureAwareBackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
                 args.Result = _fb.GetCases(search);

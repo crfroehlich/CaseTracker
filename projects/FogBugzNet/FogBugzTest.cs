@@ -129,14 +129,14 @@ In order to run the test create an XML file with this format:
         }
 
         [Test]
-        public void TestParsing()
+        public void TestParsingWithNorwegianLocale()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
             XmlDocument doc = new XmlDocument();
             doc.LoadXml("<Root><sTitle><![CDATA[\"Welcome to FogBugz\" Sample Case]]></sTitle><sProject><![CDATA[Inbox]]></sProject><ixProject>2</ixProject><sPersonAssignedTo><![CDATA[Assaf Lavie]]></sPersonAssignedTo><sArea><![CDATA[Not Spam]]></sArea><hrsElapsed>0.177222222222222</hrsElapsed><hrsCurrEst>0.25</hrsCurrEst><ixBugParent>0</ixBugParent><ixFixFor>1</ixFixFor><sFixFor><![CDATA[Undecided]]></sFixFor><sCategory><![CDATA[Bug]]></sCategory></Root>");
             Assert.DoesNotThrow(delegate() { double.Parse(doc.SelectSingleNode("//hrsElapsed").InnerText); });
             Assert.DoesNotThrow(delegate() { double.Parse(doc.SelectSingleNode("//hrsCurrEst").InnerText); });
-
-
         }
 
     }
