@@ -57,6 +57,18 @@ namespace FogBugzCaseTracker
             }
         }
 
+        public int CaseListRefreshIntervalSeconds
+        {
+            get
+            {
+                return (int)numSeconds.Value;
+            }
+            set
+            {
+                numSeconds.Value = value;
+            }
+        }
+
         public SettingsDlg()
         {
             InitializeComponent();
@@ -88,6 +100,11 @@ namespace FogBugzCaseTracker
                 DialogResult = DialogResult.Cancel;
                 Close();
             }
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

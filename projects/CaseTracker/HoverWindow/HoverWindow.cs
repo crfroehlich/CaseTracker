@@ -275,6 +275,7 @@ namespace FogBugzCaseTracker
             dlg.UserOpacity = Opacity;
             dlg.UserFont = dropCaseList.Font;
             dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
+            dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
 
             double oldOpacity = Opacity;
             Font oldFont = dropCaseList.Font;
@@ -284,6 +285,7 @@ namespace FogBugzCaseTracker
                 Opacity = dlg.UserOpacity;
                 dropCaseList.Font = dlg.UserFont;
                 _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
+                timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
                 saveSettings();
             }
             else
