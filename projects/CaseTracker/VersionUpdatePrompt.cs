@@ -44,5 +44,14 @@ namespace FogBugzCaseTracker
         {
 
         }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.No;
+                Close();
+            }
+        }
     }
 }

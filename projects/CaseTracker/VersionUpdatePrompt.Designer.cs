@@ -149,6 +149,7 @@
             this.btnYes.TabIndex = 8;
             this.btnYes.Text = "Yes";
             this.btnYes.UseVisualStyleBackColor = true;
+            this.btnYes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // btnHellsYea
             // 
@@ -160,6 +161,7 @@
             this.btnHellsYea.TabIndex = 9;
             this.btnHellsYea.Text = "Definitely!";
             this.btnHellsYea.UseVisualStyleBackColor = true;
+            this.btnHellsYea.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // btnLater
             // 
@@ -171,6 +173,7 @@
             this.btnLater.TabIndex = 10;
             this.btnLater.Text = "Later...";
             this.btnLater.UseVisualStyleBackColor = true;
+            this.btnLater.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
             // VersionUpdatePrompt
             // 
@@ -194,6 +197,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Case Tracker - New Version Available!";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picNew)).EndInit();
             this.grpWhatsNew.ResumeLayout(false);
             this.ResumeLayout(false);
