@@ -174,7 +174,7 @@ namespace FogBugzCaseTracker
             this.dropCaseList.MaxDropDownItems = 100;
             this.dropCaseList.Name = "dropCaseList";
             this.dropCaseList.Size = new System.Drawing.Size(316, 21);
-            this.dropCaseList.Sorted = true;
+            this.dropCaseList.Sorted = false;
             this.dropCaseList.TabIndex = 11;
             this.dropCaseList.ValueMember = "id";
             this.dropCaseList.SelectedIndexChanged += new System.EventHandler(this.listCases_SelectedIndexChanged);
