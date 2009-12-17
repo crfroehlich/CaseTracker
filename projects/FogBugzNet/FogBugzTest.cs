@@ -139,5 +139,15 @@ In order to run the test create an XML file with this format:
             Assert.DoesNotThrow(delegate() { double.Parse(doc.SelectSingleNode("//hrsCurrEst").InnerText); });
         }
 
+        [Test]
+        public void TestWikiEdit()
+        {
+            FogBugz fb = Login();
+            WikiArticle wa = fb.ViewArticle(333333);
+            wa.Body += " Edit last " + DateTime.Now.ToLongDateString();
+            fb.UpdateArticle(wa);
+            
+
+        }
     }
 }

@@ -151,7 +151,7 @@ namespace FogBugzNet
             Utils.Log.Debug("Querying filters");
             string res = fbCommand("listFilters", null);
 
-            XmlNodeList filters = xmlDoc(res).SelectNodes("//filter");
+                XmlNodeList filters = xmlDoc(res).SelectNodes("//filter");
 
             ArrayList ret = new ArrayList();
             foreach (XmlNode node in filters)
@@ -379,6 +379,27 @@ namespace FogBugzNet
             Utils.Log.InfoFormat("Adding a note to case {0}: {1}", id, note);
 
             fbCommand("edit", "ixBug=" + id.ToString(), "sEvent=" + note);
+        }
+
+        public WikiArticle ViewArticle(int ID)
+        {
+            string ret = fbCommand("viewArticle", "ixWikiPage=" + ID.ToString());
+            
+            XmlDocument doc = xmlDoc(ret);
+
+            WikiArticle wa = new WikiArticle();
+            wa.ID = ID;
+            wa.Headline = doc.SelectSingleNode("//sHeadline").InnerText;
+            wa.Body = doc.SelectSingleNode("//sBody").InnerText;
+            return wa;
+        }
+
+        public void UpdateArticle(WikiArticle article)
+        {
+            string ret = fbCommand("editArticle",
+                "ixWikiPage=" + article.ID.ToString(),
+                "sBody=" + article.Body,
+                "sHeadline=" + article.Headline);
         }
     }
 }
