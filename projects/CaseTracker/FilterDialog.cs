@@ -79,7 +79,7 @@ namespace FogBugzCaseTracker
                 return cmboNarrowSearch.Text;
         }
 
-        private void testSearchAsync()
+        private void testSearchAsync(RunWorkerCompletedEventHandler OnDone)
         {
             CultureAwareBackgroundWorker bw = new CultureAwareBackgroundWorker();
 
@@ -88,26 +88,36 @@ namespace FogBugzCaseTracker
             {
                 args.Result = fb.GetCases(search);
             });
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
-            {
-                if (args.Error == null)
-                {
-                    Cases = (Case[])args.Result;
-                    listTestResults.Items.Clear();
-                    foreach (Case c in Cases)
-                        listTestResults.Items.Add(c);
-                }
-                else
-                    Utils.ShowErrorMessage("Error while executing search.\n" + args.Error.ToString());
-            });
+            bw.RunWorkerCompleted += OnDone;
             bw.RunWorkerAsync();
         }
 
         private void DoSearch()
         {
+            DoSearch(false);
+        }
+
+        private void DoSearch(bool andCloseDialog)
+        {
             try
             {
-                testSearchAsync();
+                testSearchAsync(new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
+                {
+                    if (args.Error == null)
+                    {
+                        Cases = (Case[])args.Result;
+                        if (andCloseDialog)
+                        {
+                            Close();
+                            return;
+                        }
+                        listTestResults.Items.Clear();
+                        foreach (Case c in Cases)
+                            listTestResults.Items.Add(c);
+                    }
+                    else
+                        Utils.ShowErrorMessage("Error while executing search.\n" + args.Error.ToString());
+                }));
             }
             catch (ECommandFailed x)
             {
@@ -143,11 +153,6 @@ namespace FogBugzCaseTracker
                 cmboNarrowSearch.Items.AddRange(_history.History.ToArray());
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void lnkSearchHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start((string)ConfigurationManager.AppSettings["SearchSyntaxHelpURL"]);
@@ -165,6 +170,11 @@ namespace FogBugzCaseTracker
                 DialogResult = DialogResult.Cancel;
                 Close();
             }
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            DoSearch(true);
         }
     }
 }
