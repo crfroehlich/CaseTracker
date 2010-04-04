@@ -129,11 +129,6 @@ namespace FogBugzCaseTracker
                 Close();
         }
 
-        private void lnkSearchHelp_Click(object sender, EventArgs e)
-        {
-
-            Process.Start((string)ConfigurationManager.AppSettings["SearchSyntaxHelpURL"]);
-        }
 
         private void chkIgnoreBaseSearch_CheckedChanged(object sender, EventArgs e)
         {
@@ -155,7 +150,7 @@ namespace FogBugzCaseTracker
 
         private void lnkSearchHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            Process.Start((string)ConfigurationManager.AppSettings["SearchSyntaxHelpURL"]);
         }
 
         private void chkIncludeNoEstimate_CheckedChanged(object sender, EventArgs e)
