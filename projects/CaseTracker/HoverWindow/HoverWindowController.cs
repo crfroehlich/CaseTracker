@@ -120,7 +120,7 @@ namespace FogBugzCaseTracker
             Utils.Log.Info("Shutting down...");
             try
             {
-                if (_switchToNothinUponClosing)
+                if (_settings.SwitchToNothingWhenClosing)
                     _fb.StopWorking();
                 else
                     Utils.Log.Debug("User continues to work on case after closing.");

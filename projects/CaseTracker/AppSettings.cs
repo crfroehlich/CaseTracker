@@ -27,7 +27,6 @@ namespace FogBugzCaseTracker
             _settingsRegKey.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
             _settingsRegKey.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
             _settingsRegKey.SetValue("LastWidth", Width);
-            _settingsRegKey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             _settings.SaveToRegistry(_settingsRegKey);
             _settingsRegKey.Close();
             _filter.History.Save();
@@ -84,7 +83,6 @@ namespace FogBugzCaseTracker
             Location = newLoc;
 
             Width = (int)_settingsRegKey.GetValue("LastWidth", Width);
-            _switchToNothinUponClosing = (int)_settingsRegKey.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
             _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
             _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
             _filter.BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];

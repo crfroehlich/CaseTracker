@@ -26,6 +26,7 @@ namespace FogBugzCaseTracker
                 numPauseMinutes.Value = _model.MinutesBeforeAway;
 
             numSeconds.Value = _model.CaseListRefreshInterval_Secs;
+            chkStopOnExit.Checked = _model.SwitchToNothingWhenClosing;
         }
 
         public void LoadModel(SettingsModel model)
@@ -46,6 +47,7 @@ namespace FogBugzCaseTracker
                 _model.MinutesBeforeAway = (int)numPauseMinutes.Value;
 
             _model.CaseListRefreshInterval_Secs = (int)numSeconds.Value;
+            _model.SwitchToNothingWhenClosing = chkStopOnExit.Checked;
             return _model;
         }
 

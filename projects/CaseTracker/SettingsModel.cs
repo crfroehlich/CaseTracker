@@ -13,6 +13,7 @@ namespace FogBugzCaseTracker
         public Font UserFont;
         public int MinutesBeforeAway;
         public int CaseListRefreshInterval_Secs;
+        public bool SwitchToNothingWhenClosing;
 
         #region ICloneable Members
 
@@ -23,6 +24,7 @@ namespace FogBugzCaseTracker
             ret.UserFont = (Font)UserFont.Clone();
             ret.MinutesBeforeAway = MinutesBeforeAway;
             ret.CaseListRefreshInterval_Secs = CaseListRefreshInterval_Secs;
+            ret.SwitchToNothingWhenClosing = SwitchToNothingWhenClosing;
             return ret;
         }
 
@@ -36,16 +38,21 @@ namespace FogBugzCaseTracker
             key.SetValue("FontSize", UserFont.SizeInPoints * 100, RegistryValueKind.DWord);
             key.SetValue("MinutesBeforeAway", MinutesBeforeAway, RegistryValueKind.DWord);
             key.SetValue("PollingInterval", CaseListRefreshInterval_Secs * 1000);
+            key.SetValue("SwitchToNothingWhenClosing", SwitchToNothingWhenClosing ? 1 : 0);
+
         }
 
         public void LoadFromRegistry(RegistryKey key, SettingsModel defaultValues)
         {
-            int opac = (int)key.GetValue("Opacity", (int)(defaultValues.Opacity * 100));            Opacity = (double)opac / 100.0;
+            int opac = (int)key.GetValue("Opacity", (int)(defaultValues.Opacity * 100));
+            Opacity = (double)opac / 100.0;
 
             LoadFontFromRegistry(key, defaultValues.UserFont);
 
             MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]));
             CaseListRefreshInterval_Secs = (int)key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"])) / 1000;
+            SwitchToNothingWhenClosing = (int)key.GetValue("SwitchToNothingWhenClosing", 0) != 0;
+
         }
 
         private void LoadFontFromRegistry(RegistryKey key, Font defaultFont)

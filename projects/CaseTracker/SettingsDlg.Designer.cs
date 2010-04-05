@@ -45,6 +45,7 @@
             this.numSeconds = new System.Windows.Forms.NumericUpDown();
             this.lblPollEvery = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.chkStopOnExit = new System.Windows.Forms.CheckBox();
             this.grpAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOpacity)).BeginInit();
             this.grpBehavior.SuspendLayout();
@@ -57,7 +58,7 @@
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOk.Location = new System.Drawing.Point(329, 210);
+            this.btnOk.Location = new System.Drawing.Point(329, 239);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -70,7 +71,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(248, 210);
+            this.btnCancel.Location = new System.Drawing.Point(248, 239);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -164,6 +165,7 @@
             // 
             this.grpBehavior.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpBehavior.Controls.Add(this.chkStopOnExit);
             this.grpBehavior.Controls.Add(this.chkAutoPause);
             this.grpBehavior.Controls.Add(this.lblMinutes);
             this.grpBehavior.Controls.Add(this.numPauseMinutes);
@@ -174,7 +176,7 @@
             this.grpBehavior.ForeColor = System.Drawing.Color.Black;
             this.grpBehavior.Location = new System.Drawing.Point(12, 118);
             this.grpBehavior.Name = "grpBehavior";
-            this.grpBehavior.Size = new System.Drawing.Size(407, 83);
+            this.grpBehavior.Size = new System.Drawing.Size(407, 115);
             this.grpBehavior.TabIndex = 5;
             this.grpBehavior.TabStop = false;
             this.grpBehavior.Text = "Behavior";
@@ -271,12 +273,22 @@
             this.lblPollEvery.TabIndex = 2;
             this.lblPollEvery.Text = "Refresh list of cases every ";
             // 
+            // chkStopOnExit
+            // 
+            this.chkStopOnExit.AutoSize = true;
+            this.chkStopOnExit.Location = new System.Drawing.Point(19, 81);
+            this.chkStopOnExit.Name = "chkStopOnExit";
+            this.chkStopOnExit.Size = new System.Drawing.Size(217, 17);
+            this.chkStopOnExit.TabIndex = 10;
+            this.chkStopOnExit.Text = "Stop working when Case Tracker closes";
+            this.chkStopOnExit.UseVisualStyleBackColor = true;
+            // 
             // SettingsDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(432, 240);
+            this.ClientSize = new System.Drawing.Size(432, 269);
             this.Controls.Add(this.grpBehavior);
             this.Controls.Add(this.grpAppearance);
             this.Controls.Add(this.btnCancel);
@@ -320,5 +332,6 @@
         private System.Windows.Forms.CheckBox chkAutoPause;
         private System.Windows.Forms.Label lblMinutes;
         private System.Windows.Forms.NumericUpDown numPauseMinutes;
+        private System.Windows.Forms.CheckBox chkStopOnExit;
     }
 }

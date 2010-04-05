@@ -10,7 +10,6 @@ namespace FogBugzCaseTracker
     public partial class HoverWindow
     {
         private Case _caseBeforePause;
-        private bool _switchToNothinUponClosing = false;
         private object _currentState;
         private Case _trackedCase = null;
 
