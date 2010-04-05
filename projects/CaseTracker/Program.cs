@@ -42,7 +42,7 @@ namespace FogBugzCaseTracker
             if (firstInstance)
                 Application.Run(new HoverWindow());
 
-            Utils.Log.Info("Shutting down");
+            Utils.Log.Debug("Shutting down");
         }
     }
 }

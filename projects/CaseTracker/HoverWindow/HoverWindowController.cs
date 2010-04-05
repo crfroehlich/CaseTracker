@@ -117,7 +117,7 @@ namespace FogBugzCaseTracker
 
         private void CloseApplication()
         {
-            Utils.Log.Info("Shutting down...");
+            Utils.Log.Debug("Shutting down...");
             try
             {
                 if (_settings.SwitchToNothingWhenClosing)
