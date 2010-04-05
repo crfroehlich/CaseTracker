@@ -15,7 +15,7 @@ namespace FogBugzCaseTracker
         {
             get
             {
-                return _filter.History.History.Count > 0 ? _filter.History.History[0] : ConfigurationManager.AppSettings["DefaultNarrowSearch"];
+                return _filter.History.QueryStrings.Count > 0 ? _filter.History.QueryStrings[0] : ConfigurationManager.AppSettings["DefaultNarrowSearch"];
 
             }
             set

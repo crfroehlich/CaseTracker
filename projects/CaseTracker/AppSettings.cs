@@ -5,6 +5,7 @@ using System.Text;
 using FogBugzNet;
 using System.Configuration;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace FogBugzCaseTracker
 {
@@ -40,7 +41,7 @@ namespace FogBugzCaseTracker
 
             _filter.History = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
             _filter.History.Load();
-            _filter.UserSearch = (_filter.History.History.Count > 0) ? _filter.History.History[0] : "";
+            _filter.UserSearch = (_filter.History.QueryStrings.Count > 0) ? _filter.History.QueryStrings[0] : "";
 
             _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (_key == null)
@@ -105,5 +106,36 @@ namespace FogBugzCaseTracker
 
         }
 
-    }
-}
+
+
+        private void ShowSettingsDialog()
+        {
+            SettingsDlg dlg = new SettingsDlg();
+            dlg.Owner = this;
+            LocateDialogBelowOrAboveWindow(dlg);
+            dlg.UserOpacity = Opacity;
+            dlg.UserFont = dropCaseList.Font;
+            dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
+            dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
+
+            double oldOpacity = Opacity;
+            Font oldFont = dropCaseList.Font;
+            int oldMinutes = _minutesBeforeConsideredAway;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Opacity = dlg.UserOpacity;
+                dropCaseList.Font = dlg.UserFont;
+                _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
+                timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
+                saveSettings();
+            }
+            else
+            {
+                Opacity = oldOpacity;
+                dropCaseList.Font = oldFont;
+                _minutesBeforeConsideredAway = oldMinutes;
+            }
+        }
+
+    } // class HoverWindow
+} // ns

@@ -10,21 +10,19 @@ namespace FogBugzCaseTracker
     {
         private int _maxSize;
 
-        // TODO: find better name for this member
-        public List<string> History { get; set; }
-
+        public List<string> QueryStrings { get; set; }
 
         RegistryKey _key;
 
         public SearchHistory(int howLong)
         {
             _maxSize = howLong;
-            History = new List<string>();
+            QueryStrings = new List<string>();
         }
 
         public void Load()
         {
-            History.Clear();
+            QueryStrings.Clear();
             _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker\\SearchHistory");
             try
             {
@@ -33,7 +31,7 @@ namespace FogBugzCaseTracker
                 {
                     _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
                     if (_key != null)
-                        History.Add((String)_key.GetValue("NarrowSearch", "")); // To support transition from before search history was implemented
+                        QueryStrings.Add((String)_key.GetValue("NarrowSearch", "")); // To support transition from before search history was implemented
                     return;
                 }
 
@@ -41,7 +39,7 @@ namespace FogBugzCaseTracker
                 {
                     string filter = (string)_key.GetValue(i.ToString(), "") ?? "";
                     if (filter != "")
-                        History.Add(filter);
+                        QueryStrings.Add(filter);
                 }
             }
             finally
@@ -60,8 +58,8 @@ namespace FogBugzCaseTracker
             
             try
             {
-                for (int i = 0; i < History.Count; ++i)
-                    _key.SetValue(i.ToString(), History[i]);
+                for (int i = 0; i < QueryStrings.Count; ++i)
+                    _key.SetValue(i.ToString(), QueryStrings[i]);
             }
             finally
             {
@@ -76,11 +74,11 @@ namespace FogBugzCaseTracker
             if (filter == "")
                 return;
 
-            History.RemoveAll(delegate(string val) { return val == filter; });
+            QueryStrings.RemoveAll(delegate(string val) { return val == filter; });
 
-            History.Insert(0, filter);
-            if (History.Count > _maxSize)
-                History.RemoveRange(_maxSize, History.Count - _maxSize);
+            QueryStrings.Insert(0, filter);
+            if (QueryStrings.Count > _maxSize)
+                QueryStrings.RemoveRange(_maxSize, QueryStrings.Count - _maxSize);
 
 
         }
@@ -94,50 +92,50 @@ namespace FogBugzCaseTracker
         public void Test()
         {
             SearchHistory sh = new SearchHistory(3);
-            Assert.True(sh.History[0] == "");
-            Assert.True(sh.History[1] == "");
-            Assert.True(sh.History[2] == "");
+            Assert.True(sh.QueryStrings[0] == "");
+            Assert.True(sh.QueryStrings[1] == "");
+            Assert.True(sh.QueryStrings[2] == "");
             sh.Save();
             sh.Load();
-            Assert.True(sh.History[0] == "");
-            Assert.True(sh.History[1] == "");
-            Assert.True(sh.History[2] == "");
+            Assert.True(sh.QueryStrings[0] == "");
+            Assert.True(sh.QueryStrings[1] == "");
+            Assert.True(sh.QueryStrings[2] == "");
             sh.PushSearch("assaf");
-            Assert.True(sh.History[0] == "assaf");
-            Assert.True(sh.History[1] == "");
-            Assert.True(sh.History[2] == "");
+            Assert.True(sh.QueryStrings[0] == "assaf");
+            Assert.True(sh.QueryStrings[1] == "");
+            Assert.True(sh.QueryStrings[2] == "");
             sh.PushSearch("lavie");
-            Assert.True(sh.History[0] == "lavie");
-            Assert.True(sh.History[1] == "assaf");
-            Assert.True(sh.History[2] == "");
+            Assert.True(sh.QueryStrings[0] == "lavie");
+            Assert.True(sh.QueryStrings[1] == "assaf");
+            Assert.True(sh.QueryStrings[2] == "");
             sh.PushSearch("again");
-            Assert.True(sh.History[0] == "again");
-            Assert.True(sh.History[1] == "lavie");
-            Assert.True(sh.History[2] == "assaf");
+            Assert.True(sh.QueryStrings[0] == "again");
+            Assert.True(sh.QueryStrings[1] == "lavie");
+            Assert.True(sh.QueryStrings[2] == "assaf");
             sh.PushSearch("again");
-            Assert.True(sh.History[0] == "again");
-            Assert.True(sh.History[1] == "lavie");
-            Assert.True(sh.History[2] == "assaf");
+            Assert.True(sh.QueryStrings[0] == "again");
+            Assert.True(sh.QueryStrings[1] == "lavie");
+            Assert.True(sh.QueryStrings[2] == "assaf");
             sh.PushSearch("assaf");
-            Assert.True(sh.History[0] == "assaf");
-            Assert.True(sh.History[1] == "again");
-            Assert.True(sh.History[2] == "lavie");
+            Assert.True(sh.QueryStrings[0] == "assaf");
+            Assert.True(sh.QueryStrings[1] == "again");
+            Assert.True(sh.QueryStrings[2] == "lavie");
             sh.PushSearch("again");
-            Assert.True(sh.History[0] == "again");
-            Assert.True(sh.History[1] == "assaf");
-            Assert.True(sh.History[2] == "lavie");
+            Assert.True(sh.QueryStrings[0] == "again");
+            Assert.True(sh.QueryStrings[1] == "assaf");
+            Assert.True(sh.QueryStrings[2] == "lavie");
             sh.Save();
             SearchHistory sh2 = new SearchHistory(4);
             sh2.Load();
-            Assert.True(sh2.History[0] == "again");
-            Assert.True(sh2.History[1] == "assaf");
-            Assert.True(sh2.History[2] == "lavie");
-            Assert.True(sh2.History[3] == "");
+            Assert.True(sh2.QueryStrings[0] == "again");
+            Assert.True(sh2.QueryStrings[1] == "assaf");
+            Assert.True(sh2.QueryStrings[2] == "lavie");
+            Assert.True(sh2.QueryStrings[3] == "");
             sh2.Save();
             SearchHistory sh3 = new SearchHistory(2);
             sh3.Load();
-            Assert.True(sh3.History[0] == "again");
-            Assert.True(sh3.History[1] == "assaf");
+            Assert.True(sh3.QueryStrings[0] == "again");
+            Assert.True(sh3.QueryStrings[1] == "assaf");
 
 
         }

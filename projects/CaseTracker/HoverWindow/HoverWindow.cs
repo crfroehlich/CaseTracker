@@ -269,31 +269,8 @@ namespace FogBugzCaseTracker
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            SettingsDlg dlg = new SettingsDlg();
-            dlg.Owner = this;
-            LocateDialogBelowOrAboveWindow(dlg);
-            dlg.UserOpacity = Opacity;
-            dlg.UserFont = dropCaseList.Font;
-            dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
-            dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
 
-            double oldOpacity = Opacity;
-            Font oldFont = dropCaseList.Font;
-            int oldMinutes = _minutesBeforeConsideredAway;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Opacity = dlg.UserOpacity;
-                dropCaseList.Font = dlg.UserFont;
-                _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
-                timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
-                saveSettings();
-            }
-            else
-            {
-                Opacity = oldOpacity;
-                dropCaseList.Font = oldFont;
-                _minutesBeforeConsideredAway = oldMinutes;
-            }
+            ShowSettingsDialog();
         }
 
         private bool UserIsAway()

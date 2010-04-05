@@ -115,8 +115,8 @@ namespace FogBugzCaseTracker
         private void SearchForm_Load(object sender, EventArgs e)
         {
             cmboNarrowSearch.Items.Clear();
-            if (_model.History.History.Count > 0)
-                cmboNarrowSearch.Items.AddRange(_model.History.History.ToArray());
+            if (_model.History.QueryStrings.Count > 0)
+                cmboNarrowSearch.Items.AddRange(_model.History.QueryStrings.ToArray());
         }
 
         private void lnkSearchHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
