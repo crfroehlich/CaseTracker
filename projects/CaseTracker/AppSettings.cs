@@ -11,7 +11,7 @@ namespace FogBugzCaseTracker
 {
     public partial class HoverWindow
     {
-        private SettingsModel _settings = new SettingsModel();
+        private SettingsModel _settings;
 
         private RegistryKey _settingsRegKey;
         private void saveSettings()
@@ -24,21 +24,20 @@ namespace FogBugzCaseTracker
             _settingsRegKey.SetValue("server", _server);
             _settingsRegKey.SetValue("LastX", Location.X);
             _settingsRegKey.SetValue("LastY", Location.Y);
-            _settingsRegKey.SetValue("Opacity", _settings.Opacity * 100, RegistryValueKind.DWord);
             _settingsRegKey.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
             _settingsRegKey.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
             _settingsRegKey.SetValue("LastWidth", Width);
-            _settingsRegKey.SetValue("Font", _settings.UserFont.Name);
-            _settingsRegKey.SetValue("FontSize", _settings.UserFont.SizeInPoints * 100, RegistryValueKind.DWord);
             _settingsRegKey.SetValue("PollingInterval", timerUpdateCases.Interval);
             _settingsRegKey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             _settingsRegKey.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
+            _settings.SaveToRegistry(_settingsRegKey);
             _settingsRegKey.Close();
             _filter.History.Save();
         }
 
         private void loadSettings()
         {
+            _settings = ExtractModelFromUI();
             Utils.Log.Debug("Loading settings from registry");
 
             _filter.History = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
@@ -63,20 +62,24 @@ namespace FogBugzCaseTracker
             dropCaseList.Font = _settings.UserFont;
         }
 
+        private SettingsModel ExtractModelFromUI()
+        {
+            SettingsModel ret = new SettingsModel();
+            ret.Opacity = (int)(Opacity * 100);
+            ret.UserFont = (Font)dropCaseList.Font.Clone();
+            return ret;
+        }
+
         private void ReadSettingsFromRegKey()
         {
+
+            SettingsModel defaultValues = ExtractModelFromUI();
+            _settings.LoadFromRegistry(_settingsRegKey, defaultValues);
             Point newLoc = new Point();
             timerRetryLogin.Interval = int.Parse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"]);
 
             newLoc.X = (int)_settingsRegKey.GetValue("LastX", Location.X);
             newLoc.Y = (int)_settingsRegKey.GetValue("LastY", Location.Y);
-            int opac = (int)_settingsRegKey.GetValue("Opacity", (int)(Opacity * 100));
-            _settings.Opacity = (double)opac / 100.0;
-
-            // TODO: Shoudl be a member of the model class
-            string fontName = (String)_settingsRegKey.GetValue("Font", dropCaseList.Font.Name);
-            float fontSize = (int)_settingsRegKey.GetValue("FontSize", (int)(dropCaseList.Font.SizeInPoints * 100)) / (float)100.0;
-            _settings.UserFont = new Font(fontName, fontSize);
 
 
             Location = newLoc;
