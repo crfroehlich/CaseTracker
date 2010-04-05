@@ -27,7 +27,6 @@ namespace FogBugzCaseTracker
             _settingsRegKey.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
             _settingsRegKey.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
             _settingsRegKey.SetValue("LastWidth", Width);
-            _settingsRegKey.SetValue("PollingInterval", timerUpdateCases.Interval);
             _settingsRegKey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             _settings.SaveToRegistry(_settingsRegKey);
             _settingsRegKey.Close();
@@ -59,6 +58,8 @@ namespace FogBugzCaseTracker
         {
             Opacity = _settings.Opacity;
             dropCaseList.Font = _settings.UserFont;
+            timerUpdateCases.Interval = _settings.CaseListRefreshInterval_Secs * 1000;
+            // TODO: this fails when cancelling dialog
         }
 
         private SettingsModel ExtractModelFromUI()
@@ -84,7 +85,6 @@ namespace FogBugzCaseTracker
             Location = newLoc;
 
             Width = (int)_settingsRegKey.GetValue("LastWidth", Width);
-            timerUpdateCases.Interval = (int)_settingsRegKey.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]));
             _switchToNothinUponClosing = (int)_settingsRegKey.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
             _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
             _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
@@ -130,20 +130,16 @@ namespace FogBugzCaseTracker
 
         private void ShowSettingsDialog()
         {
-            // TODO: Extract settings model into its own class and pass to the dialog, similar to FilterDialog
             SettingsDlg dlg = new SettingsDlg();
 
             dlg.Owner = this;
-            LocateDialogBelowOrAboveWindow(dlg);
-
-            dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
             dlg.LoadModel(_settings);
+            PositionDialogBelowOrAboveWindow(dlg);
 
             SettingsModel oldSettings = (SettingsModel)_settings.Clone();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 _settings = dlg.SaveModel();
-                timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
                 saveSettings();
             }
             else

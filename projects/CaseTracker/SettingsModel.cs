@@ -12,6 +12,7 @@ namespace FogBugzCaseTracker
         public double Opacity;
         public Font UserFont;
         public int MinutesBeforeAway;
+        public int CaseListRefreshInterval_Secs;
 
         #region ICloneable Members
 
@@ -33,7 +34,7 @@ namespace FogBugzCaseTracker
             key.SetValue("Font", UserFont.Name);
             key.SetValue("FontSize", UserFont.SizeInPoints * 100, RegistryValueKind.DWord);
             key.SetValue("MinutesBeforeAway", MinutesBeforeAway, RegistryValueKind.DWord);
-
+            key.SetValue("PollingInterval", CaseListRefreshInterval_Secs * 1000);
         }
 
         public void LoadFromRegistry(RegistryKey key, SettingsModel defaultValues)
@@ -42,7 +43,9 @@ namespace FogBugzCaseTracker
 
             LoadFontFromRegistry(key, defaultValues.UserFont);
 
-            MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]));        }
+            MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]));
+            CaseListRefreshInterval_Secs = (int)key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"])) / 1000;
+        }
 
         private void LoadFontFromRegistry(RegistryKey key, Font defaultFont)
         {

@@ -24,6 +24,7 @@ namespace FogBugzCaseTracker
             else
                 numPauseMinutes.Value = _model.MinutesBeforeAway;
 
+            numSeconds.Value = _model.CaseListRefreshInterval_Secs;
         }
 
         public void LoadModel(SettingsModel model)
@@ -43,19 +44,8 @@ namespace FogBugzCaseTracker
             else
                 _model.MinutesBeforeAway = (int)numPauseMinutes.Value;
 
+            _model.CaseListRefreshInterval_Secs = (int)numSeconds.Value;
             return _model;
-        }
-
-        public int CaseListRefreshIntervalSeconds
-        {
-            get
-            {
-                return (int)numSeconds.Value;
-            }
-            set
-            {
-                numSeconds.Value = value;
-            }
         }
 
         public SettingsDlg()
@@ -65,7 +55,8 @@ namespace FogBugzCaseTracker
 
         private void numOpacity_ValueChanged(object sender, EventArgs e)
         {
-            Owner.Opacity = (double)numOpacity.Value / 100.0;
+            _model.Opacity = (double)numOpacity.Value / 100.0;
+            ApplyModel();
         }
 
         private void btnChooseFont_Click(object sender, EventArgs e)
