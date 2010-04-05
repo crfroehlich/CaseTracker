@@ -242,7 +242,8 @@ namespace FogBugzCaseTracker
 
         private void lblImBack_Click(object sender, EventArgs e)
         {
-            ResumeWork();
+            if (!_dragging)
+                ResumeWork();
             backgroundPic.Focus();
         }
 
@@ -291,6 +292,30 @@ namespace FogBugzCaseTracker
             StopWork();
             backgroundPic.Focus();
 
+        }
+
+        private void pnlPaused_MouseDown(object sender, MouseEventArgs e)
+        {
+            startDragging(e);
+
+        }
+
+        private void pnlPaused_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_dragging)
+                dragWindow(e);
+
+        }
+
+        private void pnlPaused_MouseUp(object sender, MouseEventArgs e)
+        {
+            _dragging = false;
+            
+        }
+
+        private void pnlPaused_Resize(object sender, EventArgs e)
+        {
+            lblImBack.Left = (pnlPaused.Width - lblImBack.Width) / 2;
         }
 
     } // Class HoverWindow

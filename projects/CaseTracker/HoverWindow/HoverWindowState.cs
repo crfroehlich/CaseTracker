@@ -147,6 +147,7 @@ namespace FogBugzCaseTracker
                 frm.pnlPaused.Left = 1;
                 frm.pnlPaused.Width = frm.Width - 2;
                 frm.pnlPaused.Height = frm.Height - 2;
+                frm.lblImBack.Top = (frm.pnlPaused.Height - frm.lblImBack.Height ) / 2;
                 frm.btnNewCase.Enable(false);
                 frm.btnExportExcel.Enable(false);
                 frm.btnExportFreeMind.Enable(false);
