@@ -11,27 +11,27 @@ namespace FogBugzCaseTracker
 {
     public partial class HoverWindow
     {
-        private RegistryKey _key;
+        private RegistryKey _settingsRegKey;
         private void saveSettings()
         {
             Utils.Log.Debug("Saving settings to registry");
 
-            _key = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
-            _key.SetValue("username", _username);
-            _key.SetValue("password", Convert.ToBase64String(Utils.EncryptCurrentUser(_password)));
-            _key.SetValue("server", _server);
-            _key.SetValue("LastX", Location.X);
-            _key.SetValue("LastY", Location.Y);
-            _key.SetValue("Opacity", Opacity * 100, RegistryValueKind.DWord);
-            _key.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
-            _key.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
-            _key.SetValue("LastWidth", Width);
-            _key.SetValue("Font", dropCaseList.Font.Name);
-            _key.SetValue("FontSize", dropCaseList.Font.SizeInPoints * 100, RegistryValueKind.DWord);
-            _key.SetValue("PollingInterval", timerUpdateCases.Interval);
-            _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
-            _key.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
-            _key.Close();
+            _settingsRegKey = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker");
+            _settingsRegKey.SetValue("username", _username);
+            _settingsRegKey.SetValue("password", Convert.ToBase64String(Utils.EncryptCurrentUser(_password)));
+            _settingsRegKey.SetValue("server", _server);
+            _settingsRegKey.SetValue("LastX", Location.X);
+            _settingsRegKey.SetValue("LastY", Location.Y);
+            _settingsRegKey.SetValue("Opacity", Opacity * 100, RegistryValueKind.DWord);
+            _settingsRegKey.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
+            _settingsRegKey.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
+            _settingsRegKey.SetValue("LastWidth", Width);
+            _settingsRegKey.SetValue("Font", dropCaseList.Font.Name);
+            _settingsRegKey.SetValue("FontSize", dropCaseList.Font.SizeInPoints * 100, RegistryValueKind.DWord);
+            _settingsRegKey.SetValue("PollingInterval", timerUpdateCases.Interval);
+            _settingsRegKey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
+            _settingsRegKey.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
+            _settingsRegKey.Close();
             _filter.History.Save();
         }
 
@@ -43,48 +43,59 @@ namespace FogBugzCaseTracker
             _filter.History.Load();
             _filter.UserSearch = (_filter.History.QueryStrings.Count > 0) ? _filter.History.QueryStrings[0] : "";
 
-            _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
-            if (_key == null)
-            {
-                _username = "";
-                _password = "";
-                _server = "";
-            }
+            _settingsRegKey = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
+            if (_settingsRegKey == null)
+                ResetAuthenticationData();
             else
             {
-                _username = (String)_key.GetValue("username", "");
-                _server = (String)_key.GetValue("server", "");
-
-                if (_server == "")
-                    _server = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
-
-                RecoverPassword(_key);
-
-                Point newLoc = new Point();
-                timerRetryLogin.Interval = int.Parse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"]);
-
-                newLoc.X = (int)_key.GetValue("LastX", Location.X);
-                newLoc.Y = (int)_key.GetValue("LastY", Location.Y);
-                int opac = (int)_key.GetValue("Opacity", (int)(Opacity * 100));
-
-                string fontName = (String)_key.GetValue("Font", dropCaseList.Font.Name);
-                float  fontSize = (int)_key.GetValue("FontSize", (int)(dropCaseList.Font.SizeInPoints * 100)) / (float)100.0;
-                dropCaseList.Font = new Font(fontName, fontSize);
-
-                Opacity = (double)opac / 100.0;
-                
-                Location = newLoc;
-
-                Width = (int)_key.GetValue("LastWidth", Width);
-                timerUpdateCases.Interval = (int)_key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]));
-                _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
-                _filter.IgnoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
-                _filter.IncludeNoEstimate = (int)_key.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
-                _filter.BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
-                _minutesBeforeConsideredAway = (int)_key.GetValue("MinutesBeforeAway", _minutesBeforeConsideredAway);
-
-                _key.Close();
+                RestoreAuthenticationData();
+                ReadSettingsFromRegKey();
+                _settingsRegKey.Close();
             }
+        }
+
+        private void ReadSettingsFromRegKey()
+        {
+            Point newLoc = new Point();
+            timerRetryLogin.Interval = int.Parse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"]);
+
+            newLoc.X = (int)_settingsRegKey.GetValue("LastX", Location.X);
+            newLoc.Y = (int)_settingsRegKey.GetValue("LastY", Location.Y);
+            int opac = (int)_settingsRegKey.GetValue("Opacity", (int)(Opacity * 100));
+
+            string fontName = (String)_settingsRegKey.GetValue("Font", dropCaseList.Font.Name);
+            float fontSize = (int)_settingsRegKey.GetValue("FontSize", (int)(dropCaseList.Font.SizeInPoints * 100)) / (float)100.0;
+            dropCaseList.Font = new Font(fontName, fontSize);
+
+            Opacity = (double)opac / 100.0;
+
+            Location = newLoc;
+
+            Width = (int)_settingsRegKey.GetValue("LastWidth", Width);
+            timerUpdateCases.Interval = (int)_settingsRegKey.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]));
+            _switchToNothinUponClosing = (int)_settingsRegKey.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
+            _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
+            _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
+            _filter.BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
+            _minutesBeforeConsideredAway = (int)_settingsRegKey.GetValue("MinutesBeforeAway", _minutesBeforeConsideredAway);
+        }
+
+        private void RestoreAuthenticationData()
+        {
+            _username = (String)_settingsRegKey.GetValue("username", "");
+            _server = (String)_settingsRegKey.GetValue("server", "");
+
+            if (_server == "")
+                _server = (string)ConfigurationManager.AppSettings["FogBugzBaseURL"];
+
+            RecoverPassword(_settingsRegKey);
+        }
+
+        private void ResetAuthenticationData()
+        {
+            _username = "";
+            _password = "";
+            _server = "";
         }
 
         private void RecoverPassword(RegistryKey key)
@@ -106,10 +117,9 @@ namespace FogBugzCaseTracker
 
         }
 
-
-
         private void ShowSettingsDialog()
         {
+            // TODO: Extract settings model into its own class and pass to the dialog, similar to FilterDialog
             SettingsDlg dlg = new SettingsDlg();
             dlg.Owner = this;
             LocateDialogBelowOrAboveWindow(dlg);
