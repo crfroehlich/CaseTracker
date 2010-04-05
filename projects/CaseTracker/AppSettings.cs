@@ -22,8 +22,8 @@ namespace FogBugzCaseTracker
             _key.SetValue("LastX", Location.X);
             _key.SetValue("LastY", Location.Y);
             _key.SetValue("Opacity", Opacity * 100, RegistryValueKind.DWord);
-            _key.SetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0);
-            _key.SetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0);
+            _key.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
+            _key.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
             _key.SetValue("LastWidth", Width);
             _key.SetValue("Font", dropCaseList.Font.Name);
             _key.SetValue("FontSize", dropCaseList.Font.SizeInPoints * 100, RegistryValueKind.DWord);
@@ -31,15 +31,15 @@ namespace FogBugzCaseTracker
             _key.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             _key.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
             _key.Close();
-            _history.Save();
+            _filter.History.Save();
         }
 
         private void loadSettings()
         {
             Utils.Log.Debug("Loading settings from registry");
 
-            _history = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
-            _history.Load();
+            _filter.History = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
+            _filter.History.Load();
 
             _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (_key == null)
@@ -76,8 +76,8 @@ namespace FogBugzCaseTracker
                 Width = (int)_key.GetValue("LastWidth", Width);
                 timerUpdateCases.Interval = (int)_key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]));
                 _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
-                _ignoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", _ignoreBaseSearch ? 1 : 0) != 0;
-                _includeNoEstimate = (int)_key.GetValue("IncludeNoEstimate", _includeNoEstimate ? 1 : 0) != 0;
+                _filter.IgnoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
+                _filter.IncludeNoEstimate = (int)_key.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
                 _minutesBeforeConsideredAway = (int)_key.GetValue("MinutesBeforeAway", _minutesBeforeConsideredAway);
 
                 _key.Close();

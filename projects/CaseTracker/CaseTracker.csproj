@@ -91,6 +91,7 @@
     <Compile Include="EstimateDialog.Designer.cs">
       <DependentUpon>EstimateDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilterModel.cs" />
     <Compile Include="HoverWindow\CaseList.cs">
       <SubType>Form</SubType>
     </Compile>

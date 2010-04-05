@@ -30,7 +30,7 @@ namespace FogBugzCaseTracker
             SetState(new StateUpdatingCases(this));
             Application.DoEvents();
 
-            string search = FormatSearch();
+            string search = _filter.FormatSearchQuery();
 
             GetCasesAsync(search, delegate(Case[] cases, Exception error)
             {

@@ -66,7 +66,7 @@
             // 
             // picNew
             // 
-            this.picNew.Image = global::FogBugzCaseTracker.Properties.Resources._new;
+            this.picNew.Image = global::FogBugzCaseTracker.Properties.Resources.new_icon;
             this.picNew.Location = new System.Drawing.Point(12, 12);
             this.picNew.Name = "picNew";
             this.picNew.Size = new System.Drawing.Size(44, 45);

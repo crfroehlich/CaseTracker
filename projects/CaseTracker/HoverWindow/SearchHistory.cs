@@ -9,7 +9,11 @@ namespace FogBugzCaseTracker
     public class SearchHistory
     {
         private int _maxSize;
+
+        // TODO: find better name for this member
         public List<string> History { get; set; }
+
+
         RegistryKey _key;
 
         public SearchHistory(int howLong)

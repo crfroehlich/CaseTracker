@@ -60,13 +60,6 @@ namespace FogBugzCaseTracker.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap _new {
-            get {
-                object obj = ResourceManager.GetObject("new", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap busy {
             get {
                 object obj = ResourceManager.GetObject("busy", resourceCulture);
@@ -245,6 +238,13 @@ namespace FogBugzCaseTracker.Properties {
         internal static System.Drawing.Bitmap new_case_disabled {
             get {
                 object obj = ResourceManager.GetObject("new_case_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap new_icon {
+            get {
+                object obj = ResourceManager.GetObject("new_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

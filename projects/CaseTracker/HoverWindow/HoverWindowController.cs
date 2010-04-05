@@ -28,10 +28,6 @@ namespace FogBugzCaseTracker
         {
             InitializeComponent();
 
-
-
-            _baseSearch = ConfigurationManager.AppSettings["BaseSearch"];
-            _ignoreBaseSearch = bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]);
             _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
                                             new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
 

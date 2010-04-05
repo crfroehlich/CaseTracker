@@ -14,105 +14,70 @@ namespace FogBugzCaseTracker
 {
     public partial class FilterDialog : Form
     {
-        private SearchHistory _history;
         public HoverWindow dad;
         public FogBugz fb;
-        public Case[] Cases;
-        public String UserSearch
-        {
-            get
-            {
-                return cmboNarrowSearch.Text;
-            }
+        private FilterModel _model;
 
-            set
-            {
-                cmboNarrowSearch.Text = value;
-            }
+        public void LoadModel(FilterModel model)
+        {
+            _model = model;
+            txtBaseSearch.Text = model.BaseSearch;
+            chkIncludeNoEstimate.Checked = model.IncludeNoEstimate;
+            cmboNarrowSearch.Text = model.UserSearch;
+            chkIgnoreBaseSearch.Checked = model.IgnoreBaseSearch;
+            txtBaseSearch.Enabled = !model.IgnoreBaseSearch;
         }
 
-        public bool IncludeNoEstimate
+        public FilterModel SaveModel()
         {
-            set 
-            {
-                chkIncludeNoEstimate.Checked = value;
-            }
-            get
-            {
-                return chkIncludeNoEstimate.Checked;
-            }
+            FilterModel model = new FilterModel();
+            model.BaseSearch = txtBaseSearch.Text;
+            model.IncludeNoEstimate = chkIncludeNoEstimate.Checked;
+            model.UserSearch = cmboNarrowSearch.Text;
+            model.IgnoreBaseSearch = chkIgnoreBaseSearch.Checked;
+            return model;
         }
 
-        public String BaseSearch
+        private bool IsDirty()
         {
-            set 
-            {
-                txtBaseSearch.Text = value;
-            }
+            return
+                _model.UserSearch != cmboNarrowSearch.Text
+                ||
+                _model.IgnoreBaseSearch != chkIgnoreBaseSearch.Checked
+                ||
+                _model.IncludeNoEstimate != chkIncludeNoEstimate.Checked;
         }
 
-        public bool IgnoreBaseSearch
+        public FilterDialog()
         {
-            set
-            {
-                chkIgnoreBaseSearch.Checked = value;
-                txtBaseSearch.Enabled = !chkIgnoreBaseSearch.Checked;
-
-            }
-            get
-            {
-                return chkIgnoreBaseSearch.Checked;
-            }
-        }
-
-        public FilterDialog(SearchHistory history)
-        {
-            _history = history;
             InitializeComponent();
         }
 
-        private string formatSearch()
-        {
-            if (!chkIgnoreBaseSearch.Checked)
-                return txtBaseSearch.Text + " " + cmboNarrowSearch.Text;
-            else
-                return cmboNarrowSearch.Text;
-        }
-
-        private void testSearchAsync(RunWorkerCompletedEventHandler OnDone)
+        private void testSearchAsync(RunWorkerCompletedEventHandler OnTestSearchComplete)
         {
             CultureAwareBackgroundWorker bw = new CultureAwareBackgroundWorker();
 
-            String search = formatSearch();
+            String search = _model.FormatSearchQuery();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
                 args.Result = fb.GetCases(search);
             });
-            bw.RunWorkerCompleted += OnDone;
+            bw.RunWorkerCompleted += OnTestSearchComplete;
             bw.RunWorkerAsync();
         }
 
         private void DoSearch()
         {
-            DoSearch(false);
-        }
-
-        private void DoSearch(bool andCloseDialog)
-        {
+            _model = SaveModel();
             try
             {
                 testSearchAsync(new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
                 {
                     if (args.Error == null)
                     {
-                        Cases = (Case[])args.Result;
-                        if (andCloseDialog)
-                        {
-                            Close();
-                            return;
-                        }
+                        _model.Cases = (Case[])args.Result;
                         listTestResults.Items.Clear();
-                        foreach (Case c in Cases)
+                        foreach (Case c in _model.Cases)
                             listTestResults.Items.Add(c);
                     }
                     else
@@ -139,28 +104,21 @@ namespace FogBugzCaseTracker
                 Close();
         }
 
-
         private void chkIgnoreBaseSearch_CheckedChanged(object sender, EventArgs e)
         {
             txtBaseSearch.Enabled = !chkIgnoreBaseSearch.Checked;
-
         }
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
             cmboNarrowSearch.Items.Clear();
-            if (_history.History.Count > 0)
-                cmboNarrowSearch.Items.AddRange(_history.History.ToArray());
+            if (_model.History.History.Count > 0)
+                cmboNarrowSearch.Items.AddRange(_model.History.History.ToArray());
         }
 
         private void lnkSearchHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start((string)ConfigurationManager.AppSettings["SearchSyntaxHelpURL"]);
-        }
-
-        private void chkIncludeNoEstimate_CheckedChanged(object sender, EventArgs e)
-        {
-            IncludeNoEstimate = chkIncludeNoEstimate.Checked;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -174,7 +132,8 @@ namespace FogBugzCaseTracker
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            DoSearch(true);
+            if (IsDirty())
+                _model.Cases = null; // So that the query is done on the caller dialog and not during closing of this dialog
         }
     }
 }
