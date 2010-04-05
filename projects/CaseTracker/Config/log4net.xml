@@ -28,8 +28,6 @@
       <appender-ref ref="RollingFileAppender" />
     </root>
   </log4net>
-
-
 </configuration>
 
 

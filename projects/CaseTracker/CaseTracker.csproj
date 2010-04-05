@@ -225,7 +225,7 @@
     <None Include="Resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="Config\app.config" />
     <None Include="Resources\icon.bmp" />
   </ItemGroup>
   <ItemGroup>
@@ -338,7 +338,7 @@
     <None Include="Resources\stop_disabled.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log4net.xml" />
+    <Content Include="Config\log4net.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
