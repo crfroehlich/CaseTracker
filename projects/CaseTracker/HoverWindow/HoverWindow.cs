@@ -275,9 +275,9 @@ namespace FogBugzCaseTracker
 
         private bool UserIsAway()
         {
-            if (_minutesBeforeConsideredAway == 0)
+            if (_settings.MinutesBeforeAway == 0)
                 return false;
-            return Interop.GetTimeSinceLastInput().TotalMinutes > _minutesBeforeConsideredAway;
+            return Interop.GetTimeSinceLastInput().TotalMinutes > _settings.MinutesBeforeAway;
         }
 
         private void timerAway_Tick(object sender, EventArgs e)

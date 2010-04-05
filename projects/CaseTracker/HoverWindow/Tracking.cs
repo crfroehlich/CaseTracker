@@ -13,7 +13,6 @@ namespace FogBugzCaseTracker
         private bool _switchToNothinUponClosing = false;
         private object _currentState;
         private Case _trackedCase = null;
-        private int _minutesBeforeConsideredAway;
 
         public bool ClientTrackingCase
         {

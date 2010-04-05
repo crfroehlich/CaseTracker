@@ -18,6 +18,12 @@ namespace FogBugzCaseTracker
 
             fontDialog1.Font = _model.UserFont;
             lblChosenFont.Text = String.Format("{0} {1}", _model.UserFont.Name, _model.UserFont.SizeInPoints);
+
+            if (_model.MinutesBeforeAway == 0)
+                chkAutoPause.Checked = false;
+            else
+                numPauseMinutes.Value = _model.MinutesBeforeAway;
+
         }
 
         public void LoadModel(SettingsModel model)
@@ -32,28 +38,12 @@ namespace FogBugzCaseTracker
 
             _model.UserFont = fontDialog1.Font;
 
+            if (!chkAutoPause.Checked)
+                _model.MinutesBeforeAway = 0;
+            else
+                _model.MinutesBeforeAway = (int)numPauseMinutes.Value;
+
             return _model;
-        }
-
-        public int MinutesBeforeAway
-        {
-            set
-            {
-                if (value == 0)
-                    chkAutoPause.Checked = false;
-                else
-                    numPauseMinutes.Value = value;
-
-            }
-
-            get
-            {
-                if (!chkAutoPause.Checked)
-                    return 0;
-                else
-                    return (int)numPauseMinutes.Value;
-
-            }
         }
 
         public int CaseListRefreshIntervalSeconds

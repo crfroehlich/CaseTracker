@@ -31,8 +31,6 @@ namespace FogBugzCaseTracker
             _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
                                             new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
 
-            _minutesBeforeConsideredAway = int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]);
-
             loadSettings();
 
             _autoUpdate.Run();

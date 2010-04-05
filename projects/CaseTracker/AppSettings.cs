@@ -29,7 +29,6 @@ namespace FogBugzCaseTracker
             _settingsRegKey.SetValue("LastWidth", Width);
             _settingsRegKey.SetValue("PollingInterval", timerUpdateCases.Interval);
             _settingsRegKey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
-            _settingsRegKey.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
             _settings.SaveToRegistry(_settingsRegKey);
             _settingsRegKey.Close();
             _filter.History.Save();
@@ -90,7 +89,6 @@ namespace FogBugzCaseTracker
             _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
             _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
             _filter.BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
-            _minutesBeforeConsideredAway = (int)_settingsRegKey.GetValue("MinutesBeforeAway", _minutesBeforeConsideredAway);
         }
 
         private void RestoreAuthenticationData()
@@ -134,31 +132,22 @@ namespace FogBugzCaseTracker
         {
             // TODO: Extract settings model into its own class and pass to the dialog, similar to FilterDialog
             SettingsDlg dlg = new SettingsDlg();
-            SettingsModel settings = new SettingsModel();
-            settings.Opacity = Opacity;
-            settings.UserFont = dropCaseList.Font;
 
             dlg.Owner = this;
             LocateDialogBelowOrAboveWindow(dlg);
 
-            dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
             dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
-            dlg.LoadModel(settings);
+            dlg.LoadModel(_settings);
 
-            SettingsModel oldSettings = (SettingsModel)settings.Clone();
-            int oldMinutes = _minutesBeforeConsideredAway;
+            SettingsModel oldSettings = (SettingsModel)_settings.Clone();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 _settings = dlg.SaveModel();
-                _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
                 timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
                 saveSettings();
             }
             else
-            {
                 _settings = oldSettings;
-                _minutesBeforeConsideredAway = oldMinutes;
-            }
             ApplySettings();
         }
 
