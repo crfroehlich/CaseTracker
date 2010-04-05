@@ -15,8 +15,9 @@ namespace FogBugzCaseTracker
         public void ApplyModel()
         {
             numOpacity.Value = (decimal)(100.0 * _model.Opacity);
-            UserFont = _model.UserFont;
 
+            fontDialog1.Font = _model.UserFont;
+            lblChosenFont.Text = String.Format("{0} {1}", _model.UserFont.Name, _model.UserFont.SizeInPoints);
         }
 
         public void LoadModel(SettingsModel model)
@@ -29,23 +30,9 @@ namespace FogBugzCaseTracker
         {
             _model.Opacity = (double)numOpacity.Value / 100.0;
 
-            _model.UserFont = UserFont;
+            _model.UserFont = fontDialog1.Font;
+
             return _model;
-        }
-
-        // TODO: get rid of these properties, they should be part of Load/Save
-        public Font UserFont
-        {
-            set
-            {
-                fontDialog1.Font = value;
-                lblChosenFont.Text = String.Format("{0} {1}", value.Name, + value.SizeInPoints);
-            }
-            get
-            {
-                return fontDialog1.Font;
-
-            }
         }
 
         public int MinutesBeforeAway
