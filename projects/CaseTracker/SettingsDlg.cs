@@ -15,6 +15,7 @@ namespace FogBugzCaseTracker
         public void ApplyModel()
         {
             numOpacity.Value = (decimal)(100.0 * _model.Opacity);
+            ((Form)Owner).Opacity = _model.Opacity;
 
             fontDialog1.Font = _model.UserFont;
             lblChosenFont.Text = String.Format("{0} {1}", _model.UserFont.Name, _model.UserFont.SizeInPoints);
