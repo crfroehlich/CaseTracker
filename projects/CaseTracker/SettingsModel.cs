@@ -40,10 +40,16 @@ namespace FogBugzCaseTracker
         {
             int opac = (int)key.GetValue("Opacity", (int)(defaultValues.Opacity * 100));            Opacity = (double)opac / 100.0;
 
-            string fontName = (String)key.GetValue("Font", defaultValues.UserFont.Name);
-            float fontSize = (int)key.GetValue("FontSize", (int)(defaultValues.UserFont.SizeInPoints * 100)) / (float)100.0;            UserFont = new Font(fontName, fontSize);
+            LoadFontFromRegistry(key, defaultValues.UserFont);
 
             MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]));        }
+
+        private void LoadFontFromRegistry(RegistryKey key, Font defaultFont)
+        {
+            string fontName = (String)key.GetValue("Font", defaultFont.Name);
+            float fontSize = (int)key.GetValue("FontSize", (int)(defaultFont.SizeInPoints * 100)) / (float)100.0;
+            UserFont = new Font(fontName, fontSize);
+        }
 
     }
 }
