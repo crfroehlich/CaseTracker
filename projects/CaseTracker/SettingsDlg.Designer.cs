@@ -45,7 +45,7 @@
             this.numSeconds = new System.Windows.Forms.NumericUpDown();
             this.lblPollEvery = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.chkStopOnExit = new System.Windows.Forms.CheckBox();
+            this.chkSwitchToNothinOnExit = new System.Windows.Forms.CheckBox();
             this.grpAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOpacity)).BeginInit();
             this.grpBehavior.SuspendLayout();
@@ -165,7 +165,7 @@
             // 
             this.grpBehavior.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpBehavior.Controls.Add(this.chkStopOnExit);
+            this.grpBehavior.Controls.Add(this.chkSwitchToNothinOnExit);
             this.grpBehavior.Controls.Add(this.chkAutoPause);
             this.grpBehavior.Controls.Add(this.lblMinutes);
             this.grpBehavior.Controls.Add(this.numPauseMinutes);
@@ -275,13 +275,13 @@
             // 
             // chkStopOnExit
             // 
-            this.chkStopOnExit.AutoSize = true;
-            this.chkStopOnExit.Location = new System.Drawing.Point(19, 81);
-            this.chkStopOnExit.Name = "chkStopOnExit";
-            this.chkStopOnExit.Size = new System.Drawing.Size(217, 17);
-            this.chkStopOnExit.TabIndex = 10;
-            this.chkStopOnExit.Text = "Stop working when Case Tracker closes";
-            this.chkStopOnExit.UseVisualStyleBackColor = true;
+            this.chkSwitchToNothinOnExit.AutoSize = true;
+            this.chkSwitchToNothinOnExit.Location = new System.Drawing.Point(19, 81);
+            this.chkSwitchToNothinOnExit.Name = "chkStopOnExit";
+            this.chkSwitchToNothinOnExit.Size = new System.Drawing.Size(217, 17);
+            this.chkSwitchToNothinOnExit.TabIndex = 10;
+            this.chkSwitchToNothinOnExit.Text = "Stop working when Case Tracker closes";
+            this.chkSwitchToNothinOnExit.UseVisualStyleBackColor = true;
             // 
             // SettingsDlg
             // 
@@ -332,6 +332,6 @@
         private System.Windows.Forms.CheckBox chkAutoPause;
         private System.Windows.Forms.Label lblMinutes;
         private System.Windows.Forms.NumericUpDown numPauseMinutes;
-        private System.Windows.Forms.CheckBox chkStopOnExit;
+        private System.Windows.Forms.CheckBox chkSwitchToNothinOnExit;
     }
 }
