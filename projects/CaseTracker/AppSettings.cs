@@ -40,6 +40,7 @@ namespace FogBugzCaseTracker
 
             _filter.History = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
             _filter.History.Load();
+            _filter.UserSearch = (_filter.History.History.Count > 0) ? _filter.History.History[0] : "";
 
             _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (_key == null)
@@ -78,6 +79,7 @@ namespace FogBugzCaseTracker
                 _switchToNothinUponClosing = (int)_key.GetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0) != 0;
                 _filter.IgnoreBaseSearch = (int)_key.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
                 _filter.IncludeNoEstimate = (int)_key.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
+                _filter.BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
                 _minutesBeforeConsideredAway = (int)_key.GetValue("MinutesBeforeAway", _minutesBeforeConsideredAway);
 
                 _key.Close();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
 using FogBugzNet;
+using System.Configuration;
 
 namespace FogBugzCaseTracker
 {
@@ -14,7 +15,7 @@ namespace FogBugzCaseTracker
         {
             get
             {
-                return _filter.History.History.Count > 0 ? _filter.History.History[0] : "";
+                return _filter.History.History.Count > 0 ? _filter.History.History[0] : ConfigurationManager.AppSettings["DefaultNarrowSearch"];
 
             }
             set
@@ -26,7 +27,7 @@ namespace FogBugzCaseTracker
         private void ShowFilterDialog()
         {
             Utils.Log.Debug("Showing filter dialog");
-            FilterDialog f = new FilterDialog();
+            FilterDialog f = new FilterDialog(this, _fb);
             f.LoadModel(_filter);
             if (f.ShowDialog() == DialogResult.OK)
             {

@@ -14,9 +14,17 @@ namespace FogBugzCaseTracker
 {
     public partial class FilterDialog : Form
     {
-        public HoverWindow dad;
-        public FogBugz fb;
+        private HoverWindow _parentWindow;
+        private FogBugz _fb;
         private FilterModel _model;
+
+        public FilterDialog(HoverWindow parent, FogBugz fb)
+        {
+            InitializeComponent();
+            _fb = fb;
+            _parentWindow = parent;
+
+        }
 
         public void LoadModel(FilterModel model)
         {
@@ -30,12 +38,12 @@ namespace FogBugzCaseTracker
 
         public FilterModel SaveModel()
         {
-            FilterModel model = new FilterModel();
-            model.BaseSearch = txtBaseSearch.Text;
-            model.IncludeNoEstimate = chkIncludeNoEstimate.Checked;
-            model.UserSearch = cmboNarrowSearch.Text;
-            model.IgnoreBaseSearch = chkIgnoreBaseSearch.Checked;
-            return model;
+            _model.BaseSearch = txtBaseSearch.Text;
+            _model.IncludeNoEstimate = chkIncludeNoEstimate.Checked;
+            _model.UserSearch = cmboNarrowSearch.Text;
+            _model.IgnoreBaseSearch = chkIgnoreBaseSearch.Checked;
+
+            return _model;
         }
 
         private bool IsDirty()
@@ -48,11 +56,6 @@ namespace FogBugzCaseTracker
                 _model.IncludeNoEstimate != chkIncludeNoEstimate.Checked;
         }
 
-        public FilterDialog()
-        {
-            InitializeComponent();
-        }
-
         private void testSearchAsync(RunWorkerCompletedEventHandler OnTestSearchComplete)
         {
             CultureAwareBackgroundWorker bw = new CultureAwareBackgroundWorker();
@@ -60,7 +63,7 @@ namespace FogBugzCaseTracker
             String search = _model.FormatSearchQuery();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
-                args.Result = fb.GetCases(search);
+                args.Result = _fb.GetCases(search);
             });
             bw.RunWorkerCompleted += OnTestSearchComplete;
             bw.RunWorkerAsync();
