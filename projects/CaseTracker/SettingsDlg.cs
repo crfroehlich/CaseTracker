@@ -10,7 +10,21 @@ namespace FogBugzCaseTracker
 {
     public partial class SettingsDlg : Form
     {
-        public double UserOpacity
+        private SettingsModel _model;
+
+        public void LoadModel(SettingsModel model)
+        {
+            _model = model;
+            UserOpacity = model.Opacity;
+        }
+
+        public SettingsModel SaveModel()
+        {
+            _model.Opacity = UserOpacity;
+            return _model;
+        }
+
+        private double UserOpacity
         {
             get
             {

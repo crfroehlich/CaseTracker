@@ -11,6 +11,8 @@ namespace FogBugzCaseTracker
 {
     public partial class HoverWindow
     {
+        private SettingsModel _settings = new SettingsModel();
+
         private RegistryKey _settingsRegKey;
         private void saveSettings()
         {
@@ -51,7 +53,13 @@ namespace FogBugzCaseTracker
                 RestoreAuthenticationData();
                 ReadSettingsFromRegKey();
                 _settingsRegKey.Close();
+                ApplySettings();
             }
+        }
+
+        private void ApplySettings()
+        {
+            Opacity = _settings.Opacity;
         }
 
         private void ReadSettingsFromRegKey()
@@ -62,12 +70,12 @@ namespace FogBugzCaseTracker
             newLoc.X = (int)_settingsRegKey.GetValue("LastX", Location.X);
             newLoc.Y = (int)_settingsRegKey.GetValue("LastY", Location.Y);
             int opac = (int)_settingsRegKey.GetValue("Opacity", (int)(Opacity * 100));
+            _settings.Opacity = (double)opac / 100.0;
 
             string fontName = (String)_settingsRegKey.GetValue("Font", dropCaseList.Font.Name);
             float fontSize = (int)_settingsRegKey.GetValue("FontSize", (int)(dropCaseList.Font.SizeInPoints * 100)) / (float)100.0;
             dropCaseList.Font = new Font(fontName, fontSize);
 
-            Opacity = (double)opac / 100.0;
 
             Location = newLoc;
 
@@ -121,19 +129,22 @@ namespace FogBugzCaseTracker
         {
             // TODO: Extract settings model into its own class and pass to the dialog, similar to FilterDialog
             SettingsDlg dlg = new SettingsDlg();
+            SettingsModel settings = new SettingsModel();
+            settings.Opacity = Opacity;
             dlg.Owner = this;
             LocateDialogBelowOrAboveWindow(dlg);
-            dlg.UserOpacity = Opacity;
+
             dlg.UserFont = dropCaseList.Font;
             dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
             dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
+            dlg.LoadModel(settings);
 
-            double oldOpacity = Opacity;
+            SettingsModel oldSettings = (SettingsModel)settings.Clone();
             Font oldFont = dropCaseList.Font;
             int oldMinutes = _minutesBeforeConsideredAway;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Opacity = dlg.UserOpacity;
+                _settings = dlg.SaveModel();
                 dropCaseList.Font = dlg.UserFont;
                 _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
                 timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
@@ -141,10 +152,11 @@ namespace FogBugzCaseTracker
             }
             else
             {
-                Opacity = oldOpacity;
+                _settings = oldSettings;
                 dropCaseList.Font = oldFont;
                 _minutesBeforeConsideredAway = oldMinutes;
             }
+            ApplySettings();
         }
 
     } // class HoverWindow
