@@ -122,9 +122,12 @@ namespace FogBugzCaseTracker
         private int FindWorkedOnCaseIndexInDropDown()
         {
             int current = _fb.CaseWorkedOnNow;
-            for (int i = 1; i < dropCaseList.Items.Count; ++i)
-                if (((Case)dropCaseList.Items[i]).ID == current)
+            for (int i = 0; i < dropCaseList.Items.Count; ++i)
+            {
+                if ((dropCaseList.Items[i].GetType() == typeof(FogBugzNet.Case)) && 
+                    (((Case)dropCaseList.Items[i]).ID == current))
                     return i;
+            }
 
             Utils.Log.DebugFormat("Worked-on case {0} not found in current search", current);
             return -1;
