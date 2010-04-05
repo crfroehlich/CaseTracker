@@ -22,6 +22,7 @@ namespace FogBugzCaseTracker
             ret.Opacity = Opacity;
             ret.UserFont = (Font)UserFont.Clone();
             ret.MinutesBeforeAway = MinutesBeforeAway;
+            ret.CaseListRefreshInterval_Secs = CaseListRefreshInterval_Secs;
             return ret;
         }
 

@@ -59,7 +59,6 @@ namespace FogBugzCaseTracker
             Opacity = _settings.Opacity;
             dropCaseList.Font = _settings.UserFont;
             timerUpdateCases.Interval = _settings.CaseListRefreshInterval_Secs * 1000;
-            // TODO: this fails when cancelling dialog
         }
 
         private SettingsModel ExtractModelFromUI()
