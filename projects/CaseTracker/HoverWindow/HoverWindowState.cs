@@ -37,6 +37,7 @@ namespace FogBugzCaseTracker
                 frm.btnPause.Enable(false);
                 frm.btnStop.Enable(false);
                 frm.pnlPaused.Visible = false;
+                frm.btnSettings.Enable(false);
 
 
             }
@@ -81,6 +82,7 @@ namespace FogBugzCaseTracker
                 frm.btnExportFreeMind.Enable(true);
                 frm.btnExportExcel.Enable(true);
                 frm.busyPicture.Visible = false;
+                frm.btnSettings.Enable(true);
             }
         };
 
