@@ -14,8 +14,9 @@ namespace FogBugzCaseTracker
 
         public void ApplyModel()
         {
-            UserOpacity = _model.Opacity;
+            numOpacity.Value = (decimal)(100.0 * _model.Opacity);
             UserFont = _model.UserFont;
+
         }
 
         public void LoadModel(SettingsModel model)
@@ -26,25 +27,13 @@ namespace FogBugzCaseTracker
 
         public SettingsModel SaveModel()
         {
-            _model.Opacity = UserOpacity;
+            _model.Opacity = (double)numOpacity.Value / 100.0;
+
             _model.UserFont = UserFont;
             return _model;
         }
 
         // TODO: get rid of these properties, they should be part of Load/Save
-
-        private double UserOpacity
-        {
-            get
-            {
-                return (double)numOpacity.Value / 100.0;
-            }
-            set
-            {
-                numOpacity.Value = (decimal)(100.0 * value);
-            }
-        }
-
         public Font UserFont
         {
             set
