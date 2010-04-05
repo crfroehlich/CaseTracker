@@ -12,17 +12,26 @@ namespace FogBugzCaseTracker
     {
         private SettingsModel _model;
 
+        public void ApplyModel()
+        {
+            UserOpacity = _model.Opacity;
+            UserFont = _model.UserFont;
+        }
+
         public void LoadModel(SettingsModel model)
         {
             _model = model;
-            UserOpacity = model.Opacity;
+            ApplyModel();
         }
 
         public SettingsModel SaveModel()
         {
             _model.Opacity = UserOpacity;
+            _model.UserFont = UserFont;
             return _model;
         }
+
+        // TODO: get rid of these properties, they should be part of Load/Save
 
         private double UserOpacity
         {
@@ -96,7 +105,10 @@ namespace FogBugzCaseTracker
         private void btnChooseFont_Click(object sender, EventArgs e)
         {
             if (fontDialog1.ShowDialog() == DialogResult.OK)
-                UserFont = fontDialog1.Font;
+            {
+                _model.UserFont = fontDialog1.Font;
+                ApplyModel();
+            }
         }
 
 

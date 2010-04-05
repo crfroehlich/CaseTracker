@@ -24,12 +24,12 @@ namespace FogBugzCaseTracker
             _settingsRegKey.SetValue("server", _server);
             _settingsRegKey.SetValue("LastX", Location.X);
             _settingsRegKey.SetValue("LastY", Location.Y);
-            _settingsRegKey.SetValue("Opacity", Opacity * 100, RegistryValueKind.DWord);
+            _settingsRegKey.SetValue("Opacity", _settings.Opacity * 100, RegistryValueKind.DWord);
             _settingsRegKey.SetValue("IgnoreBaseSearch", _filter.IgnoreBaseSearch ? 1 : 0);
             _settingsRegKey.SetValue("IncludeNoEstimate", _filter.IncludeNoEstimate ? 1 : 0);
             _settingsRegKey.SetValue("LastWidth", Width);
-            _settingsRegKey.SetValue("Font", dropCaseList.Font.Name);
-            _settingsRegKey.SetValue("FontSize", dropCaseList.Font.SizeInPoints * 100, RegistryValueKind.DWord);
+            _settingsRegKey.SetValue("Font", _settings.UserFont.Name);
+            _settingsRegKey.SetValue("FontSize", _settings.UserFont.SizeInPoints * 100, RegistryValueKind.DWord);
             _settingsRegKey.SetValue("PollingInterval", timerUpdateCases.Interval);
             _settingsRegKey.SetValue("SwitchToNothingWhenClosing", _switchToNothinUponClosing ? 1 : 0);
             _settingsRegKey.SetValue("MinutesBeforeAway", _minutesBeforeConsideredAway, RegistryValueKind.DWord);
@@ -60,6 +60,7 @@ namespace FogBugzCaseTracker
         private void ApplySettings()
         {
             Opacity = _settings.Opacity;
+            dropCaseList.Font = _settings.UserFont;
         }
 
         private void ReadSettingsFromRegKey()
@@ -72,9 +73,10 @@ namespace FogBugzCaseTracker
             int opac = (int)_settingsRegKey.GetValue("Opacity", (int)(Opacity * 100));
             _settings.Opacity = (double)opac / 100.0;
 
+            // TODO: Shoudl be a member of the model class
             string fontName = (String)_settingsRegKey.GetValue("Font", dropCaseList.Font.Name);
             float fontSize = (int)_settingsRegKey.GetValue("FontSize", (int)(dropCaseList.Font.SizeInPoints * 100)) / (float)100.0;
-            dropCaseList.Font = new Font(fontName, fontSize);
+            _settings.UserFont = new Font(fontName, fontSize);
 
 
             Location = newLoc;
@@ -131,21 +133,20 @@ namespace FogBugzCaseTracker
             SettingsDlg dlg = new SettingsDlg();
             SettingsModel settings = new SettingsModel();
             settings.Opacity = Opacity;
+            settings.UserFont = dropCaseList.Font;
+
             dlg.Owner = this;
             LocateDialogBelowOrAboveWindow(dlg);
 
-            dlg.UserFont = dropCaseList.Font;
             dlg.MinutesBeforeAway = _minutesBeforeConsideredAway;
             dlg.CaseListRefreshIntervalSeconds = (int)((double)timerUpdateCases.Interval / 1000.0);
             dlg.LoadModel(settings);
 
             SettingsModel oldSettings = (SettingsModel)settings.Clone();
-            Font oldFont = dropCaseList.Font;
             int oldMinutes = _minutesBeforeConsideredAway;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 _settings = dlg.SaveModel();
-                dropCaseList.Font = dlg.UserFont;
                 _minutesBeforeConsideredAway = dlg.MinutesBeforeAway;
                 timerUpdateCases.Interval = dlg.CaseListRefreshIntervalSeconds * 1000;
                 saveSettings();
@@ -153,7 +154,6 @@ namespace FogBugzCaseTracker
             else
             {
                 _settings = oldSettings;
-                dropCaseList.Font = oldFont;
                 _minutesBeforeConsideredAway = oldMinutes;
             }
             ApplySettings();
