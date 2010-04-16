@@ -17,7 +17,7 @@ namespace FogBugzCaseTracker
         public SearchHistory(int howLong)
         {
             _maxSize = howLong;
-            QueryStrings = new List<string>();
+            QueryStrings = new List<string>(howLong);
         }
 
         public void Load()
@@ -92,26 +92,27 @@ namespace FogBugzCaseTracker
         public void Test()
         {
             SearchHistory sh = new SearchHistory(3);
-            Assert.True(sh.QueryStrings[0] == "");
-            Assert.True(sh.QueryStrings[1] == "");
-            Assert.True(sh.QueryStrings[2] == "");
+            sh.QueryStrings.Add("");
+            sh.QueryStrings.Add("");
+            sh.QueryStrings.Add("");
+            Assert.AreEqual("", sh.QueryStrings[0]);
+            Assert.AreEqual("", sh.QueryStrings[1]);
+            Assert.AreEqual("", sh.QueryStrings[2]);
             sh.Save();
             sh.Load();
-            Assert.True(sh.QueryStrings[0] == "");
-            Assert.True(sh.QueryStrings[1] == "");
-            Assert.True(sh.QueryStrings[2] == "");
+            Assert.AreEqual(0, sh.QueryStrings.Count);
             sh.PushSearch("assaf");
-            Assert.True(sh.QueryStrings[0] == "assaf");
-            Assert.True(sh.QueryStrings[1] == "");
-            Assert.True(sh.QueryStrings[2] == "");
+            Assert.AreEqual("assaf", sh.QueryStrings[0]);
+            Assert.AreEqual(1, sh.QueryStrings.Count);
             sh.PushSearch("lavie");
-            Assert.True(sh.QueryStrings[0] == "lavie");
-            Assert.True(sh.QueryStrings[1] == "assaf");
-            Assert.True(sh.QueryStrings[2] == "");
+            Assert.AreEqual("lavie", sh.QueryStrings[0]);
+            Assert.AreEqual("assaf", sh.QueryStrings[1]);
+            Assert.AreEqual(2, sh.QueryStrings.Count);
             sh.PushSearch("again");
-            Assert.True(sh.QueryStrings[0] == "again");
-            Assert.True(sh.QueryStrings[1] == "lavie");
-            Assert.True(sh.QueryStrings[2] == "assaf");
+            Assert.AreEqual("again", sh.QueryStrings[0]);
+            Assert.AreEqual("lavie", sh.QueryStrings[1]);
+            Assert.AreEqual("assaf", sh.QueryStrings[2]);
+            Assert.AreEqual(3, sh.QueryStrings.Count);
             sh.PushSearch("again");
             Assert.True(sh.QueryStrings[0] == "again");
             Assert.True(sh.QueryStrings[1] == "lavie");
@@ -130,7 +131,7 @@ namespace FogBugzCaseTracker
             Assert.True(sh2.QueryStrings[0] == "again");
             Assert.True(sh2.QueryStrings[1] == "assaf");
             Assert.True(sh2.QueryStrings[2] == "lavie");
-            Assert.True(sh2.QueryStrings[3] == "");
+            Assert.AreEqual(3, sh.QueryStrings.Count);
             sh2.Save();
             SearchHistory sh3 = new SearchHistory(2);
             sh3.Load();
