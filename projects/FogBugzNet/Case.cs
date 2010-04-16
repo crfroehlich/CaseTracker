@@ -20,15 +20,19 @@ namespace FogBugzNet
         public MileStone ParentMileStone = new MileStone();
 
         public string ShortDescription { get { return ID + ": " + Name; } }
+
+        private static string FormatTimeSpan(TimeSpan ts)
+        {
+            return String.Format("{0}:{1}",
+                        ts.Hours.ToString("0#"),
+                        ts.Minutes.ToString("0#"));
+        }
+
         public string ElapsedTime_h_m // returns elapsed time in h:m format: 20:04
         {
-
             get
             {
-                return String.Format("{0}:{1}",
-                        Elapsed.TotalHours.ToString("0#"),
-                        Elapsed.Minutes.ToString("0#"));
-
+                return FormatTimeSpan(Elapsed);
             }
         }
         public string EstimatedTime_h_m // returns elapsed time in h:m format: 20:04
@@ -36,10 +40,7 @@ namespace FogBugzNet
 
             get
             {
-                return String.Format("{0}:{1}",
-                        Estimate.TotalHours.ToString("0#"),
-                        Estimate.Minutes.ToString("0#"));
-
+                return FormatTimeSpan(Estimate);
             }
         }
         public string LongDescription
