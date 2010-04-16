@@ -323,5 +323,10 @@ namespace FogBugzCaseTracker
             lblImBack.Left = (pnlPaused.Width - lblImBack.Width) / 2;
         }
 
+        private void busyPicture_Click(object sender, EventArgs e)
+        {
+            ShowMainMenu();
+        }
+
     } // Class HoverWindow
 }
