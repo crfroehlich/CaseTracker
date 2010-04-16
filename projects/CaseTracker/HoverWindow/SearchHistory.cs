@@ -114,29 +114,29 @@ namespace FogBugzCaseTracker
             Assert.AreEqual("assaf", sh.QueryStrings[2]);
             Assert.AreEqual(3, sh.QueryStrings.Count);
             sh.PushSearch("again");
-            Assert.True(sh.QueryStrings[0] == "again");
-            Assert.True(sh.QueryStrings[1] == "lavie");
-            Assert.True(sh.QueryStrings[2] == "assaf");
+            Assert.AreEqual("again", sh.QueryStrings[0]);
+            Assert.AreEqual("lavie", sh.QueryStrings[1]);
+            Assert.AreEqual("assaf", sh.QueryStrings[2]);
             sh.PushSearch("assaf");
-            Assert.True(sh.QueryStrings[0] == "assaf");
-            Assert.True(sh.QueryStrings[1] == "again");
-            Assert.True(sh.QueryStrings[2] == "lavie");
+            Assert.AreEqual("assaf", sh.QueryStrings[0]);
+            Assert.AreEqual("again", sh.QueryStrings[1]);
+            Assert.AreEqual("lavie", sh.QueryStrings[2]);
             sh.PushSearch("again");
-            Assert.True(sh.QueryStrings[0] == "again");
-            Assert.True(sh.QueryStrings[1] == "assaf");
-            Assert.True(sh.QueryStrings[2] == "lavie");
+            Assert.AreEqual("again", sh.QueryStrings[0]);
+            Assert.AreEqual("assaf", sh.QueryStrings[1]);
+            Assert.AreEqual("lavie", sh.QueryStrings[2]);
             sh.Save();
             SearchHistory sh2 = new SearchHistory(4);
             sh2.Load();
-            Assert.True(sh2.QueryStrings[0] == "again");
-            Assert.True(sh2.QueryStrings[1] == "assaf");
-            Assert.True(sh2.QueryStrings[2] == "lavie");
+            Assert.AreEqual("again", sh.QueryStrings[0]);
+            Assert.AreEqual("assaf", sh.QueryStrings[1]);
+            Assert.AreEqual("lavie", sh.QueryStrings[2]);
             Assert.AreEqual(3, sh.QueryStrings.Count);
             sh2.Save();
             SearchHistory sh3 = new SearchHistory(2);
             sh3.Load();
-            Assert.True(sh3.QueryStrings[0] == "again");
-            Assert.True(sh3.QueryStrings[1] == "assaf");
+            Assert.AreEqual("again", sh.QueryStrings[0]);
+            Assert.AreEqual("assaf", sh.QueryStrings[1]);
 
 
         }
