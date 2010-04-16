@@ -83,6 +83,8 @@ namespace FogBugzCaseTracker
                 frm.btnExportExcel.Enable(true);
                 frm.busyPicture.Visible = false;
                 frm.btnSettings.Enable(true);
+                frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList, "");
+   
             }
         };
 
