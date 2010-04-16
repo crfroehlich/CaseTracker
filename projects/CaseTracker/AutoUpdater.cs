@@ -89,19 +89,22 @@ namespace FogBugzCaseTracker
         private void VerifyMd5(string filename, string expectedHash)
         {
             Utils.Log.InfoFormat("Verifying downloaded setup MD5 {0}, {1}", filename, expectedHash);
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-
-            StringBuilder sb = new StringBuilder();
-            byte[] actualHash = md5.ComputeHash(new FileStream(filename, FileMode.Open, FileAccess.Read));
-            foreach (Byte b in actualHash)
-                sb.Append(String.Format("{0,2:X}", b));
-            string actualHashStr = sb.ToString();
+            string actualHashStr = ComputeFileHash(filename, new MD5CryptoServiceProvider());
             if (actualHashStr != expectedHash)
             {
                 Utils.Log.WarnFormat("Actual MD5 was: ", actualHashStr);
                 File.Delete(filename);
                 throw new Exception(String.Format("Bad hash of downloaded version.\nExpected: {0}\n  Actual: {1}", expectedHash, actualHashStr));
             }
+        }
+
+        private string ComputeFileHash(string filename, HashAlgorithm alg)
+        {
+            StringBuilder sb = new StringBuilder();
+            byte[] actualHash = alg.ComputeHash(new FileStream(filename, FileMode.Open, FileAccess.Read));
+            foreach (Byte b in actualHash)
+                sb.Append(String.Format("{0,2:X}", b));
+            return sb.ToString();
         }
 
         private string DownloadLatestVersion()
