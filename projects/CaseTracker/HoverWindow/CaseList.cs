@@ -95,7 +95,11 @@ namespace FogBugzCaseTracker
 
         public string FormatCurrentCaseToolTip()
         {
-            return String.Format("Working on: {0} (elapsed time: {1})", dropCaseList.Text, ((Case)dropCaseList.SelectedItem).ElapsedTime_h_m);
+            Case c = (Case)dropCaseList.SelectedItem;
+
+            double pctDone = c.Estimate.TotalHours > 0 ? (c.Elapsed.TotalHours / c.Estimate.TotalHours ) : 1;
+
+            return String.Format("Working on: {0} (elapsed {1}%: {2} )", dropCaseList.Text, (int)(pctDone * 100), c.ElapsedTime_h_m);
         }
 
 

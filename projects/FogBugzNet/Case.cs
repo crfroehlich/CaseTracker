@@ -26,7 +26,7 @@ namespace FogBugzNet
             get
             {
                 return String.Format("{0}:{1}",
-                        Elapsed.TotalHours.ToString("###"),
+                        Elapsed.TotalHours.ToString("0#"),
                         Elapsed.Minutes.ToString("0#"));
 
             }
