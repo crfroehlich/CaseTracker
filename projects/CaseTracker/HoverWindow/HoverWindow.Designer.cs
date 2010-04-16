@@ -368,7 +368,7 @@ namespace FogBugzCaseTracker
             this.btnFilter.TabIndex = 13;
             this.btnFilter.TabStop = false;
             this.btnFilter.UseVisualStyleBackColor = false;
-            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click_1);
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // menuNew
             // 

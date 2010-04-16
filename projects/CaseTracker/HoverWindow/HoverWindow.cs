@@ -146,7 +146,7 @@ namespace FogBugzCaseTracker
             backgroundPic.Focus();
         }
 
-        private void btnFilter_Click_1(object sender, EventArgs e)
+        private void btnFilter_Click(object sender, EventArgs e)
         {
             ShowFilterDialog();
             backgroundPic.Focus();
