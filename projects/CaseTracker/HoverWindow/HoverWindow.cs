@@ -134,11 +134,16 @@ namespace FogBugzCaseTracker
 
         private void btnMain_Click(object sender, EventArgs e)
         {
+            ShowMainMenu();
+
+        }
+
+        private void ShowMainMenu()
+        {
             Point p = new Point(Location.X + btnMain.Location.X,
                                 Location.Y + btnMain.Location.Y + btnMain.Height);
             menuMain.Show(p);
             backgroundPic.Focus();
-
         }
 
         private void btnFilter_Click_1(object sender, EventArgs e)
