@@ -4,3 +4,4 @@ glob:projects/CaseTracker/obj/*
 glob:projects/FogBugzNet/bin/*
 glob:projects/FogBugzNet/obj/*
 glob:projects/CaseTracker/Output/*
+glob:projects/CaseTracker/*.user
