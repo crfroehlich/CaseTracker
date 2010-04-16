@@ -93,6 +93,11 @@ namespace FogBugzCaseTracker
             bw.RunWorkerAsync();
         }
 
+        public string FormatCurrentCaseToolTip()
+        {
+            return String.Format("Working on: {0} (elapsed time: {1})", dropCaseList.Text, ((Case)dropCaseList.SelectedItem).ElapsedTime_h_m);
+        }
+
 
     }
 }

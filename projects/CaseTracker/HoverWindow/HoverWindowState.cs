@@ -116,8 +116,7 @@ namespace FogBugzCaseTracker
                 frm.btnNewEstimate.Enable(true);
                 frm.btnResolveClose.Enable(true);
 
-                frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList,
-                    String.Format("Working on: {0} (elapsed time: {1})", frm.dropCaseList.Text, ((Case)frm.dropCaseList.SelectedItem).ElapsedTime_h_m));
+                frm.tooltipCurrentCase.SetToolTip(frm.dropCaseList, frm.FormatCurrentCaseToolTip());
                 frm.timerUpdateCases.Enabled = true;
                 frm.busyPicture.Visible = false;
                 frm.btnPause.Enable(true);
