@@ -99,7 +99,7 @@ namespace FogBugzCaseTracker
 
             double pctDone = c.Estimate.TotalHours > 0 ? (c.Elapsed.TotalHours / c.Estimate.TotalHours ) : 1;
 
-            return String.Format("Working on: {0} (elapsed {1}%: {2} )", dropCaseList.Text, (int)(pctDone * 100), c.ElapsedTime_h_m);
+            return String.Format("Working on: {0} ({1}/{2}, {3}% )", dropCaseList.Text, c.ElapsedTime_h_m, c.EstimatedTime_h_m, (int)(pctDone * 100));
         }
 
 

@@ -31,6 +31,17 @@ namespace FogBugzNet
 
             }
         }
+        public string EstimatedTime_h_m // returns elapsed time in h:m format: 20:04
+        {
+
+            get
+            {
+                return String.Format("{0}:{1}",
+                        Estimate.TotalHours.ToString("0#"),
+                        Estimate.Minutes.ToString("0#"));
+
+            }
+        }
         public string LongDescription
         {
             get
