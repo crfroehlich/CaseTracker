@@ -103,7 +103,7 @@ namespace FogBugzCaseTracker
             {
                 Utils.Log.DebugFormat("Downloading latest version from {0} to {1}", remoteURL, localFilePath);
                 HttpUtils.httpGetBinary(remoteURL, localFilePath);
-                CryptoUtils.VerifyMd5(localFilePath, _latest.SelectSingleNode("MD5").InnerText);
+                CryptoUtils.VerifyDownloadedFileHash(localFilePath, _latest.SelectSingleNode("MD5").InnerText, new System.Security.Cryptography.MD5CryptoServiceProvider());
             } else
                 Utils.Log.DebugFormat("Latest version already downloaded to: {0}", localFilePath);
                 

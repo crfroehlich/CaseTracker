@@ -8,10 +8,10 @@ namespace FogBugzCaseTracker
 {
     public class CryptoUtils
     {
-        public static void VerifyMd5(string filename, string expectedHash)
+        public static void VerifyDownloadedFileHash(string filename, string expectedHash, System.Security.Cryptography.HashAlgorithm alg)
         {
             Utils.Log.InfoFormat("Verifying downloaded setup MD5 {0}, {1}", filename, expectedHash);
-            string actualHashStr = ComputeFileHash(filename, new System.Security.Cryptography.MD5CryptoServiceProvider());
+            string actualHashStr = ComputeFileHash(filename, alg);
             if (actualHashStr != expectedHash)
             {
                 Utils.Log.WarnFormat("Actual MD5 was: ", actualHashStr);
