@@ -29,7 +29,7 @@ namespace FogBugzCaseTracker
             _versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
         }
 
-        private bool IsLatestNewerThanMe()
+        private bool IsLatestNewerThanCurrent()
         {
             string theirVer = _latest.SelectSingleNode("Version").InnerText;
             String[] partsTheir = theirVer.Split(new char[] { '.' });
@@ -135,7 +135,7 @@ namespace FogBugzCaseTracker
         {
             _latest = (XmlElement)doc.SelectNodes("//Release").Item(0);
 
-            if (IsLatestNewerThanMe())
+            if (IsLatestNewerThanCurrent())
             {
                 Utils.Log.Debug("Found newer version");
 
