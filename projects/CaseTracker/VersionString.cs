@@ -96,6 +96,11 @@ namespace FogBugzCaseTracker
         [Test]
         public void TestIsNewer()
         {
+            Assert.True(VersionInfo.FromString("1.2.3.4").IsNewerThan(VersionInfo.FromString("1.2.3.3")));
+            Assert.False(VersionInfo.FromString("1.2.3.4").IsNewerThan(VersionInfo.FromString("1.2.3.4")));
+            Assert.True(VersionInfo.FromString("1.2.3.4").IsNewerThan(VersionInfo.FromString("1.2.2.4")));
+            Assert.True(VersionInfo.FromString("1.2.3.4").IsNewerThan(VersionInfo.FromString("1.1.3.4")));
+            Assert.True(VersionInfo.FromString("1.2.3.4").IsNewerThan(VersionInfo.FromString("0.2.3.3")));
         }
     }
 
