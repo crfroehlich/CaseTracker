@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Threading;
 using FogBugzNet;
@@ -29,20 +28,25 @@ namespace FogBugzCaseTracker
             Utils.Log.Debug("Setting locale of this application to en-US");
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
 
-            bool firstInstance;
-            mutexSingleton = new Mutex(false, "Local\\VisionMapCaseTrackerSingletonMutex", out firstInstance);
-            // If firstInstance is now true, we're the first instance of the application;
-            // otherwise another instance is running.
             Application.ThreadException += delegate(object sender, ThreadExceptionEventArgs args)
             {
                 Utils.Log.Error(args.Exception.ToString());
                 Utils.ShowErrorMessage(args.Exception.Message);
             };
 
-            if (firstInstance)
+            if (IsFirstInstance())
                 Application.Run(new HoverWindow());
 
             Utils.Log.Debug("Shutting down");
+        }
+
+        private static bool IsFirstInstance()
+        {
+            bool firstInstance;
+            mutexSingleton = new Mutex(false, "Local\\VisionMapCaseTrackerSingletonMutex", out firstInstance);
+            // If firstInstance is now true, we're the first instance of the application;
+            // otherwise another instance is running.
+            return firstInstance;
         }
     }
 }
