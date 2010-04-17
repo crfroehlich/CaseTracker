@@ -82,7 +82,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AutoUpdater.cs" />
-    <Compile Include="CryptoUtils.cs" />
+    <Compile Include="Crypto.cs" />
     <Compile Include="CultureAwareBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>

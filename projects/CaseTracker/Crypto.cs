@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace FogBugzCaseTracker
 {
     [TestFixture]
-    public class CryptoUtils
+    public class Crypto
     {
         public static void VerifyDownloadedFileHash(string filename, string expectedHash, System.Security.Cryptography.HashAlgorithm alg)
         {
