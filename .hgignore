@@ -5,3 +5,5 @@ glob:projects/FogBugzNet/bin/*
 glob:projects/FogBugzNet/obj/*
 glob:projects/CaseTracker/Output/*
 glob:projects/CaseTracker/*.user
+glob:projects/CaseTracker/*.Cache
+glob:projects/FogBugzNet/*.Cache
