@@ -51,10 +51,22 @@ namespace FogBugzCaseTracker
 
         }
 
+        private void DeleteKeyIfExists(string key)
+        {
+            RegistryKey k = Registry.CurrentUser.OpenSubKey(key);
+            if (k != null)
+            {
+                k.Close();
+                Registry.CurrentUser.DeleteSubKeyTree("Software\\VisionMap\\CaseTracker\\SearchHistory");
+            }
+        }
+
         public void Save()
         {
-            try { Registry.CurrentUser.DeleteSubKeyTree("Software\\VisionMap\\CaseTracker\\SearchHistory"); } catch (Exception) {}
-            _key = Registry.CurrentUser.CreateSubKey("Software\\VisionMap\\CaseTracker\\SearchHistory");
+            string historyKey = @"Software\VisionMap\CaseTracker\SearchHistory";
+            DeleteKeyIfExists(historyKey);
+
+            _key = Registry.CurrentUser.CreateSubKey(historyKey);
             
             try
             {
