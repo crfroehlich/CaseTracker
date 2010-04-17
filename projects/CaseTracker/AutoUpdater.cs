@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading;
-using System.IO;
 using System.ComponentModel;
-using System.Xml;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Xml;
 using FogBugzNet;
-using System.Security.Cryptography;
 
 namespace FogBugzCaseTracker
 {

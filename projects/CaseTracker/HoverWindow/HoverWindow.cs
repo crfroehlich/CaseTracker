@@ -1,9 +1,9 @@
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using FogBugzNet;
-using System.Configuration;
 
 namespace FogBugzCaseTracker
 {

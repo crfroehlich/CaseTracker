@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Configuration;
 using System.Drawing;
 using Microsoft.Win32;
-using System.Configuration;
 
 namespace FogBugzCaseTracker
 {

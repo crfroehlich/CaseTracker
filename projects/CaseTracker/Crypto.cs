@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using FogBugzNet;
-using System.IO;
 using NUnit.Framework;
 
 namespace FogBugzCaseTracker

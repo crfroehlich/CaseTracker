@@ -18,26 +18,42 @@ namespace FogBugzCaseTracker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Utils.InitializeLog();
+            InitLogger(argv);
 
-            if ((argv.Length > 0) && (argv[0] == "DEBUG"))
-                Utils.OverrideConfiguredLogLevel(log4net.Core.Level.Debug);
+            FixLocale();
 
-            Utils.Log.DebugFormat("Current Local is: {0}", System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName);
-
-            Utils.Log.Debug("Setting locale of this application to en-US");
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
-
-            Application.ThreadException += delegate(object sender, ThreadExceptionEventArgs args)
-            {
-                Utils.Log.Error(args.Exception.ToString());
-                Utils.ShowErrorMessage(args.Exception.Message);
-            };
+            HandleThreadExceptions();
 
             if (IsFirstInstance())
                 Application.Run(new HoverWindow());
 
             Utils.Log.Debug("Shutting down");
+        }
+
+        private static void HandleThreadExceptions()
+        {
+            Application.ThreadException += delegate(object sender, ThreadExceptionEventArgs args)
+            {
+                Utils.Log.Error(args.Exception.ToString());
+                Utils.ShowErrorMessage(args.Exception.Message);
+            };
+        }
+
+        private static void FixLocale()
+        {
+            Utils.Log.DebugFormat("Current Local is: {0}", System.Threading.Thread.CurrentThread.CurrentCulture.DisplayName);
+
+            Utils.Log.Debug("Setting locale of this application to en-US");
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+        }
+
+        private static void InitLogger(string[] argv)
+        {
+
+            Utils.InitializeLog();
+
+            if ((argv.Length > 0) && (argv[0] == "DEBUG"))
+                Utils.OverrideConfiguredLogLevel(log4net.Core.Level.Debug);
         }
 
         private static bool IsFirstInstance()
