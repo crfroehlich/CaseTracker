@@ -27,13 +27,6 @@ namespace FogBugzCaseTracker
         public HoverWindow()
         {
             InitializeComponent();
-
-            _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
-                                            new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
-
-            loadSettings();
-
-            _autoUpdate.Run();
         }
 
         private void startDragging(MouseEventArgs e)

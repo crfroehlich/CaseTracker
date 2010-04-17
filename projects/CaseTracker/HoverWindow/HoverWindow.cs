@@ -10,6 +10,23 @@ namespace FogBugzCaseTracker
     public partial class HoverWindow : Form
     {
 
+        private void Initialize()
+        {
+            loadSettings();
+
+            SetState(new StateLoggedOff(this));
+
+            trayIcon.ShowBalloonTip(2000);
+
+            _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
+                                            new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
+
+            _autoUpdate.Run();
+
+            MoveWindowToCenter();
+
+            loginWithPrompt();
+        }
 
         private void updateCasesTimer_Click(object sender, EventArgs e)
         {
@@ -19,13 +36,7 @@ namespace FogBugzCaseTracker
 
         private void HoverWindow_Load(object sender, EventArgs e)
         {
-            SetState(new StateLoggedOff(this));
-
-            trayIcon.ShowBalloonTip(2000);
-
-            MoveWindowToCenter();
-
-            loginWithPrompt();
+            Initialize();
         }
 
 
