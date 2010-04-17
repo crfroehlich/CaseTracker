@@ -42,13 +42,13 @@ In order to run the test create an XML file with this format:
         private void BadLogin()
         {
             FogBugz fb = new FogBugz("bad url");
-            fb.Logon("bad", "bad");
+            fb.LogOn("bad", "bad");
         }
 
         private void GoodLogin()
         {
             FogBugz fb = new FogBugz(_creds.Server);
-            fb.Logon(_creds.UserName, _creds.Password);
+            fb.LogOn(_creds.UserName, _creds.Password);
         }
 
         [Test]
@@ -65,7 +65,7 @@ In order to run the test create an XML file with this format:
             FogBugz fb = new FogBugz(_creds.Server);
 
             EventWaitHandle evw = new EventWaitHandle(false, EventResetMode.ManualReset);
-            Assert.True(fb.Logon(_creds.UserName, _creds.Password));
+            Assert.True(fb.LogOn(_creds.UserName, _creds.Password));
             return fb;
         }
 

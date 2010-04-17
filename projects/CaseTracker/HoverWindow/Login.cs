@@ -14,7 +14,7 @@ namespace FogBugzCaseTracker
         private string _server;
         private string _password;
 
-        public struct LogonResultInfo
+        public struct LoginResultInfo
         {
             public String User;
             public string Password;
@@ -22,10 +22,10 @@ namespace FogBugzCaseTracker
             public DialogResult UserChoice;
         };
 
-        LogonResultInfo DoLogonScreen(string initialUser, string initialPassword, string initialServer)
+        LoginResultInfo DoLoginScreen(string initialUser, string initialPassword, string initialServer)
         {
-            Utils.Log.Debug("Logon screen showing...");
-            LogonResultInfo ret = new LogonResultInfo();
+            Utils.Log.Debug("Login screen showing...");
+            LoginResultInfo ret = new LoginResultInfo();
 
             LoginForm f = new LoginForm();
             f.Password = initialPassword;
@@ -66,7 +66,7 @@ namespace FogBugzCaseTracker
                         _server = (url.Length > 0) ? url : (string)ConfigurationManager.AppSettings["ExampleServerURL"];
                     }
 
-                    LogonResultInfo info = DoLogonScreen(_username, _password, _server);
+                    LoginResultInfo info = DoLoginScreen(_username, _password, _server);
                     if (info.UserChoice != DialogResult.Cancel)
                     {
                         _username = info.User;
@@ -79,7 +79,7 @@ namespace FogBugzCaseTracker
 
                 _fb = new FogBugz(_server);
 
-                LogonAsync(_username, _password, delegate(bool succeeded)
+                LoginAsync(_username, _password, delegate(bool succeeded)
                 {
                     if (succeeded)
                     {
@@ -100,15 +100,15 @@ namespace FogBugzCaseTracker
                 throw x;
             }
         }
-        public delegate void OnLogon(bool succeeded);
+        public delegate void OnLogin(bool succeeded);
 
-        public void LogonAsync(string username, string password, OnLogon OnDone)
+        public void LoginAsync(string username, string password, OnLogin OnDone)
         {
             Utils.Log.DebugFormat("Logging in as {0}", username);
             BackgroundWorker bw = new CultureAwareBackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate(object sender, DoWorkEventArgs args)
             {
-                args.Result = _fb.Logon(username, password);
+                args.Result = _fb.LogOn(username, password);
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object sender, RunWorkerCompletedEventArgs args)
             {
@@ -125,7 +125,7 @@ namespace FogBugzCaseTracker
         private void RetryLogin()
         {
             Utils.Log.Debug("Retrying login...");
-            LogonAsync(_username, _password, delegate(bool success)
+            LoginAsync(_username, _password, delegate(bool success)
             {
                 if (success)
                     updateCases(true);

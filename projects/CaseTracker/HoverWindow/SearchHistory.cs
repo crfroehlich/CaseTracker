@@ -77,7 +77,6 @@ namespace FogBugzCaseTracker
             {
                 if (_key != null)
                     _key.Close();
-
             }
         }
 

@@ -62,7 +62,7 @@ namespace FogBugzNet
 
 
 
-        public bool Logon(string username, string password)
+        public bool LogOn(string username, string password)
         {
             try
             {
