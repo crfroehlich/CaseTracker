@@ -215,6 +215,7 @@
       <DependentUpon>SettingsDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="SettingsModel.cs" />
+    <Compile Include="VersionString.cs" />
     <Compile Include="VersionUpdatePrompt.cs">
       <SubType>Form</SubType>
     </Compile>

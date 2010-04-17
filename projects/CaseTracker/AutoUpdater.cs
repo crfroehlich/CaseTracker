@@ -31,21 +31,10 @@ namespace FogBugzCaseTracker
 
         private bool IsLatestNewerThanCurrent()
         {
-            string theirVer = _latest.SelectSingleNode("Version").InnerText;
-            String[] partsTheir = theirVer.Split(new char[] { '.' });
-            string myVer = _versionInfo.ProductVersion;
-            String[] partsMine = myVer.Split(new char[] { '.' });
+            VersionInfo theirVer = VersionInfo.FromString(_latest.SelectSingleNode("Version").InnerText);
+            VersionInfo myVer = VersionInfo.FromString(_versionInfo.ProductVersion);
 
-            Utils.Log.DebugFormat("Their version {0}, My version {1}", theirVer, myVer);
-
-            for (int i = 0; i < 4; ++i)
-            {
-                if (int.Parse(partsTheir[i]) > int.Parse(partsMine[i]))
-                    return true;
-                if (int.Parse(partsTheir[i]) < int.Parse(partsMine[i]))
-                    return false;
-            }
-            return false;
+            return theirVer.IsNewerThan(myVer);
         }
 
         public void Run()
