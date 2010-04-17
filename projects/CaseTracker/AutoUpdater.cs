@@ -15,7 +15,7 @@ namespace FogBugzCaseTracker
     public class AutoUpdater
     {
         private string _url;
-        private TimeSpan _interval;
+        private TimeSpan _versionCheckInterval;
         private FileVersionInfo _versionInfo;
         private XmlElement _latest;
         private string _setup;
@@ -23,7 +23,7 @@ namespace FogBugzCaseTracker
         public AutoUpdater(string url, TimeSpan interval)
         {
             _url = url;
-            _interval = interval;
+            _versionCheckInterval = interval;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             _versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -48,7 +48,7 @@ namespace FogBugzCaseTracker
                     {
                         Utils.Log.Debug("Looking for newer version...");
                         FindNewerReleases(GetLatestVersionXml());
-                        Thread.Sleep(_interval);
+                        Thread.Sleep(_versionCheckInterval);
                     }
                 }
                 catch (Exception e)
