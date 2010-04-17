@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using FogBugzNet;
 using NUnit.Framework;
+using System.Globalization;
 
 namespace FogBugzCaseTracker
 {
@@ -17,7 +18,7 @@ namespace FogBugzCaseTracker
             {
                 Utils.Log.WarnFormat("Actual hash was: ", actualHashStr);
                 File.Delete(filename);
-                throw new Exception(String.Format("Bad hash of downloaded version.\nExpected: {0}\n  Actual: {1}", expectedHash, actualHashStr));
+                throw new Exception(String.Format(CultureInfo.InvariantCulture, "Bad hash of downloaded version.\nExpected: {0}\n  Actual: {1}", expectedHash, actualHashStr));
             }
         }
 
