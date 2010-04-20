@@ -63,7 +63,7 @@ namespace FogBugzCaseTracker
         private SettingsModel ExtractModelFromUI()
         {
             SettingsModel ret = new SettingsModel();
-            ret.Opacity = (int)(Opacity * 100);
+            ret.Opacity = Opacity;
             ret.UserFont = (Font)dropCaseList.Font.Clone();
             return ret;
         }

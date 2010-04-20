@@ -13,6 +13,12 @@ namespace FogBugzCaseTracker
         public int CaseListRefreshInterval_Secs;
         public bool SwitchToNothingWhenClosing;
 
+        public SettingsModel()
+        {
+            CaseListRefreshInterval_Secs = int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]);
+            MinutesBeforeAway = int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]);
+        }
+
         #region ICloneable Members
 
         public object Clone()
@@ -47,8 +53,8 @@ namespace FogBugzCaseTracker
 
             LoadFontFromRegistry(key, defaultValues.UserFont);
 
-            MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]));
-            CaseListRefreshInterval_Secs = (int)key.GetValue("PollingInterval", 1000 * int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"])) / 1000;
+            MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", MinutesBeforeAway);
+            CaseListRefreshInterval_Secs = (int)key.GetValue("PollingInterval", 1000 * CaseListRefreshInterval_Secs) / 1000; // Saved in ms for backward compat with older version
             SwitchToNothingWhenClosing = (int)key.GetValue("SwitchToNothingWhenClosing", 0) != 0;
 
         }
