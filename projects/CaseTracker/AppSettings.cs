@@ -110,7 +110,11 @@ namespace FogBugzCaseTracker
         {
             try
             {
-                _password = Utils.DecryptCurrentUser(Convert.FromBase64String((String)key.GetValue("password", "")));
+                string regVal = (String)key.GetValue("password", "");
+                if (regVal == "")
+                    _password = "";
+                else
+                    _password = Utils.DecryptCurrentUser(Convert.FromBase64String(regVal));
             }
             catch (System.FormatException x)
             {
