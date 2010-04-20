@@ -19,10 +19,12 @@ namespace FogBugzCaseTracker
             if (f.ShowDialog() == DialogResult.OK)
             {
                 _filter = f.SaveModel();
+                _filter.History.PushSearch(_filter.UserSearch);
                 if (_filter.Cases != null)
                     updateCaseDropdown(_filter.Cases);
                 else
                     updateCases();
+
                 _filter.History.Save();
             }
             Utils.Log.Debug("Closing filter dialog");
