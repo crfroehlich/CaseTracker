@@ -28,12 +28,7 @@ namespace FogBugzCaseTracker
             {
 
                 if (_key == null)
-                {
-                    _key = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
-                    if (_key != null)
-                        QueryStrings.Add((String)_key.GetValue("NarrowSearch", "")); // To support transition from before search history was implemented
                     return;
-                }
 
                 for (int i = 0; i < _maxSize; ++i)
                 {
