@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using FogBugzNet;
+using System.Configuration;
 
 namespace FogBugzCaseTracker
 {
     public class FilterModel
     {
-        public String BaseSearch;
+        public String BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
         public bool IncludeNoEstimate = true;
         public String UserSearch;
         public Case[] Cases;

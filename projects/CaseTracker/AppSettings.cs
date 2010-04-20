@@ -85,7 +85,6 @@ namespace FogBugzCaseTracker
             Width = (int)_settingsRegKey.GetValue("LastWidth", Width);
             _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
             _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
-            _filter.BaseSearch = ConfigurationManager.AppSettings["BaseSearch"];
         }
 
         private void RestoreAuthenticationData()

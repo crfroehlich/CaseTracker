@@ -29,16 +29,15 @@ namespace FogBugzCaseTracker
         public void LoadModel(FilterModel model)
         {
             _model = model;
-            txtBaseSearch.Text = model.BaseSearch;
             chkIncludeNoEstimate.Checked = model.IncludeNoEstimate;
             cmboNarrowSearch.Text = model.UserSearch;
             chkIgnoreBaseSearch.Checked = model.IgnoreBaseSearch;
             txtBaseSearch.Enabled = !model.IgnoreBaseSearch;
+            txtBaseSearch.Text = model.BaseSearch;
         }
 
         public FilterModel SaveModel()
         {
-            _model.BaseSearch = txtBaseSearch.Text;
             _model.IncludeNoEstimate = chkIncludeNoEstimate.Checked;
             _model.UserSearch = cmboNarrowSearch.Text;
             _model.IgnoreBaseSearch = chkIgnoreBaseSearch.Checked;
