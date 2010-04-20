@@ -39,12 +39,12 @@ namespace FogBugzNet
             catch (System.Net.WebException x)
             {
                 Utils.Log.Error(x.ToString() + ". Connection status: " + x.Status.ToString());
-                throw new EServerError("Unable to find FogBugz server at location: " + url);
+                throw new EServerError("Unable to find FogBugz server");
             }
             catch (System.UriFormatException x)
             {
                 Utils.Log.Error(x.ToString());
-                throw new EURLError("The server URL you provided appears to be malformed: " + url);
+                throw new EURLError("The server URL you provided appears to be malformed");
             }
         }
 
@@ -78,12 +78,12 @@ namespace FogBugzNet
             catch (System.Net.WebException x)
             {
                 Utils.Log.Error(x.ToString() + ". Connection status: " + x.Status.ToString());
-                throw new EServerError("Unable to find FogBugz server at location: " + url);
+                throw new EServerError("Unable to find FogBugz server");
             }
             catch (System.UriFormatException x)
             {
                 Utils.Log.Error(x.ToString());
-                throw new EURLError("The server URL you provided appears to be malformed: " + url);
+                throw new EURLError("The server URL you provided appears to be malformed");
             }
         }
 
