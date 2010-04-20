@@ -25,6 +25,9 @@ namespace FogBugzCaseTracker
                 frm.btnRefresh.Enable(false);
                 frm.btnNewCase.Enable(false);
                 frm.btnNewSubcase.Enable(false);
+                frm.menuNew.Enabled = false;
+                frm.menuCurrentFilter.Enabled = false;
+                frm.menuCurrentCase.Enabled = false;
                 frm.btnResolve.Enable(false);
                 frm.btnViewCaseOutline.Enable(false);
                 frm.btnViewCase.Enable(false);
@@ -73,6 +76,8 @@ namespace FogBugzCaseTracker
             public StateLoggedIn(HoverWindow frm)
                 : base(frm)
             {
+                frm.menuNew.Enabled = true;
+                frm.menuCurrentFilter.Enabled = true;
                 frm.dropCaseList.Enabled = true;
                 frm.btnFilter.Enable(true);
                 frm.btnRefresh.Enable(true);
@@ -111,6 +116,7 @@ namespace FogBugzCaseTracker
             {
                 frm.btnResolve.Enable(true);
 
+                frm.menuCurrentCase.Enabled = true;
                 frm.btnViewCaseOutline.Enable(true);
                 frm.btnViewCase.Enable(true);
                 frm.btnNewEstimate.Enable(true);
@@ -132,6 +138,9 @@ namespace FogBugzCaseTracker
                 : base(frm)
             {
                 frm.btnResolve.Enable(false);
+                frm.menuNew.Enable(true);
+                frm.menuCurrentFilter.Enabled = false;
+                frm.menuCurrentCase.Enabled = false;
 
                 frm.btnViewCaseOutline.Enable(false);
                 frm.btnViewCase.Enable(false);
