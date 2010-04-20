@@ -55,6 +55,9 @@ namespace FogBugzCaseTracker
 
             MinutesBeforeAway = (int)key.GetValue("MinutesBeforeAway", MinutesBeforeAway);
             CaseListRefreshInterval_Secs = (int)key.GetValue("PollingInterval", 1000 * CaseListRefreshInterval_Secs) / 1000; // Saved in ms for backward compat with older version
+            if (CaseListRefreshInterval_Secs == 0) // Handle invalid registry data
+                CaseListRefreshInterval_Secs = 600;
+
             SwitchToNothingWhenClosing = (int)key.GetValue("SwitchToNothingWhenClosing", 0) != 0;
 
         }
