@@ -16,7 +16,7 @@ namespace FogBugzCaseTracker
             string actualHashStr = ComputeFileHash(filename, alg);
             if (actualHashStr.ToUpper() != expectedHash.ToUpper())
             {
-                Utils.Log.WarnFormat("Actual hash was: ", actualHashStr);
+                Utils.Log.Warn("Actual hash was: " + actualHashStr);
                 File.Delete(filename);
                 throw new Exception(String.Format(CultureInfo.InvariantCulture, "Bad hash of downloaded version.\nExpected: {0}\n  Actual: {1}", expectedHash, actualHashStr));
             }
