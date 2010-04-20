@@ -158,11 +158,11 @@ namespace FogBugzCaseTracker
                 frm.pnlPaused.Width = frm.Width - 2;
                 frm.pnlPaused.Height = frm.Height - 2;
                 frm.lblImBack.Top = (frm.pnlPaused.Height - frm.lblImBack.Height ) / 2;
-                frm.btnNewCase.Enable(false);
+                frm.btnNewCase.Enable(true);
                 frm.btnExportExcel.Enable(false);
                 frm.btnExportFreeMind.Enable(false);
                 frm.btnImportFreeMind.Enable(false);
-                frm.btnNewSubcase.Enable(false);
+                frm.btnNewSubcase.Enable(true);
             }
         };
 
