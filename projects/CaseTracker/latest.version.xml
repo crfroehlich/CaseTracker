@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VersionInfo>
   <Release>
+    <Version>1.4.1.0</Version>
+    <Notes>* FIX: Several issues regarding saving user settings to registry were fixed. Users of v1.4.0 should update.
+* FIX: Various improvements to usability and responsiveness
+* FEATURE: More information in active case's tooltip (estimate, elapsed %)</Notes>
+    <URL>http://visionmap.googlecode.com/files/CaseTracker-1.4.1.0-setup.exe</URL>
+    <MD5>E58A5B9EB68C162D3A424B1426D3E92B</MD5>
+    <SHA1>6be1eb4f91a4651445657ca0b135756812b5f138</SHA1>
+  </Release>
+  <Release>
     <Version>1.4.0.0</Version>
     <Notes>* FEATURE: Window can be dragged even when paused.
 * FEATURE: Option to stop working when Case Tracker exists.
