@@ -39,7 +39,7 @@ namespace FogBugzCaseTracker
 
             _filter.History = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
             _filter.History.Load();
-            _filter.UserSearch = (_filter.History.QueryStrings.Count > 0) ? _filter.History.QueryStrings[0] : "";
+            _filter.UserSearch = (_filter.History.QueryStrings.Count > 0) ? _filter.History.QueryStrings[0] : ConfigurationManager.AppSettings["DefaultNarrowSearch"];
 
             _settingsRegKey = Registry.CurrentUser.OpenSubKey("Software\\VisionMap\\CaseTracker");
             if (_settingsRegKey == null)

@@ -11,19 +11,6 @@ namespace FogBugzCaseTracker
     {
         private FilterModel _filter = new FilterModel();
 
-        private String _narrowSearch
-        {
-            get
-            {
-                return _filter.History.QueryStrings.Count > 0 ? _filter.History.QueryStrings[0] : ConfigurationManager.AppSettings["DefaultNarrowSearch"];
-
-            }
-            set
-            {
-                _filter.History.PushSearch(value);
-            }
-        }
-
         private void ShowFilterDialog()
         {
             Utils.Log.Debug("Showing filter dialog");

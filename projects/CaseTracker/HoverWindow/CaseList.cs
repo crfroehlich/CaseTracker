@@ -44,8 +44,8 @@ namespace FogBugzCaseTracker
                 {
                     if (e.ErrorCode == (int)ECommandFailed.Code.InvalidSearch)
                     {
-                        _narrowSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
-                        Utils.Log.WarnFormat("Invalid search failed: {0}, reverting to default search: {1}", search, _narrowSearch);
+                        _filter.UserSearch = ConfigurationManager.AppSettings["DefaultNarrowSearch"];
+                        Utils.Log.WarnFormat("Invalid search failed: {0}, reverting to default search: {1}", search, _filter.UserSearch);
                         updateCases(failSilently);
                     }
                     if (!failSilently)
