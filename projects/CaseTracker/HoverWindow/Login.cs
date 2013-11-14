@@ -10,9 +10,9 @@ namespace FogBugzCaseTracker
 {
     public partial class HoverWindow
     {
-        private string _username;
-        private string _server;
-        private string _password;
+        private string _username =  string.Empty;
+        private string _server = string.Empty;
+        private string _password = string.Empty;
 
         public struct LoginResultInfo
         {
@@ -22,15 +22,12 @@ namespace FogBugzCaseTracker
             public DialogResult UserChoice;
         };
 
-        LoginResultInfo DoLoginScreen(string initialUser, string initialPassword, string initialServer)
+        static LoginResultInfo DoLoginScreen(string initialUser, string initialPassword, string initialServer)
         {
             Utils.Log.Debug("Login screen showing...");
             LoginResultInfo ret = new LoginResultInfo();
 
-            LoginForm f = new LoginForm();
-            f.Password = initialPassword;
-            f.UserName = initialUser;
-            f.Server = initialServer;
+            LoginForm f = new LoginForm {Password = initialPassword, UserName = initialUser, Server = initialServer};
 
 
             if (f.ShowDialog() == DialogResult.Cancel)
@@ -58,12 +55,12 @@ namespace FogBugzCaseTracker
             try
             {
                 SetState(new StateLoggingIn(this));
-                if (forceNewCreds || _password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == (string)ConfigurationManager.AppSettings["ExampleServerURL"])
+                if (forceNewCreds || _password.Length == 0 || _username.Length == 0 || _server.Length == 0 || _server == ConfigurationManager.AppSettings["ExampleServerURL"])
                 {
-                    if (_server.Length == 0)
+                    if (string.IsNullOrEmpty(_server))
                     {
                         string url = ConfigurationManager.AppSettings["FogBugzBaseURL"] ?? "";
-                        _server = (url.Length > 0) ? url : (string)ConfigurationManager.AppSettings["ExampleServerURL"];
+                        _server = (url.Length > 0) ? url : ConfigurationManager.AppSettings["ExampleServerURL"];
                     }
 
                     LoginResultInfo info = DoLoginScreen(_username, _password, _server);

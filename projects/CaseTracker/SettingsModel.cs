@@ -15,8 +15,8 @@ namespace FogBugzCaseTracker
 
         public SettingsModel()
         {
-            CaseListRefreshInterval_Secs = int.Parse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"]);
-            MinutesBeforeAway = int.Parse(ConfigurationManager.AppSettings["MinutesBeforeAway"]);
+            int.TryParse(ConfigurationManager.AppSettings["UpdateCaseListIntervalSeconds"], out CaseListRefreshInterval_Secs);
+            int.TryParse(ConfigurationManager.AppSettings["MinutesBeforeAway"], out MinutesBeforeAway);
         }
 
         #region ICloneable Members

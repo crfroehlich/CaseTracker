@@ -18,8 +18,11 @@ namespace FogBugzCaseTracker
 
             trayIcon.ShowBalloonTip(2000);
 
-            _autoUpdate = new AutoUpdater(ConfigurationManager.AppSettings["AutoUpdateURL"],
-                                            new TimeSpan(int.Parse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"]), 0, 0));
+            string Url = ConfigurationManager.AppSettings["AutoUpdateURL"] ?? "";
+            int Hours;
+            int.TryParse(ConfigurationManager.AppSettings["VersionUpdateCheckIntervalHours"], out Hours);
+            _autoUpdate = new AutoUpdater(Url,
+                                            new TimeSpan(Hours, 0, 0));
 
             _autoUpdate.Run();
 
@@ -299,7 +302,7 @@ namespace FogBugzCaseTracker
 
         private void timerAway_Tick(object sender, EventArgs e)
         {
-            if ((_currentState.GetType() == typeof(StateTrackingCase)) && UserIsAway())
+            if ((null != _currentState && _currentState.GetType() == typeof(StateTrackingCase)) && UserIsAway())
                 PauseWork();
         }
 

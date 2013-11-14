@@ -36,8 +36,9 @@ namespace FogBugzCaseTracker
         {
             _settings = ExtractModelFromUI();
             Utils.Log.Debug("Loading settings from registry");
-
-            _filter.History = new SearchHistory(int.Parse(ConfigurationManager.AppSettings["SearchFilterHistorySize"]));
+            int Outer;
+            int.TryParse(ConfigurationManager.AppSettings["SearchFilterHistorySize"], out Outer);
+            _filter.History = new SearchHistory(Outer);
             _filter.History.Load();
             _filter.UserSearch = (_filter.History.QueryStrings.Count > 0) ? _filter.History.QueryStrings[0] : ConfigurationManager.AppSettings["DefaultNarrowSearch"];
 
@@ -74,8 +75,9 @@ namespace FogBugzCaseTracker
             SettingsModel defaultValues = ExtractModelFromUI();
             _settings.LoadFromRegistry(_settingsRegKey, defaultValues);
             Point newLoc = new Point();
-            timerRetryLogin.Interval = int.Parse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"]);
-
+            int Outer;
+            int.TryParse(ConfigurationManager.AppSettings["RetryLoginInterval_ms"], out Outer);
+            timerRetryLogin.Interval = (Outer >= 100) ? Outer : 100;
             newLoc.X = (int)_settingsRegKey.GetValue("LastX", Location.X);
             newLoc.Y = (int)_settingsRegKey.GetValue("LastY", Location.Y);
 
@@ -83,8 +85,12 @@ namespace FogBugzCaseTracker
             Location = newLoc;
 
             Width = (int)_settingsRegKey.GetValue("LastWidth", Width);
-            _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", bool.Parse(ConfigurationManager.AppSettings["IgnoreBaseSearch"]) ? 1 : 0) != 0;
-            _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", bool.Parse(ConfigurationManager.AppSettings["IncludeNoEstimates"]) ? 1 : 0) != 0;
+            bool One;
+            bool Two;
+            bool.TryParse(ConfigurationManager.AppSettings["IgnoreBaseSearch"], out One);
+            bool.TryParse(ConfigurationManager.AppSettings["IncludeNoEstimates"], out Two);
+            _filter.IgnoreBaseSearch = (int)_settingsRegKey.GetValue("IgnoreBaseSearch", One ? 1 : 0) != 0;
+            _filter.IncludeNoEstimate = (int)_settingsRegKey.GetValue("IncludeNoEstimate", Two? 1 : 0) != 0;
         }
 
         private void RestoreAuthenticationData()
