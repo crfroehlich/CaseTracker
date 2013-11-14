@@ -29,12 +29,17 @@ namespace FogBugzNet
     {
         public static string httpGet(string url)
         {
+            string Ret = string.Empty;
             try
             {
-                WebRequest req = WebRequest.Create(url);
-                WebResponse res = req.GetResponse();
-                StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.GetEncoding("utf-8"));
-                return sr.ReadToEnd();
+                if (false == string.IsNullOrEmpty(url))
+                {
+                    WebRequest req = WebRequest.Create(url);
+                    WebResponse res = req.GetResponse();
+                    StreamReader sr = new StreamReader(res.GetResponseStream(),
+                        System.Text.Encoding.GetEncoding("utf-8"));
+                    Ret = sr.ReadToEnd();
+                }
             }
             catch (System.Net.WebException x)
             {
@@ -46,6 +51,7 @@ namespace FogBugzNet
                 Utils.Log.Error(x.ToString());
                 throw new EURLError("The server URL you provided appears to be malformed");
             }
+            return Ret;
         }
 
         public static void ReadStreamToFile(Stream src, string dst)

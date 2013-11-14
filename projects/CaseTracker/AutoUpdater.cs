@@ -28,10 +28,11 @@ namespace FogBugzCaseTracker
 
         private bool IsLatestNewerThanCurrent()
         {
-            VersionInfo latestVersion = VersionInfo.FromString(_latest.SelectSingleNode("Version").InnerText);
-            VersionInfo currentVersion = VersionInfo.FromString(_versionInfo.ProductVersion);
+            //VersionInfo latestVersion = VersionInfo.FromString(_latest.SelectSingleNode("Version").InnerText);
+            //VersionInfo currentVersion = VersionInfo.FromString(_versionInfo.ProductVersion);
 
-            return latestVersion.IsNewerThan(currentVersion);
+            //return latestVersion.IsNewerThan(currentVersion);
+            return false;
         }
 
         public void Run()
@@ -58,10 +59,16 @@ namespace FogBugzCaseTracker
 
         private XmlDocument GetLatestVersionXml()
         {
-            string latestVersionXml = HttpUtils.httpGet(_url);
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(latestVersionXml);
-            return doc;
+            XmlDocument Ret = new XmlDocument();
+            if (false == string.IsNullOrEmpty(_url))
+            {
+                string latestVersionXml = HttpUtils.httpGet(_url);
+                if (false == string.IsNullOrEmpty(latestVersionXml))
+                {
+                    Ret.LoadXml(latestVersionXml);
+                }
+            }
+            return Ret;
         }
 
         private string setupCacheDir

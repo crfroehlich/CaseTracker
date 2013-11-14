@@ -115,12 +115,13 @@ namespace FogBugzCaseTracker
         {
             cmboNarrowSearch.Items.Clear();
             if (_model.History.QueryStrings.Count > 0)
-                cmboNarrowSearch.Items.AddRange(_model.History.QueryStrings.ToArray());
+                cmboNarrowSearch.Items.AddRange(items: _model.History.QueryStrings.ToArray());
         }
 
         private void lnkSearchHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start((string)ConfigurationManager.AppSettings["SearchSyntaxHelpURL"]);
+            string help = ConfigurationManager.AppSettings["SearchSyntaxHelpURL"] ?? "http://www.fogcreek.com/FogBugz/docs/60/topics/basics/Searchingforcases.html";
+            Process.Start(help);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
